@@ -1,0 +1,78 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{Deep Learning}
+\author{Pietro Marcatti}
+\date{First Semester 2022/2023}
+
+\begin{document}
+
+\maketitle
+\section{History of Deep Learning}
+\subsection{Perceptron}
+The perceptron algorithm was invented in 1958. The perceptron became the first model for binary classification. It has one weight $w_i$ per input $x_i$. If the result is larger than a threshold it returns 1 otherwise 0 or -1 (non linearity ?).
+To train a perceptron we repeat the following steps:
+\begin{itemize}
+    \item Initialize weigths randomly
+    \item Take one sample $x_i$ and predict $y_i$
+    \item For erroneous predictions update weights
+    \begin{itemize}
+        \item If prediction $y = 0$ and ground truth $y_i$ = 1, increase the weights
+        \item If prediction $y = 1$ and ground truth $y_i$ = 0, decrease the weights
+    \end{itemize}
+    \item Repeat until no errors are made
+\end{itemize}
+However the perceptron can't solve a simple, although non-linear, problem such as the XOR. 
+To improve on the perceptron model you must add new layers but there was a stagnation on the neural networks research. The stagnation was caused by a lack of motivation from the community due to the discouraging results of the first perceptron models. 
+Still during the AI winter a couple important findings were published such as back-propagation and recurrent neural networks.\\\\
+In 2009 the ImageNet dataset was published. It colleted images for each of the 100k terms in WordNet (16M images in total). Terms were organized hierearchally, es: Vehicle \textrightarrow Ambulance.
+The ImageNet challange was instituted: 1 million images, 1000 classes, top-5 and top-1 error measured. To build ImageNet they started colleting candidate images from the internet. They then classified the candidates with Amazon Mechanical Turk service.\\
+A more recent important achievement was the one obtained by AlphaGo a deep learning model, based on reinforced learning, that in 2016 defeated the best Go player.\\
+Deep learning is the first class of learning algorithms that is scalable: performance just keeps getting better as you feed them more data. Instead when working on a small amount of data the performance of a traditional learning model (logistic regression, SVM, decision tree etc) is better.\\
+The three key factors for deep learning scaling are:
+\begin{itemize}
+    \item Data
+    \item Computation/hardware
+    \item Algorithms
+\end{itemize}
+
+\section{Logistic Regression}
+Let's start with a simple two feature model:
+\begin{itemize}
+    \item $x_1$ number of lectures you attend
+    \item $x_2$ hours spent on the laboratory activities
+\end{itemize}
+With logistic regression we want to learn a probabilistic function:
+$$\hat{y} = P(y=1|x)$$
+In particular the goal is to find the parameters $w$ and $b$ of the following function (hypothesis).
+$$H_{w,b}(x)= g =(w^T\cdot x+b) = \frac{1}{1+e^{-(w^T\cdot x+b)}}$$
+where $g(z)$ is the sigmoid function so that:
+$$\begin{cases}
+    H_{w,b}(x) >= 0.5 & \text{if } y=1\\
+    H_w,b(x)<0.5 & \text{if } y=0
+\end{cases}$$
+To get our discrete classification we map the output of the hypthesis function as follow:
+$$\begin{cases}
+    H_{w,b}(x) >= 0.5 & \text{\textrightarrow "1"}\\
+    H_w,b(x)<0.5 & \text{\textrightarrow "0"}
+\end{cases}$$
+The decision boundary is $H_{w,b}(x) = 0.5 \rightarrow w^T\cdot x+b=0\rightarrow-3+x_1+2x_2$ supposing we have $b=3$ and $w=[1,2]$. The hypotesis function is $>0.5$ when the argument is $>0$, that is becuause of the shape and output of the sigmoid.
+
+\subsection{Cost Function}
+To find $w$ and $b$ so that:
+$$\begin{cases}
+    H_{w,b}(x) >= 0.5 & \text{if } y=1\\
+    H_w,b(x)<0.5 & \text{if } y=0
+\end{cases}$$
+the logistic classifirer defines the following cost function:
+\begin{equation}
+    J(w,b) = \frac{1}{m}\cdot \sum_{i=1}^{m}{Cost(h_{w,b}(x^i),y^i)}
+\end{equation}
+\begin{equation}
+    Cost(h_{w,b}(x^i),y^i)= -y^i\cdot ln(h_{w,b}(x^i))-(1-y^i)\cdot ln(1-h_{w,b}(x^i))
+\end{equation}
+This cost function or loss function is convex and is derivable respect to $w$ and $b$
+In general we call the function to learn the \textbf{hypotesis} but in deep learning it's also called \textbf{model}, the \textbf{cost function} in deep learning is also called \textbf{loss function}.
+\end{document}
