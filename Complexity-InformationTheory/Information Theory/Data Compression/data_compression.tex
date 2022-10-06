@@ -1,0 +1,87 @@
+\section{Data Compression}
+Before we can talk about data compression it is necessary to explore the meaning and the functiong of encodings. Given two alphabets $A={a_1,a_2,\ldots,a_k}$ and $B={b_1,b_2,\ldots,b_k}$ an encoding is function:
+\begin{equation}
+    \varphi: A^* \longrightarrow B^*
+\end{equation}
+For a function to be a suitable encoding it must be at least an injective function (one-way function). In information theory and in data encoding in particular we refer to injective encoding as \textbf{uniquely decodable} encodings.
+Prefix codes are uniquely decodable codes that can be decoded without delay and are written in the form:
+\begin{equation}
+    A=\{a_1, a_2, \ldots, a_k\} \xrightarrow{\varphi} B=\{b_1, b_2, \ldots, b_D\}
+\end{equation}
+where $\varphi_i = |\varphi(a_i)|$
+    \subsection{Kraft-McMillen 1958 Inverse Theorem}
+    If $\varphi$ is a uniquely decodable code, then:
+    \begin{equation}
+        \sum_{i=1}^{k}{D^{1-l_i}}<=1
+    \end{equation}
+    $D$ is the cardinality of the output alphabet, $l_i$ is the lenght of the encoding for $a_i$. We can quickly see that, there can't be an uniquely decodable code that uses three encodings of length 1 to map over the binary alphabet:
+    \begin{equation}
+        A=\{a,b,c\},\quad B=\{0,1\}, \quad
+        l_a=l_b=l_c=1 \longrightarrow \frac{1}{2}+\frac{1}{2}+\frac{1}{2} >1
+    \end{equation}
+    Instead, if we were to insist on using a length 10 encoding for everyone of the input characters:
+    \begin{equation}
+        A=\{a,b,c\},\quad B=\{0,1\},\quad
+        l_a=l_b=l_c=10 \longrightarrow \frac{1}{2^{10}}+\frac{1}{2^{10}}+\frac{1}{2^{10}} << 1
+    \end{equation}
+    \subsubsection{Proof 1}
+    Assume the code is uniquely decodable and it is a prefix code, we can sort the input alphabet so that the length of the encoding satisfies the following:
+    $$a_1\leq a_2\leq\ldots\leq a_k$$
+    A character with an enconding of length $i$ generates a sub-tree rooted in $a_i$ with height $l-l_i$. This sub-tree contains $D^(l-l_i)$ nodes that cannot be used in the encoding because they would share an encoded prefix.\\
+    Insert diagram\\
+    In the original three the following number of leaves  $$D^l - \sum_{i=1}^{k-1}{D^{l-l_1}}$$
+    The $k-1$ term that bounds the sum is needed because we need to make sure that one last leaf is available to assign it to the last character $a_k$.
+    \begin{equation}
+        \setlength{\jot}{10pt}
+        \begin{WithArrows}
+        D^l-\sum_{i=1}^{k-1}{D^{l-l_i}} &\geq 1 \Arrow[xoffset=1cm]{Group by $D^l$} \\
+        D^l(1-\sum_{i=1}^{k-1}{D^{-l_i}}) &\geq 1 \Arrow[xoffset=1cm]{Divide by $D^l$} \\
+        1-\sum_{i=1}^{k-1}{D^{-l_i}}\geq &D^{-l} \Arrow[xoffset=1cm]{$D^{-l}$ is the last term of the sum}\\
+        1 \geq \sum_{i=1}^{k}{D^{-l_i}}&
+        \end{WithArrows}
+        \nonumber
+    \end{equation}
+    \subsubsection{Proof 2 - General case}
+    Let's define $N(n,h)$ the number of strings of alphabet $A^n$ having encoding length h. It must be true that $N(n,h)\leq D^h$ because $\varphi$ is uniquely decodable.
+    \begin{equation}
+        D^{-l_1}+D^{-l_2}+\ldots+D^{-l_k}\leq 1 \\
+    \end{equation}
+    $\forall n, n\in\mathbb{N}$ let's consider the object $(D^{-l_1}+D^{-l_2}+\ldots+D^{-l_k})^n$. If written as a product it takes the following form:
+    $$D^{-l_1\cdot n}+D^{-l_1\cdot(n-1)-l_2}+\ldots+D^{-l_k\cdot n}$$
+    As $n$ tends towards infinity the exponent will behave differently depending on the value of the base. If the base is $<1$ it will be bound between 0 and 1, and in any case $<1$. If the base is $>1$ it will grow towards infinity faster than any polynomial function. Lastly, if the base is $=1$ it will remain constant. To prove the theorem we will demonstrate that the object is dominated by a linear function, meaning that it cannot be in the second case. 
+    All of the members' exponents follow this chain of disequalities: $l_1\cdot n\leq exp\leq l_k\cdot n$. That is, because we sorted the character by encoding length, 1 being the shortest while $k$ the longest.
+    \begin{align*}
+        \underset{prob. 0}{N(n,1)}D^{-1}+\ldots+N(n,l_1\cdot n)D^{l_1\cdot n}+\ldots+N(n,l_k\cdot n)D^{-l_k\cdot n}\\\leq D^1D^{-1}+\ldots+D^l_kD^{-l_k} \leq l_k\cdot n
+    \end{align*}
+    Since the object is dominated by $l_k\cdot n$ which is linear, it must mean that it also grows at most linearly, meaning that the base of the exponent must be $\leq 1$.
+    \subsection{Kraft-McMillen Direct Theorem}
+    If given $l_1,l_2,\ldots,l_k$ and $D$ such that $\sum_{i=1}^{k}{D^{-l_i}}\leq 1$ there must exist a prefix code $\varphi$ having $l_1,l_2,\ldots,l_k$ as lengths of the encoding.
+    \subsubsection{Proof}
+    Proof can be given by construction by producing the complete D-ary tree \\
+    \includegraphics[width=8cm]{Information Theory/Data Compression/Kraft-McMillen-Inequality-Proof-Diagram.png}\\
+    \textbf{Observation:} Prefix codes compress as good as any other uniquely decodable code.
+    \subsubsection{Average expected code length - Definition}
+    Given the input alphabet A, P the probability and B the output we define the Expected Length as:
+    \begin{equation}
+        EL(\varphi)=\sum_{i=1}^{k}{p_i\cdot l_i}=\sum_{i=1}^{k}{p_i|\varphi(a_i)|}
+    \end{equation}
+    Our goal is to find prefix codes that minimize $EL$.
+    
+    \subsection{1st Shannon Theorem 1948}
+    If $\varphi$ is uniquely decodable code then $EL(\varphi)\geq \mathbb{H}_D(P)=\sum_{i=1}^{k}{p_i\cdot log_D{p_i}}$
+    The proof relies on Kraft-McMillen theorem and this simple logarithmic property:
+    $$log_e{x}\leq x-1, \quad -log_e{x}\geq 1-x$$
+    \subsubsection{Proof}
+    \hspace*{-2cm}
+    \begin{align*}
+        \setlength{\jot}{10pt}
+        \begin{WithArrows}
+        &EL(\varphi)-\mathbb{H}_D(P) = \sum_{i=1}^k{p_i\cdot l_i}+\sum_{i=1}^{k}{p_i\cdot log_D{p_i}} \Arrow[xoffset=1cm]{Group by $p_i$ and force $l_i$ as $log_D$} \\
+        &=\sum_{i=1}^{k}{p_i\cdot log_D{(D^{l_i}p_i)}} \Arrow[xoffset=-2cm]{Change to base e, take out the common term}\\
+        &=\frac{1}{log_e{D}}\cdot \sum_{i=1}^{k}{p_i\cdot log_e{(D^{l_i}p_i)}} \Arrow[xoffset=-2cm]{Group by $-1$}\\
+        &=\frac{-1}{log_e{D}}\cdot \sum_{i=1}^{k}{p_i\cdot log_e{\frac{1}{D^{l_i}p_i}}} \Arrow[xoffset=-2cm]{Using the above property}\\
+        &\geq \frac{-1}{log_e{D}}\cdot \sum_{i=1}^{k}{p_i\cdot (\frac{1}{D^{l_i}p_i}}-1) \\
+        &= \frac{-1}{log_e{D}}\cdot \bigg{(}\sum_{i=1}^{k}{\frac{1}{D^{l_i}}} - \underset{=1}{\cancel{\sum_{i=1}^{k}{p_i}}} \bigg{)} \Arrow[xoffset=-1.5cm]{Group by $-1$}\\
+        &=\frac{1}{log_e{D}}\bigg{(}\underset{KMM\longrightarrow \geq 0}{1-\sum_{i=1}^{k}{\frac{1}{D^{l_i}}}} \bigg{)}\geq 0
+        \end{WithArrows}
+    \end{align*}
