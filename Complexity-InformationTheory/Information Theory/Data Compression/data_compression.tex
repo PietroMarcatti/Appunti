@@ -85,3 +85,55 @@ where $\varphi_i = |\varphi(a_i)|$
         &=\frac{1}{log_e{D}}\bigg{(}\underset{KMM\longrightarrow \geq 0}{1-\sum_{i=1}^{k}{\frac{1}{D^{l_i}}}} \bigg{)}\geq 0
         \end{WithArrows}
     \end{align*}
+    An optimum code achieves the equality between the expected lenght and the entropy of the distribution.
+    \subsection*{Shannon Code}
+    $$EL(\varphi) = \sum_{i=1}^{k}{p_i\cdot l_i}$$
+    $$ \mathbb{H}_D(P) = -\sum_{i=1}^{k}{p_i\cdot \log_{D}{\frac{1}{p_i}}}$$
+    First observation: $\log_{D}{\frac{1}{p_i}} \in \mathbb{R},\quad l_i \in \mathbb{N} \longrightarrow l_i=\lceil\log_{D}{\frac{1}{p_i}}\rceil$\\
+    Second observation: We can use the Direct Theorem to prove $\varphi$ exists\\
+    Example:
+    $$\sum_{i=1}^{k}{D^{-\lceil \log_{D}{\frac{1}{p_i}} \rceil}}\leq 1$$
+    $$ \lceil{\log_{D}{\frac{1}{p_i}}}\rceil = \log_{D}{\frac{1}{p_i}}+\beta_i \quad 0 \leq \beta_i < 1$$
+    $$\sum_{i=1}^{k}{D^{\log_{D}{p_i-\beta_i}}} = \sum_{i=1}^{k}{D^{\log_{D}{p_i}}\cdot \frac{1}{D^{\beta_i}}} = \sum_{i=1}^{k}{p_i\cdot \frac{1}{D^{\beta_i}}}$$
+    Example: 
+    $A = \left\{ a, b \right\}  B=\left\{ 0,1 \right\}$
+    $ P=\left\{ 1-\frac{1}{32}, \frac{1}{32} \right\}$
+    $l_b = \log_2{2^5} = 5$ $\lceil \log_2{1-\frac{1}{32}}\rceil = 1 = l_a$
+    But this is not efficient because we are assigning unnecessarily long codes to characters with low probability.
+    \subsection*{Shannon-Fano Code}
+    $a_1, a_2, \ldots, a_k \longrightarrow p_1\leq p_2\ldots \leq p_k$ The aim is to balance the sum of the probabilities assigned to the branches of the root.
+    $|\sum_{i=1}^{h}{p_i}- \sum_{i=h+1}^{k}{p_i}|$. To obtain balance we try to minimize this absolute value. We then repeat the calculation recursively.
+    Example: 
+    $A= \left\{ a,b,c,d,e,f \right\}$ 
+    $\quad P=\left\{ \underbrace{\frac{40}{100}, \frac{18}{100}}_{\frac{58}{100}}, \underbrace{\frac{15}{100}, \frac{13}{100}, \frac{10}{100}, \frac{4}{100}}_{\frac{42}{100}} \right\}$
+    Fai l'esercizio e disegna l'albero.
+    Why is Shannon-Fano compromising and not splitting exactly in half or as best as possible? Because the problem of splitting a set in equal
+    subsets is NP-Complete.\newline
+    We can demonstrate that Shannon Codes are suboptimal:
+    $$\mathbb{H}_D(P) \leq \underset{\sum_{i=1}^{k}{p_i \cdot \log_{D}{\frac{1}{p_i}}}+\sum_{i=1}^{k}{p_i\cdot\beta_i}}{EL(\varphi)} \leq \mathbb{H}_D(P)+1$$
+    $\sum_{i=1}^{k}{p_i\cdot\beta_i} \leq1$
+    \subsection*{Shannon on strings of lenght n over input alphabet}
+    Example: $A=\left\{ a,b \right\} B=\left\{ 0,1 \right\} P=\left\{ \frac{3}{4} \right\} \mathbb{H}_2(P)=0.81$
+    $EL(\varphi) = 1.25 \quad Eff. = \frac{\mathbb{H}_D(P)}{EL(\varphi)}\leq 1$
+    $Eff. = \frac{\mathbb{H}_2(P)}{EL(\varphi)}=0.64$\\
+    Let's try to calculate the efficiency now with pairs
+    $A'=\left\{ aa, ab,ba,bb \right\} P=\left\{ 9/16, 3/16, 3/16, 1/16 \right\} = P^2$ $
+    \mathbb{H}_D(P')= 1.62 = \mathbb{H}_D(P^2) = 2\cdot \mathbb{H}_D(P)$
+    $l_{aa} = \lceil  \log_2{16/9} \rceil= 1$
+    $EL(\varphi) = 1.93 Eff. = 0.83$
+    If we pretend we want to send a message 1000 characters long, with the single character encoding we expect a message lenght of 1.25k characters,
+    Instead with the pairs encoding we expect 1.93/2 = $\leadsto$ 0.97k characters.\\
+    property: given two events x, y independent
+    $\mathbb{H}(x or y) = H(x) + H(Y)$
+    Proof:
+    $$H(x or Y ) = \sum_{i,j}^{}{p_i q_j \log{p_iq_j}} = - \sum_{i,j}^{}{p_i q_j \log{p_i}} - \sum_{i,j}^{}{p_i q_j \log{q_j}}$$
+    $$ = -\sum_{j}{q_j} \cdot \sum_{i}^{}{p_i \log{p_i}} - \sum_{i}{p_i} \cdot \sum_{j}{q_j \log{q_j}} = \mathbb{H}(x) + \mathbb{H}(y)$$
+    $EL(\varphi_n) \geq \mathbb{H}_D(P^n) = n\cdot \mathbb{H}_D(P)$
+    For Shannon Codes ( and all sub-optimal codes) we have:
+    $$ n\cdot \mathbb{H}_D(P) \leq EL(\varphi_n) < n\cdot \mathbb{H}_D(P)+1$$ If we want to reason in terms of a single input alphabet value
+    we divide the disequality by n. We can see that for $n \leadsto \infty $ the expected lenght is squeezed between the terms of the disequality.
+    \subsection*{Huffman Codes}
+    $A = \left\{ a_1, a_2, \ldots, a_k \right\}, p_1\leq p_2 \ldots \leq p_k$
+    We start by taking the two leasts probable characters and we put them at the leaves, creating a phantom character with probability
+    the sum of the two. I keep repeating this process until we obtain a complete tree.
+

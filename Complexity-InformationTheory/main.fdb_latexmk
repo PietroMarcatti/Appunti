@@ -1,9 +1,9 @@
 # Fdb version 3
-["pdflatex"] 1665082585 "c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex" "main.pdf" "main" 1665082588
+["pdflatex"] 1665130680 "c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex" "main.pdf" "main" 1665130682
   "Information Theory/Data Compression/Kraft-McMillen-Inequality-Proof-Diagram.png" 1665081711 16058 1a5758ff425872a922aaaaefd36fa4d0 ""
-  "Information Theory/Data Compression/data_compression.aux" 1665082588 1539 ff7fb19acb1b3e064b933b4306c811fc "pdflatex"
-  "Information Theory/Data Compression/data_compression.tex" 1665081711 6706 3a1382c3c98eaddee5e3adb6623c5005 ""
-  "Information Theory/Introduction.aux" 1665082587 801 b94c86c09d8076e00dcc51b6cac6dee9 "pdflatex"
+  "Information Theory/Data Compression/data_compression.aux" 1665130682 1540 60f7130de97cda846f74d50a3cbbf72a "pdflatex"
+  "Information Theory/Data Compression/data_compression.tex" 1665130676 10908 7c0ed8757bafdb04bed27ac5505d1279 ""
+  "Information Theory/Introduction.aux" 1665130682 801 b94c86c09d8076e00dcc51b6cac6dee9 "pdflatex"
   "Information Theory/Introduction.tex" 1665082584 2421 00bc989fe4717580955ebd70f2e8356c ""
   "c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex" 1665081711 419 0165a68caaef8682da6884dee6973af2 ""
   "c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1665074734 2900 1537cc8184ad1792082cd229ecc269f4 ""
@@ -56,9 +56,11 @@
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1665073513 32716 08e384dc442464e7285e891af9f45947 ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb" 1665073513 32442 c975af247b6702f7ca0c299af3616b80 ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb" 1665073513 36310 f5ddc6715cc60deb16d9db5ded6a9391 ""
+  "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb" 1665073513 30457 bc0868ebece724ed7c3d37e3d9bff7bd ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10.pfb" 1665073513 11493 4f5ed183a47d3197cf8cd322325db6de ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb" 1665073513 31764 459c573c03a4949a528c2cc7f557e217 ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1665073513 34694 870c211f62cb72718a00e353f14f254d ""
+  "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb" 1665073513 35309 940e81a5b9e04201a07e8b33a3ae6e64 ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb" 1665074734 138258 6525c253f16cededa14c7fd0da7f67b2 ""
   "c:/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1665077888 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "c:/texlive/2022/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex" 1665078470 992 855ff26741653ab54814101ca36e153c ""
@@ -166,7 +168,7 @@
   "c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1665081101 4635757 fee44e15b3aae95ce4ca399b9df8f1bd ""
   "c:/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1665081240 3058773 fc25debb91eaf826a1233bf5b33c6a9a ""
   "c:/texlive/2022/texmf.cnf" 1665081068 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1665082588 2204 279f0db0328772c102c22a2040700b01 "pdflatex"
+  "main.aux" 1665130682 2204 3ae99d89297ff107f11d657fe72325ed "pdflatex"
   "main.tex" 1665081711 419 0165a68caaef8682da6884dee6973af2 ""
   (generated)
   "Information Theory/Data Compression/data_compression.aux"

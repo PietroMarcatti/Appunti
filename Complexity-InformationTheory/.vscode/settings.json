@@ -1,5 +1,7 @@
 {
     "latex-workshop.intellisense.atSuggestionJSON.replace": {
-        "@sum": "\\sum_{$1}^{$2}{$3}"
+        "@sum": "\\sum_{$1}^{$2}{$3}",
+        "@ceil": "\\lceil $1 \\rceil",
+        "@floor": "\\lflorr $1 \\rfloor"
     }
 }
