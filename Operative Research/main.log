@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.6)  18 OCT 2022 12:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.6)  18 OCT 2022 17:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex
-(c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex
+**"c:/Users/pietr/Desktop/Appunti/Operative Research/main.tex"
+(c:/Users/pietr/Desktop/Appunti/Operative Research/main.tex
 LaTeX2e <2022-06-01> patch level 5
 L3 programming layer <2022-09-28> (c:/texlive/2022/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
@@ -403,7 +403,7 @@ Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \l__witharrows_mathindent_dim=\dimen290
 ) (c:/texlive/2022/texmf-dist/tex/latex/cancel/cancel.sty
 Package: cancel 2013/04/12 v2.2 Cancel math terms
-) (./main.aux (./Information Theory/Introduction.aux) (./Information Theory/Data Compression/data_compression.aux) (./Information Theory/Complexity/kolmogorovComplexity.aux) (./Information Theory/Complexity/complexity.aux))
+) (./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
@@ -439,135 +439,34 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (c:/texlive/2022/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 15.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 14.
  (c:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 15.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 14.
  (c:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
-
-{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-\openout2 = `"Information Theory/Introduction.aux"'.
-
- (./Information Theory/Introduction.tex [2
-
-]) [3]
-\openout2 = `"Information Theory/Data Compression/data_compression.aux"'.
-
- (./Information Theory/Data Compression/data_compression.tex
-\l__witharrows_x_dim=\dimen293
-\l__witharrows_initial_int=\count312
-\l__witharrows_final_int=\count313
-\l__witharrows_arrow_int=\count314
-\l__witharrows_pos_of_arrow_int=\count315
-\l__witharrows_jump_int=\count316
-\l__witharrows_first_arrow_of_group_int=\count317
-\l__witharrows_first_line_of_group_int=\count318
-\l__witharrows_last_line_of_group_int=\count319
-\l__witharrows_first_arrow_int=\count320
-\l__witharrows_last_arrow_int=\count321
-\g__witharrows_x_initial_dim=\dimen294
-\g__witharrows_x_final_dim=\dimen295
-\g__witharrows_y_initial_dim=\dimen296
-\g__witharrows_y_final_dim=\dimen297
- [4
-
-
-
-]
-<Information Theory/Data Compression/Kraft-McMillen-Inequality-Proof-Diagram.png, id=34, 217.5628pt x 225.09094pt>
-File: Information Theory/Data Compression/Kraft-McMillen-Inequality-Proof-Diagram.png Graphic file (type png)
-<use Information Theory/Data Compression/Kraft-McMillen-Inequality-Proof-Diagram.png>
-Package pdftex.def Info: Information Theory/Data Compression/Kraft-McMillen-Inequality-Proof-Diagram.png  used on input line 61.
-(pdftex.def)             Requested size: 227.62204pt x 235.5144pt.
- [5] [6 <./Information Theory/Data Compression/Kraft-McMillen-Inequality-Proof-Diagram.png>]
-Overfull \hbox (7.46501pt too wide) in paragraph at lines 97--103
-\OT1/cmr/m/n/10 Example: $\OML/cmm/m/it/10 A \OT1/cmr/m/n/10 = [] \OML/cmm/m/it/10 B \OT1/cmr/m/n/10 = []$ $\OML/cmm/m/it/10 P \OT1/cmr/m/n/10 = []$ $\OML/cmm/m/it/10 l[] \OT1/cmr/m/n/10 = [][] [] = 5$ $\OMS/cmsy/m/n/10 d[][] []e \OT1/cmr/m/n/10 =
- []
-
-[7]
-<Information Theory/Data Compression/ShannonFano-Tree.png, id=55, 259.46938pt x 266.9975pt>
-File: Information Theory/Data Compression/ShannonFano-Tree.png Graphic file (type png)
-<use Information Theory/Data Compression/ShannonFano-Tree.png>
-Package pdftex.def Info: Information Theory/Data Compression/ShannonFano-Tree.png  used on input line 123.
-(pdftex.def)             Requested size: 170.71652pt x 175.67703pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 120--126
-
- []
-
-[8 <./Information Theory/Data Compression/ShannonFano-Tree.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 140--146
-
- []
-
-
-Overfull \hbox (12.7398pt too wide) in paragraph at lines 159--163
-\OT1/cmr/m/n/10 Given the in-put al-pha-bet and the prob-a-bil-ity dis-tri-bu-tion $\OML/cmm/m/it/10 A \OT1/cmr/m/n/10 = []  \OML/cmm/m/it/10 P \OT1/cmr/m/n/10 =
- []
-
-[9] [10]) [11]
-\openout2 = `"Information Theory/Complexity/kolmogorovComplexity.aux"'.
-
- (./Information Theory/Complexity/kolmogorovComplexity.tex
-Underfull \hbox (badness 10000) in paragraph at lines 4--8
-
- []
-
-[12
-
-
-
-]
-Overfull \hbox (15.63211pt too wide) in paragraph at lines 38--39
-\OT1/cmr/m/n/10 The Kol-mogorov com-plex-ity of a string m is de-noted by $\OML/cmm/m/it/10 K[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 ) = []\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 bin\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 m\OT1/cmr/m/n/10 )\OMS/cmsy/m/n/10 j$ 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 65--67
-
- []
-
-[13]
-LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 87.
- (c:/texlive/2022/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 87.
- [14]) [15]
-\openout2 = `"Information Theory/Complexity/complexity.aux"'.
-
- (./Information Theory/Complexity/complexity.tex
-Underfull \hbox (badness 10000) in paragraph at lines 2--3
-
+Overfull \hbox (39.39761pt too wide) in paragraph at lines 15--19
+[]\OT1/cmr/m/n/10 Teorema: Cn-sider a poly-he-dron $\OML/cmm/m/it/10 P \OT1/cmr/m/n/10 = [] = []$
  []
 
+[1
 
-Underfull \hbox (badness 10000) in paragraph at lines 8--10
-
- []
-
-[16
-
-
-
-]) [17] (./main.aux (./Information Theory/Introduction.aux) (./Information Theory/Data Compression/data_compression.aux) (./Information Theory/Complexity/kolmogorovComplexity.aux) (./Information Theory/Complexity/complexity.aux)) ) 
+{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 15635 strings out of 475071
- 334931 string characters out of 5782908
- 658113 words of memory out of 5000000
- 36724 multiletter control sequences out of 15000+600000
- 479648 words of font info for 68 fonts, out of 8000000 for 9000
+ 14959 strings out of 475071
+ 315190 string characters out of 5782908
+ 628838 words of memory out of 5000000
+ 36092 multiletter control sequences out of 15000+600000
+ 477149 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 115i,26n,118p,599b,1051s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/latxfont/line10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on main.pdf (17 pages, 340056 bytes).
+ 115i,6n,118p,493b,221s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on main.pdf (3 pages, 130519 bytes).
 PDF statistics:
- 189 PDF objects out of 1000 (max. 8388607)
- 116 compressed objects within 2 object streams
+ 78 PDF objects out of 1000 (max. 8388607)
+ 48 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 23 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

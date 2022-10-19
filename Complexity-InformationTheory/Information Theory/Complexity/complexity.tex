@@ -1,0 +1,40 @@
+\section*{Computational Complexity}
+We will focus on decision problems. Other classes of problems that we will not explore are: Functional problems and optimization problems.\\
+\begin{description}
+    \item[Decision Problems] : $P: I \longrightarrow \left\{ yes, no \right\}$
+    \item[Functional Problems] :
+    \item[Optimization Problems] :
+\end{description}
+Having a fast (polynomial) solution for an optimization problems implies that i have a fast one also for the Functional version and the decision version of the problem. The same goes inversely with the decision being hard, complex (non polynomial).\\
+The Computational model we will use is Turing Machines, read chapter 1 of the book.\\
+\subsubsection*{Time Complexity}
+This is a decision problem. There's a problem P, a class of models of computation M. The goal is to find in M the fastest machine m that solves P. By fastest we mean that executes least instructions. Fix a notion of dimension of the input which is usually done in the definition of the model of computation.\\
+\textsc{Computational Church Turing Thesis:}\\
+All reasonable models of computation are polynomially related. 
+$$M_1: \Theta(f(n)) \leadsto M_2: \Theta (p(f(n))), \quad p \; polynomial$$
+We know already about turing machines but now we'll introduce Unlimited registry machines (URM):\\
+Has an infinite set of registers ($r_0, r_1, \ldots, r_n$), in any of these registers there can be an arbitrarily long natural number.
+\begin{itemize}
+    \item S(i) means that I sum 1 to the register i.
+    \item Z(i) means that register i becomes 0.
+    \item T(i,j) means that $r_j = r_i$.
+    \item J(i,j,k) means that if the content of the $r_i = r_j$ jump to instruction k
+\end{itemize}
+Example:\\
+P: compute x+1. For the turing machine this means receiving the binary digits of x and i want on output the result of x+1. The complexity is lineary with the number of digits.\\
+With the URM the complexity is 1, i just need S(0). The problem is that we are hiding the size of the input so this model is not reasonable.\\
+Let's make an addition to the URM model and add the instructions P(i)= $r_i = r_i*r_i$ we execute these instructions:
+T(0,1), J(1,2,6), P(0), S(2), J(3,3,2) The output goes: $x, x^2, x^4, x^8, \ldots x^{2^x}$ with complexity $\Theta(n)$. With a turing machine only writing the digits of the output requires at least $\Theta: 2^xlog(x)$.\\
+\textsc{Uniform complexity cost}:\\
+Each instruction of the models has complexity $\Theta(1)$. This is not reasonable when we are using models involving operations that make the involved integers grow too fast. An example of this behaviour is the URM with the product operation.\\
+\textsc{Logarithmic Complexity Cost}:\\
+Each instruction of the models has complexity that depends on the number kof digits it manipulates.\\
+It is fundamental to analyze the complexity of all the instructions in your computational model:
+\begin{itemize}
+    \item S(i): $r_i = r_i+1 \quad \Theta(log(r_i))$
+    \item Z(i): $r_i = 0 \quad \Theta(1)$
+    \item T(i,j): $\Theta(log(r_i))$
+    \item J(i,j,k): $\Theta(min(log(r_i), log(r_j)))$
+    \item P(i): $\Theta((log(r_i)^2))$
+\end{itemize}
+If we now analyze the cost of the models with the Logarithmic complexity cost we get that the URM and the Turing machine are related. 

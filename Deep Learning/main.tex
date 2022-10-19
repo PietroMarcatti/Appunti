@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 \title{Deep Learning}
 \author{Pietro Marcatti}
@@ -74,5 +75,23 @@ the logistic classifirer defines the following cost function:
     Cost(h_{w,b}(x^i),y^i)= -y^i\cdot ln(h_{w,b}(x^i))-(1-y^i)\cdot ln(1-h_{w,b}(x^i))
 \end{equation}
 This cost function or loss function is convex and is derivable respect to $w$ and $b$
-In general we call the function to learn the \textbf{hypotesis} but in deep learning it's also called \textbf{model}, the \textbf{cost function} in deep learning is also called \textbf{loss function}.
+In general we call the function to learn the \textbf{hypotesis} but in deep learning it's also called \textbf{model}, the \textbf{cost function} in deep learning is also called \textbf{loss function}.\\\\
+Why is random initialization of weights is important? If we used 0 the first hidden layer would all be 0, because we multiplied all inputs for 0.\\
+This results that the partial derivates for all nodes in the hidden layers are equal, this is called the symmetry problem.\\\\
+We divide our training data set into smaller batches of usually around 16-32-64 samples. We compute forward and backwards on every single sample. Once we complete all the batches we completed an epoch. We can then start again but now, on the first batch, our neural network will have weights that will have already changed thanks to all other batches
+
+\subsubsection*{Regularization}
+Logistic Regression: Minimization problem with regularization:$ \;\min_{w,b}{J(w,b)}$
+$$J(w,b)= \frac{1}{m}\left[ \sum_{i=1}^{m}{Cost(h_{w,b}(x^{(i)}), y^{(i)})+\frac{\lambda}{2}\sum_{j=1}^{n}{w_i^2}} \right]$$
+$\lambda$ is called the regularization parameter, usually b is ignored in the regularization process.
+By setting a big regularization parameter we are saying that our minimization algorithm should focus on reducing the weights. The goal is to have the weights all in the same order of magnitude.\\\\
+Doesn't regularization kill the importance of some features over others?\\\\
+Regularization with Neural Networks:\\
+$$J(W^{[1]}, b^{[1]}W^{[2]}, b^{[2]})= \frac{1}{m}\left[ \sum_{i=1}^{m}{\mathbb{L}(\hat{y}, y^{(i)})+\frac{\lambda}{2}\sum_{i=1}^{L}{\norm{W^{[l]}}^2_F}} \right]$$
+
+Where $\lambda$ is the regularization parameter, l is the layer. $$\norm{W^{[i]}}^2_F=\sum_{i=1}^{n{[l-1]}}{\sum_{j=1}^{n^{[l]}}{(W_{i,j}^{[l]})^2}}$$
+Where $W^{[l]}\in \mathbb{R}^{n^{[l]}\times n^{[l-1]}}$\\
+Regularization helps preventing overfitting because by using a big value for $\lambda$ we minimize weigths close to 0 and some of them are basically dead (almost 0)\\\\
+Too many dead nodes means underfitting? Would it ever be useful to have a small $\lambda$\\\\
+
 \end{document}
