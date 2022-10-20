@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{witharrows}
+\usepackage{cancel}
+
+\title{Fundamentals of Neural Networks}
+\author{Pietro Marcatti}
+\date{First Semester 2022/2023}
+
+
+\begin{document}
+\maketitle
+
+\section*{IDK}
+A homogeneous system of linear equations has all the b column at 0.
+Row-echelon form of a system of linear equations uses linear transformations to bring the system in an different, easier form to handle that describes the same conswtraints. The matrix associated with the system contains all the information needed. A verty interesting trick: makes clear the degreees of freedom in our search ofr vectors such that $A\overline{x} = \overline{0}$ can be found on the book. The lines that are missing can be filled in with -1 and those rows will be linearly combined to give us all the solution that map to the kernel???
+\subsection*{Vector Spaces}
+Two simple operations can be done with vectors: sum and multiplication. For the sum with need to enforce on the vector space the notion of group. Abelian congruent commutative.
+A real-values vector space $V=(\mathcal{V},+,.)$ is a set V with two operations:
+where $(\mathcal{V},+)$ is an abelian group, it reads: the couple of the domain $\mathcal{V}$ and the operation + constitute a group. \\\\
+There's distributivity
+There's associativity
+theres the neutral element .\\\\
+Matrices consitute a vector space. Not only square matrices constitute a vector space, in this case i must remember the difference between outer product and inner product. Subspaces are obtained by restricting the domain.
+Examples of subspaces:
+For every vector space V, the trivial subspaces are V itself and ${0}$.
+Only example D in figure 2.6 is a subspace of $R^2$ (with the inner/outer operations). In A and C the closure property is violated, B does not contain 0.
+The solution set of a homogenous system of linear equations $A\vec{x} = 0$ with $n$ unknowns $\vec{x} = [x_1, x_n]$ is a subspace of $R^n$. 
+The solution  of a inhomogenous sustem $A\vec{x} = \vec{b} \;  \vec{b} \div \vec{0}$ is not a subspace of $R^n$. The intersection of arbitrarily many subspaces is a subsapce itself.\\\\
+Linear independence\\
+A set of vectors are linearly independent if and only if no-one of the vectors can be obtained as a linear combination of the others.\\
+A base of a vector space:
+Is a matrix $B= [b_1, b_2, b_k]$ where all b are linearly independent vectors of a vector space. Then any vector $\vec{x_j} = B \lambda_j$. A base is formed by a generating set of a vector space. The span of a collection of vectors is the collection of the linear combination of a set of vectors. So a base over the set A, $span[A] = V$. A generating set is called minimal if taking away just one element the span is not V anymore.
+Every linearly independent generating set is minimal and is a basis of V.
+We can obtain a basis of a subspace U by writing the spannin vectors as columns of a matrix and then determining the row-echelon form of A. The spanning vectors associtated with the pivot columns are a basis of U.\\
+Rank is the number of columns that are linearly independent columns. When a matrix $A^{n\times n} $has $rk(A)=n $ it is invertible.
+Given a vector space we define a linear mapping (vectors to vectors): 
+$$ \Phi(x+y) = \Phi(x)+ \Phi(y)$$ $$\Phi(\lambda x) = \lambda \Phi(x)$$
+Any mapping that satisfies this property is called homomorphism.\\
+Take finite dimensional vector spaces V and W, they are isomorphic if and only if dim(V) = dim(W). Any n-dimensional vecotr space is isomorphic to $R^n$\\\\
+Definition of transformation Matrix: Consider vector spaces V, W, with basis ecc ecc The resulting matrix encapsulates all the information of the linear transformation.\\
+Dimentionality reduction:
+Image or kernel\\
+for $\Phi : V \rightarrow W$ we define the kernel/null space:
+$$ker(\Phi) = \Phi^{-1}(0_w) = {v \in V, \Phi(v) = 0_w}$$
+$$Im(\Phi) = $$
+
+\end{document}
