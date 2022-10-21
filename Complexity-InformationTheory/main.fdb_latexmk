@@ -1,14 +1,14 @@
 # Fdb version 3
-["pdflatex"] 1666089111 "c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex" "main.pdf" "main" 1666089113
-  "Information Theory/Complexity/complexity.aux" 1666089113 487 346da96d644aa133ea1a602b06d2f55d "pdflatex"
-  "Information Theory/Complexity/complexity.tex" 1666089110 3342 3bc580b0d76c4a4a8e3b6e7958e212c6 ""
-  "Information Theory/Complexity/kolmogorovComplexity.aux" 1666089113 497 5d1274d0c870b463bc8766df342ce200 "pdflatex"
+["pdflatex"] 1666340267 "c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex" "main.pdf" "main" 1666340270
+  "Information Theory/Complexity/complexity.aux" 1666340269 487 e3870be59ee507ec5a82e2c481178866 "pdflatex"
+  "Information Theory/Complexity/complexity.tex" 1666340266 5668 b9aba84518d61b8cc3a68e412a6700a9 ""
+  "Information Theory/Complexity/kolmogorovComplexity.aux" 1666340269 497 5d1274d0c870b463bc8766df342ce200 "pdflatex"
   "Information Theory/Complexity/kolmogorovComplexity.tex" 1666084527 6287 e9c19257c3d0fef13ea5d4ace4269348 ""
   "Information Theory/Data Compression/Kraft-McMillen-Inequality-Proof-Diagram.png" 1665081711 16058 1a5758ff425872a922aaaaefd36fa4d0 ""
   "Information Theory/Data Compression/ShannonFano-Tree.png" 1665826120 32584 6520a7e15d877f7b10ded315aa34c7aa ""
-  "Information Theory/Data Compression/data_compression.aux" 1666089113 1540 cfdae2c36c2dd951bf7ca83e315eac19 "pdflatex"
+  "Information Theory/Data Compression/data_compression.aux" 1666340269 1540 cfdae2c36c2dd951bf7ca83e315eac19 "pdflatex"
   "Information Theory/Data Compression/data_compression.tex" 1665850884 14868 533fb7125baea54132bdee788deb8117 ""
-  "Information Theory/Introduction.aux" 1666089113 801 b94c86c09d8076e00dcc51b6cac6dee9 "pdflatex"
+  "Information Theory/Introduction.aux" 1666340269 801 b94c86c09d8076e00dcc51b6cac6dee9 "pdflatex"
   "Information Theory/Introduction.tex" 1665082584 2421 00bc989fe4717580955ebd70f2e8356c ""
   "c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex" 1666084825 539 cb352feda2961e487b6ae9b5abf1e66a ""
   "c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1665074734 2900 1537cc8184ad1792082cd229ecc269f4 ""
@@ -57,6 +57,7 @@
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1665073512 32762 7fee39e011c23b3589931effd97b9702 ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1665073512 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1665073513 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb" 1665073513 32915 7bf7720c61a5b3a7ff25b0964421c9b6 ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1665073513 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1665073513 32716 08e384dc442464e7285e891af9f45947 ""
   "c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb" 1665073513 32442 c975af247b6702f7ca0c299af3616b80 ""
@@ -172,7 +173,7 @@
   "c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1665081101 4635757 fee44e15b3aae95ce4ca399b9df8f1bd ""
   "c:/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1665081240 3058773 fc25debb91eaf826a1233bf5b33c6a9a ""
   "c:/texlive/2022/texmf.cnf" 1665081068 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1666089113 2323 54ed9b401dc4bb40a9c373f24044e00a "pdflatex"
+  "main.aux" 1666340269 2323 7546dc229264f24b34c20a75fc46179e "pdflatex"
   "main.tex" 1666084825 539 cb352feda2961e487b6ae9b5abf1e66a ""
   (generated)
   "Information Theory/Complexity/complexity.aux"
