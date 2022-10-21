@@ -1,0 +1,60 @@
+\section*{Simplex}
+The simplex algorithm is the algorithm that solves linear programming problems. The worst theoretical complexity of the simplex algorithm is exponential but the cases in which it behaves as such must be crafted on purpose. Otherwise, in a general scenario the algorithm is polynomial.
+The simplex solves an LP assuming it's in standard form, let the LP be:
+\[ 
+    max\{c^Tx: Ax = b, x\geq 0\} 
+\]
+Let's denote P as the feasable set, P has vertices, possibly more than one and \[ 
+    dim(P) = d - rk(A) = d-m =: n 
+\]
+Once we are inside $ P^= $ (an affine space of dimension n=d-m), we can think of (and visualize) P as a full-dimensional polyhedron of dimension n.\\
+The LP can either be infeasable, unbounded or has optimum.
+\begin{theorem}
+    The LP is unbounded if and only if there existts a vertex $ \bar{x} \in P $  and a vector r with $c^Tr>0$ such that the semi-line $ R:={\bar{x}+\lambda r, \lambda >0} $ is an edge of P (a face of dimension 1) 
+\end{theorem}
+ The direction r is called an unbounded improving extreme ray of P. Any algorithm which at some point detects an unbounded improving extreme ray can stop and report: problem unbounded.\\ The other important possibility is when there exists an optimum. In this case at least one of the vertices of P must be optimal.
+ \begin{theorem}
+    Assume x* is an optimal solution of LP. Then there exists at least one verex of P which also is an optimal solution.
+    Proof:
+    Let $ c_0 := c^Tx*$ be the optimal value and cosider the inequality $ c^tx\leq c_0  $. This inequality is valid. Let $ F : = P \cap {x:c^Tx ? c_0} $ be the set of all optimal solutions. We have $ x^* \in F $ and so F is a face of P. Since P has vertices also F has vertices and the vertices of F are vertices of P. 
+ \end{theorem}
+ From the above discussion an algorithm could move from one vertex to another looking for the best one.
+ \begin{enumerate}
+    \item if none of the edges meeting at $v^{i}$ is imporoving, stop $v^i$ is optimal (in convenx programming local optimality implies global iptimality)
+    \item if one of the improving edges is an unbouded extreme ray, stop: problema unbounded
+    \item otherwise follow an improving edge up to the next verteex $v^{i+1}$ and repreat from there
+ \end{enumerate}
+ \subsubsection*{Vertices and basic solutions}
+ P has dimension n. Its faces are associated to the constraints defining $P^>$. A vertex is identified by the facets intersercting at v (at least n). We can indeed say something stronger: the columns of $ A^j $ such that $ v_j>0 $ are linearly independent (this implies that at each vertex there are at least n components = 0)
+\\\\Insert theorem\\\\
+Let us call the tyupe of solutions like those happeneing at the verices of P basic solutions. Namely, a solution is basic if the columns corresponding to its non-zero comonents are linearly independetnt.
+\begin{itemize}
+    \item a basic solution in which the linearly independet columns are in fact a basis of $ \mathbb{R}^{m} $ so they are m, is also called non-degenerate
+    \item an independent solution in which the linearly independet columns are less than m is also called degenerate  
+\end{itemize}
+We have seen that all vertifes are basic solutions. We can easily show the converse, i.e. that each basic solution is a vertex of P.
+\\\\Insert Theorem\\\\
+Let us call a set $ \mathcal{B} $ of columns a feasible basic set in A if the columns are linearly independent and $ b= \sum_{i\in\mathcal{B}}{\lambda_iA^i}$ for some $ \lambda >0 $
+
+Therefore:
+\begin{itemize}
+    \item the cost of a vertex becomes costo fo a feasible basic set,
+    \item the search for the best vertex becomes the search for the best feasible basic set
+    \item the adjacency of the vertices in P becomes adhacency of two feasible basic sets and so on. 
+\end{itemize}
+The geometrical problem has become an analytical problem, consisting in determining a sequence of baisc sets of aA until the best one is found.\\
+Given a feasible basic set $ \mathcal{B} $, it can always be extended to a basis B. Let $A_B$ be the corresponding submatrix of A. Then $\lambda$, which are the coordinates of b w.r.t., are the non-zero coordinates of b w.r.t. B. These last can be obtained as: \[ 
+    x_B := A_B^{-1}b 
+\]
+So the basic solution corresponding to $ \mathcal{B } $ is 
+\[ 
+    x(\mathcal{B}) = (X_b, x_{[d]\\ \mathcal{B}}) = (A^{-1}_Bb,0)
+\]
+The cost of the feasible basic set $ \mathcal{B} $ is then \[ 
+    \sum_{i=1}^{k}{c_{j_i}x_i} 
+\]
+The simplex algorithm works with bases rather than baisc sets. If there is no degeneracy it's the same, but in presence of degernarcy a basi set can be extende dto a basis in many ways, and therefore to a verx of P there can correspond more than one basis.\\
+Given a basis B, let N =[d] -B. Let A_B  be the m\times m submatrix of A consisteing of the comulns in B, and A_n the m\times n submatrix of the columns inN. We partition x as x ?(x_B, x_N) where x_B are the basic variables and X_N are the non-basic variables. Similòarly, we partiion c as c=(x_B,C_N)
+Let \bar{A} = A^-1_B and \bar b = A^-1_b
+\bar{A}_N are the coefficients of the non-basic variables, and \bar b is the rhs, when the system Ax = b is put in echelon form wrt the basic variables
+A_Bx_B + A_Nx_N = b becomes Ix_B+\barA_Nx_N = \bar b

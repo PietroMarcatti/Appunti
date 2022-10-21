@@ -1,0 +1,76 @@
+\section*{Linear Programming}
+Teorema: Cnsider a polyhedron
+    $P = \left\{ x \in \mathbb{R}^n : Ax\leq b \right\} = \left\{ x: A^=x = b^=, A^<x \leq b^< \right\}$
+    It can be shown that $dim(P) = n - rank(A^=)$.
+    This implies that:
+    \begin{itemize}
+        \item a full-dimensional polytope cannot have any implicit equations
+        \item a single point cannot have true inequalities and there are n linearly independent equations
+    \end{itemize}
+    $\alpha^T x \leq \beta$ is a valid inequality for P if satisfied by all $v \in P$. The set $F: H(\alpha, \beta) \intercal P(!=0)$ is called a face of P, defined or induced by the inequality
+    $\alpha^T x \leq \beta$
+    The most important faces of a polyhedron are those whose dimension is $ = d- 1$ where $d$ is the dimensions of the whole polyhedron, as described before\\
+    In the definition of a polyhedron some inequalities may be redundant and could be removed. However the inequalities that result, that create
+    facets are never implied by any other inequality and are thus essential. If one is removed the polyhedron changes. \newline
+    Let ext(P) be tbhe set of vertices of P. A polyhedron P is pointed if $ext(P) != \emptyset$. Some simple condition for being pointed are:
+    \begin{itemize}
+        \item P does not contain any line infinite in both directions
+        \item P contains the inequalities $x_i \geq 0 for i= 1, \ldots, n$
+        \item P is a polytope
+    \end{itemize}
+    The minkowski-weil theorem states: A set $P \subseteq \mathbb{R}^n $ is a polytope if and only if $P = conv(S)$ for some finite set S of vectors in $\mathbb{R}^n$
+    In view of this theorem there are two possible representations of a polytope P:
+    \begin{itemize}
+        \item external representation: a set of hyperplanes such that P is the intersection of their half-spaces
+        \item internal representation: a set of vectros such that P is their convex hull
+    \end{itemize}
+
+    \section*{Modelling for Linear Programming}
+    Per convenzione in problemi di minimo mettiamo tutti i vincoli $\geq$, viceversa per i massimi mettiamo $\leq$.
+
+    The goal function is a linear function. Each variable $x_i$ has a cost that depends, linearly, on the variable's value. By doubling the value, the cost also doubles and so on. Let $c_i$ be the
+    
+    For many problems the objective function is non-linear. Start-up costs can be modeled using suitable binary variables.
+    The decision is then shifted to how much more than the threshold $\tau$ do i want to produce?
+    The meaning of the binary variable z is: "is y>0?". 
+    The same reasoning can be applied multiple times to represent economies of scale setting up steps at which each individual unit lowers its cost.
+    \subsection*{Linear Constraints}
+    A disequality is loose for $(x_i, x_2, x_k) \leftarrow (\gamma_1, \gamma_2, \gamma_k$)
+
+    If a non-negative variable must take only values within a range [L,U], we enforce this condition by two constraints,
+    $x \geq L$, $x\leq U$. There might be cases in which we want a variable to be either 0 or within the range [L,U]. The variable must then take values in the set (which is not convex)
+    $$X:= \{0\} \cup [L,U]$$
+    we can enforce this by adding a new variable y:
+    $$x\geq Ly$$
+    $$x \leq Uy$$
+    Big-M Method: suppose we have a series of OR constraints, these create a union of half-spaces which is not convex.\\
+    Let M be "large enough" (a virtual infinity) such that
+    $$- M \leq a_i^Tx \leq M$$
+    is always true when x satisfies all the remaining constraints of the model. If y is a binary variable, constraints as such:
+    $$a^Tx\leq b+My \quad a^Tx\geq b-My$$
+    Coming back to the union of half spaces we can introduce k binary variables $y_1, y_2, \ldots y_k$ and k+1 constraints: 
+    $$a_i^Tx\leq b_i+ My_i, \forall i=1\ldots k$$
+    and 
+    $$\sum_{i=1}^{k}{y_i}\leq k-1$$
+    This forces at least one of these binary variables to be binding, creating a non-trivial constraints.
+    Modelling the absolute value of a variable: let $x \in \mathbb{R}$ To make z be equal to $|x|$
+    $$z\geq-x \quad z\geq x$$
+    $$z \leq -x+ My\quad z\geq x+M(1-y)$$
+
+
+    \section*{Linear Programming}
+    A linear programming problem is the maximization or minimization of a linear functino over a set of real-valued vectros constrained by a finite number of linear inequalities and/or equations. An instance of a linear programming problem is a linear program.\\
+    We can define a matrix A whose rows are the vectors $a_1^T, \ldots , a_m^T$. Assume $|I| = m_1, |E| = m_2, |C|=n_1 and |U|=n_2$. We can partition A:
+    $$
+    \begin{matrix*}
+        A^11, A^12
+    \end{matrix*}
+    $$
+
+    Canonical Form:
+    When E= U = $\emptyset$ we say the LP is in canonical form and can be written in short: $\max\{c^Tx: Ax\leq b, x\geq 0\}$
+
+    Standard Form:
+    When I=U=$\emptyset$ we say that the LP is in standard form and can be written in short: $\max\{c^Tx: Ax= b, x\geq 0\}$
+    It's always possible to transform a LP in general form into standard from. All inequalities can be turned into equalities by simply adding a slack variable to turn the disequality into an equality.
+    Inversely a LP in standard form can be turned into a canonical form LP by splitting the equalities in two symmetric disequalities
