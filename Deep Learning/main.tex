@@ -1,7 +1,10 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage{mathtools}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{witharrows}
+\usepackage{cancel}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 
 \title{Deep Learning}
@@ -94,4 +97,21 @@ Where $W^{[l]}\in \mathbb{R}^{n^{[l]}\times n^{[l-1]}}$\\
 Regularization helps preventing overfitting because by using a big value for $\lambda$ we minimize weigths close to 0 and some of them are basically dead (almost 0)\\\\
 Too many dead nodes means underfitting? Would it ever be useful to have a small $\lambda$\\\\
 
+
+\subsection*{Normalization}
+Mean normalization transforms dta to have a mean of zero and a standard deviation of 1. Such normalization is the preferred normalization for Neural Networks. Given a feature $ x_i $ the mapped feature is $ x^i  = \frac{x_i-\mu_i}{\sigma_i}$ where $ \mu_i, \sigma_i $ are the mean and standard deviation computed on the training set. It is important to normalize each feature separately as its data come from different distributions and the feature number is exactly what the index $ x_i $ refers to.\\
+The MinMaxNormalization shifts the data such that all features are exactly between 0 and 1. 
+\[ 
+    x_{i}^{'}= \frac{x_i-\min{x}}{\max{x} - \min{x}} 
+\]
+It's very important to apply the same transformation to the trainin set and the test set for the supervised model to work on the test set. The figure illustrates what would happen if we were to use the minimum and range of the test set instead.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=13cm]{normalization-effect.png}
+\end{figure}
+The correct procedure is to normalize the training set and then once we have a stable model we can normalize also the test set with the same min and max values computed for the training set.
+
+\section*{NLP and Word Embedding}
+Natural language processing is a field of deep learning in which you focus on recognizing elements of written text speech particles. Other fields of use are the summarization of text, question answering, automatic email response and forwarding, chatbots ecc ecc\\
+Word embedding is a field of deep learning. It aims to represent a word as feature vectors, and consequently as numbers. The simplest way is to assign each word of a vocabulary a number but this way you could sort words which doesn't map as a semantic characterstic for words. A different way is to use a one-hot vector for each words. These vectors are the size of the vocabulary and only for the word we want to represent we put 0 in the corresponding position, otherwise 0. This representation has some pros: it's simple and it doesnt imply ordering. The cons: huge vectors and no embedded meaning. 
 \end{document}
