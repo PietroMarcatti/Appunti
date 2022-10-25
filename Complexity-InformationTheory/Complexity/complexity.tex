@@ -1,49 +1,101 @@
 \section*{Computational Complexity}
-We will focus on decision problems. Other classes of problems that we will not explore are: Functional problems and optimization problems.\\
+Determining the complexity of a problem means giving bounds on the complexity of any possible algorithm for solving a problem.
+We will focus on decision problems which is a class of problems for which the goal is to say, given an instance of the problem, if it has an answer or not. Other classes of problems that we will not explore are: Functional problems and optimization problems.\\
 \begin{description}
-    \item[Decision Problems] : $P: I \longrightarrow \left\{ yes, no \right\}$
-    \item[Functional Problems] :
+    \item[Decision Problems] : 
+    \item[Functional Problems] : 
     \item[Optimization Problems] :
 \end{description}
 Having a fast (polynomial) solution for an optimization problems implies that i have a fast one also for the Functional version and the decision version of the problem. The same goes inversely with the decision being hard, complex (non polynomial).\\
-The Computational model we will use is Turing Machines, read chapter 1 of the book.\\
+\subsubsection*{Computation Model - Turing Machines}
+The model of computation we are going to use to talk about computational complexity are Turing Machines which we are going to define here for ease of use.\\
+\begin{definition}[Turing Machine]
+    A Turing Machine is a quadruple $M= (K, \Sigma, \delta, s)$. Here K is a finite set of states; $s \in K$ is the initial state. $\Sigma$ is a finite set of symbols, we say $\Sigma$ is the alphabet of M. We assume that K and $\Sigma$ are disjoint sets. $\Sigma$ always contains the special symbols $\sqcup, \triangleright$: the blank and the first symbol o starting symbol. Finally $\delta$ is a transition function, which maps $K\times \Sigma$ to $(K \cup {h,"yes","no"})\times \Sigma \times {\leftarrow, \rightarrow,-- }$. We assume that h (the halting state), "yes" (the acceptin state), "no" (the rejecting state) and the cursor directions $\leftarrow, \rightarrow, --$, for "stay" are not in $K \cup \Sigma$. The function $\delta$ is the "program" of the machine. It specifies, for each combination of current state $q\in K$ and current symbol $\sigma \in \Sigma$, a triple $\delta(q,\sigma) = (p,\rho,D)$
+\end{definition}
+\begin{definition}[Configuration of a Turing Machine]
+    We can define the operation of a Turing machine formally using the notion of a configuration. Intuitively, a configuration contains a complete description of the current state of the computation. Formally a configuration of M is a triple (q,u,w), where $ q \in K$ is a state, and $w,u$ are strings in $\Sigma^*$. $u$ is the string to the left of the cursor, including the symbol scanned by the cursor, and $u$ is the string to the right of the cursor, possibly empty. Finally q is the current state. 
+\end{definition}
+
 \subsubsection*{Time Complexity}
-This is a decision problem. There's a problem P, a class of models of computation M. The goal is to find in M the fastest machine m that solves P. By fastest we mean that executes least instructions. Fix a notion of dimension of the input which is usually done in the definition of the model of computation.\\
-\textsc{Computational Church Turing Thesis:}\\
-All reasonable models of computation are polynomially related. 
-$$M_1: \Theta(f(n)) \leadsto M_2: \Theta (p(f(n))), \quad p \; polynomial$$
-We know already about turing machines but now we'll introduce Unlimited registry machines (URM):\\
-Has an infinite set of registers ($r_0, r_1, \ldots, r_n$), in any of these registers there can be an arbitrarily long natural number.
+This is a decision problem. There's a problem P, a class of models of computation M. The goal is to find in M the fastest machine m that solves P. By fastest we mean that executes least instructions. We need to fix a notion of dimension of the input which is usually done in the definition of the model of computation.\\
+\begin{definition}[Time complexity for M TM, on input x]
+    We say that M, Turing Machine, on input x has time complexity t if 
+    \[ 
+        (s,\triangleright, x) \underbrace{\longrightarrow}_{\text{t steps}} (H, w, u), \quad H\in {h,"yes","no"}
+    \]
+\end{definition}
+\begin{definition}[Time complexity for M TM ]
+    M has time complexity $f: \mathbb{N}\longrightarrow\mathbb{N}$ if:
+    \[ 
+        \forall x \in \Sigma^*\quad (s,\triangleright, x)\underbrace{\longrightarrow}_{\text{t steps}}(H,w,u) 
+    \]
+    with $t\leq f(|x|)$
+    This definition is a worst case time complexity. 
+\end{definition}
+\subsubsection*{URM}
+We already know about turing machines but now we'll introduce Unlimited Registry Machines (URM):\\
+Every URM has an infinite set of registers ($R_0, R_1, \ldots, R_n$), in any of these registers there can be an arbitrarily long natural number.
 \begin{itemize}
-    \item S(i) means that I sum 1 to the register i.
-    \item Z(i) means that register i becomes 0.
-    \item T(i,j) means that $r_j = r_i$.
-    \item J(i,j,k) means that if the content of the $r_i = r_j$ jump to instruction k
+    \item $S(i) \rightarrow R_i = R_i+1$.
+    \item $Z(i) \rightarrow R_i = 0$.
+    \item $T(i,j) \rightarrow R_j = R_i$.
+    \item $J(i,j,k) \rightarrow if \;R_i = R_j$ jump to instruction k
 \end{itemize}
-Example:\\
-P: compute x+1. For the turing machine this means receiving the binary digits of x and i want on output the result of x+1. The complexity is lineary with the number of digits.\\
-With the URM the complexity is 1, i just need S(0). The problem is that we are hiding the size of the input so this model is not reasonable.\\
-Let's make an addition to the URM model and add the instructions P(i)= $r_i = r_i*r_i$ we execute these instructions:
-T(0,1), J(1,2,6), P(0), S(2), J(3,3,2) The output goes: $x, x^2, x^4, x^8, \ldots x^{2^x}$ with complexity $\Theta(n)$. With a turing machine only writing the digits of the output requires at least $\Theta: 2^xlog(x)$.\\
-\textsc{Uniform complexity cost}:\\
-Each instruction of the models has complexity $\Theta(1)$. This is not reasonable when we are using models involving operations that make the involved integers grow too fast. An example of this behaviour is the URM with the product operation.\\
-\textsc{Logarithmic Complexity Cost}:\\
-Each instruction of the models has complexity that depends on the number kof digits it manipulates.\\
-It is fundamental to analyze the complexity of all the instructions in your computational model:
+Example, P:\\
+Compute $x+1$. For the turing machine this means receiving the binary digits of $x$ and I want on output the result of $x+1$. The complexity is linear with the number of digits.\\
+With the URM the complexity is 1, I just need $S(0)$. The problem is that we are hiding the size of the input so this model is not reasonable.\\
+Let's make an addition to the URM model and add the instructions $P(i) \rightarrow R_i = R_i*R_i$ and we execute these instructions:
+$T(0,1), J(1,2,6), P(0), S(2), J(3,3,2)$. The output goes: $x, x^2, x^4, x^8, \ldots x^{2^x}$ with complexity $\Theta(n)$. \\With a turing machine only writing the digits of the output requires at least $\Theta(2^xlog(x)) \leadsto \Omega(2^x) $.\\
+\begin{definition}[Uniform complexity Cost]
+    Each instruction of the models has complexity $\Theta(1)$. This is not reasonable when we are using models include operations that make the involved integers grow too fast. An example of this behaviour is the URM with the product operation.\\
+\end{definition}
+\begin{definition}[Logarithmic Complexity Cost]
+    Each instruction of the models has complexity that depends on the number $k$ of digits it manipulates.\\
+\end{definition}
+It is clar that it's fundamental to analyze the complexity of all the instructions in your computational model. Let's do it for the URM model:
 \begin{itemize}
-    \item S(i): $r_i = r_i+1 \quad \Theta(log(r_i))$
-    \item Z(i): $r_i = 0 \quad \Theta(1)$
-    \item T(i,j): $\Theta(log(r_i))$
-    \item J(i,j,k): $\Theta(min(log(r_i), log(r_j)))$
-    \item P(i): $\Theta((log(r_i)^2))$
+    \item $S(i) \rightarrow R_i = R_i+1 \quad \Theta(log(R_i))$
+    \item $Z(i) \rightarrow R_i = 0 \quad \Theta(1)$
+    \item $T(i,j) \rightarrow R_j = R_i \quad \Theta(log(r_i))$
+    \item $J(i,j,k) \rightarrow if \;R_i = R_j \text{ jump to instruction } k \quad \Theta(min(log(R_i), log(R_j)))$
+    \item $P(i) \rightarrow R_i = R_i*R_i \Theta((log(R_i)^2))$
 \end{itemize}
+To decide when to use a Logarithmic criteria for computing the complexity cost I have to look for operations in the algorithm that in a polynomial number of steps makes the input grow exponentially, moreover these are used a number of times that depends on the size of the input.\\
 If we now analyze the cost of the models with the Logarithmic complexity cost we get that the URM and the Turing machine are related.\\
-We define as $ P = \{L | L \text{can be decided in polynomial time on a deterministic Turing Machine}\} $. P is invariant with respect to the model of compuation ( conseguence of the extended Church tesis)
-We recall that a configuration for a Turing machine with k tapes is in the form $(q,u_{1},w_{1}, \ldots,u_{k},w_{k})$. The initial configuration is always: $ (s,\triangleright, x, \triangleright,\sqcup, \ldots, \triangleright,\sqcup) $ and a final configuration is always: $ (H,u_{1},w_{1}, \ldots,u_{k},w_{k}) $ where $ H=\{\underbrace{yes,no} halt\} $. For a machine that solves a decision problem L: \[ 
-    M(x) = yes\quad iff x\in L\\
-    M(x) = yes\quad iff x \notin L
+\begin{thesis}[Computational Church Turing Thesis]
+    All reasonable models of computation are polynomially related.
+    \[ 
+        M_1: \Theta(f(n)) \leadsto M_2: \Theta (p(f(n))), \quad p \; polynomial 
+    \]
+    In this case reasonable means that we have to use the logarithmic criteria.
+\end{thesis}
+We define as $ P = \{L | L \text{can be decided in polynomial time on a deterministic Turing Machine}\} $. P is invariant with respect to the model of compuation ( consequence of the extended Church tesis).
+\subsubsection*{Review of k-tape TM}
+Later we'll now demonstrate that the loss in time complexity that we experience by moving from one reasonable model of computation to another is at most quadratic.\\
+To show this result we reintroduce now some concepts about a k tape Turing Machine or k-TM. A configuration for a k-TM takes the following form
+\[ 
+    (q,w_1,u_1,w_2,u_2,\ldots,w_k,u_k),\quad w_i,u_i \in \Sigma^*
 \]
-For a machine that does not terminate on input x we write$ M(x) \uparrow $ and we say it diverges while the notation for a terminating TM is $ M(x) \downarrow $.\\
+Every $w_i$ is the string left of the cursor on k-th tape.\\ The initial configuration for a k-TM on input x is:
+\[ 
+     (s,\triangleright,x,\triangleright,\varepsilon,\triangleright,\varepsilon, \ldots,\triangleright,\varepsilon)
+\]
+A language $L\subseteq \Sigma^*$ is decided by a k-TM M if
+\[ 
+    \forall x \in \Sigma^* 
+     \begin{cases}
+        M(x) = "yes" & if \; x\in L \\
+        M(x) = "no" & if \; x \notin L 
+     \end{cases}
+\]
+A language $L\subseteq \Sigma^*$ is accepted by a k-TM M if
+\[ 
+    \forall x \in \Sigma^* 
+     \begin{cases}
+        M(x) = "yes" & if \; x\in L \\
+        M(x)\uparrow & if \; x \notin L 
+     \end{cases}
+\]The difference is that a machine that accepts a language diverges if the input is not in the language. In fact, for a machine that does not terminate on input x we write$ M(x) \uparrow $ and we say it diverges while the notation for a terminating TM is $ M(x) \downarrow $.\\
 The notion of computation: a computation step for a machine M is a binary relationship between two configuration: \[ 
     (q, u_{1},w_{1}, \ldots,u_{k},w_{k}) \longrightarrow (q^{'},u_{1}^{'},w_{1}^{'}, \ldots,u_{k}^{'},w_{k}^{'})
 \]
@@ -52,18 +104,36 @@ The notion of computation: a computation step for a machine M is a binary relati
 
 
 \subsection*{Time Complexity}
-Definition: \textsc{Time complexity}\\
-Let M be a k-TM and x be an input for M we say that M on input x takes time t if: \[ 
-    (s, \triangleright, x, \triangleright, \varepsilon, \ldots, \triangleright, \varepsilon) \longrightarrow ( H,\ldots) 
-\] with $ H \in {yes, no, halt} $. We say that M operates in time at most $ f(n) $ if: \[ 
+\begin{definition}[Time complexity]
+    Given M a k-TM and x the input for M, we say that M on input x takes time $t$ if
+    \[ 
+        (s, \triangleright, x, \triangleright, \varepsilon, \ldots, \triangleright, \varepsilon) \longrightarrow ( H,\ldots) 
+    \] 
+    with $ H \in {yes, no, halt} $. We say that M operates in time at most $ f(n) $ if: \[ 
     \forall x with |x| = m \quad M on x takes time at most f(|x|) 
-\]
-We will say that a language $ L \in TIME(f(n)) iff \exists M k-TM$ and $M$ decides L and operates in time at most $f(n)$. $TIME(f(n)) = \{L, L', \ldots\} $\\
-Example: L is the language of all strings that are palindromes. $ \Sigma = \{0,1\}\cup\{\sqcup, \triangleright\} $ we get $ \Theta(n^2) $\\\\
-Example: M is a 2-TM we can solve the same problem in linear time. Is the quadratic loss shown here the worst possible loss between two TM machine models with different number of tapes?\\
-\textsc{Theo 2.1 Papadimitriu}:\\
-if M is a k-TM that decides a language L in time f(n), then there exists a 1-TM M' that decides L in time at most $ \Theta(f(n)^2) $. fundamental hypothesis is that f(n) >= n
-\\
+    \]. Here $( H,\ldots)$ is short for final configuration.
+\end{definition}
+\begin{definition}[Time complexity classes]
+    Given a language $L \subseteq \Sigma^*$, L is decidable in $ TIME(f(n))$ if and only if  $\exists k-TM M$ that decides L and operates in time at most $f(n)$.
+    \[ 
+        TIME(f(n)) = \left\{ L \mid L\subseteq \Sigma^* \exists M k-TM\; s.t. \; \text{M decides L in time } f(n) \right\} 
+    \]
+    Example: L is the language of all strings that are palindromes. $ \Sigma = \{0,1\}\cup\{\sqcup, \triangleright\} $ we get $ \Theta(n^2) $
+\end{definition}
+\subsubsection*{Polynomial relationship between models of computation}
+We can first start looking at this relationship by showing the time complexity for the problem of deciding the language of palindromes on a 1-TM and a k-TM. Here we summarize the program ideas:
+\begin{description}
+    \item[1-TM]: We suppose that the tape is originally $\triangleright, x_{1}, \ldots,x_{n}, \sqcup$. The machine starts reading the first character $x_1$, stores the information about the digit in its state, replaces $x_1$ with $\triangleright$ then moves right until it finds $\sqcup$. At this point it goes back one step and confronts the character from the state and the one under the cursror. If they match it goes back all the way to the new $\triangleright$ and starts over, otherwise it rejects.
+    \item[k-TM]: Starting from the first character the machines reads the value and copies it on a different tape, all the way to $x_n$. After it copied all the input it moves back to the start on either of the tape and starts moving one cursor forward and one backwards meanwhile checking for matching character at every step.
+\end{description}
+
+\begin{theorem}[Theorem 2.1 Papadimitriu]:\\
+Given M a k-TM that decides a language L in time f(n), then there exists a 1-TM M' that decides L in time at most $ \Theta(f(n)^2) $. Fundamental hypothesis is that $f(n)\geq n$
+\begin{proof}
+    Work in progress.
+\end{proof}
+\end{theorem}
+
 Papadimitriu 2.8.4
 \[ 
     \forall n \exists x s.t. K(x) \geq l(x)
@@ -85,12 +155,12 @@ Show that the language of palindromes cannot be decided in $ \omega(n^2) $  less
         \[ 
             \exists M' 2-TM decides L in time \varepsilon\cdots f(n) +n+2 
         \]
-        M' has to simulate m steps of M with a constant number of steps (around 7 steps on M' are a macro-step of M') (m will depend on \varepsilon \leadsto \frac{7}{m}).\\
-        M will make f(n) steps and the steps of M' will be 7 \cdot \frac{f(n)}{m}\\
-        M in m steps can at most read and change m symbols on the tape. So if M' prime has to fit into a single step the m steps of the M machine, its alphabet will have to be $\Sigma ^m$. Each slot of the tape of M' contains an element of the alphabet $\Sigma^m$. M is doing m steps, how many slots of the machine M' can be modified/read during m steps of M? At most 2.\\
-        In order to simulate the m steps of M the machine M' reads the current tuple, the one on the left and the one on the right and it stores the information on the state. Then it changes at most 2 of the tree tuples.\\
-        The n additive term is because M' has to read the string x of M and encode it in blocks of m, finally it has to read the start symbol and blank space of the tape of M which are the 2 steps. Finally M' has to move back to its starting position so there are an additional \frac{n}{m} steps.\\
-        TIME(f(n)) only makes sense with f(n) \geq n
+        $M'$ has to simulate $m$ steps of $M$ with a constant number of steps (around 7 steps on $M'$ constitute a macro-step of $M'$) ($m$ will depend on $\varepsilon \leadsto \frac{7}{m})$.\\
+        $M$ will make $f(n)$ steps and the steps of $M'$ will be $7 \cdot \frac{f(n)}{m}$\\
+        $M$ in $m$ steps can at most read and change $m$ symbols on the tape. So if $M'$ prime has to fit into a single step the $m$ steps of the $M$ machine, its alphabet will have to be $\Sigma ^m$. Each slot of the tape of $M'$ contains an element of the alphabet $\Sigma^m$. $M$ is doing $m$ steps, how many slots of the machine $M'$ can be modified/read during $m$ steps of $M$? At most 2.\\
+        In order to simulate the $m$ steps of $M$ the machine $M'$ reads the current tuple, the one on the left and the one on the right and it stores the information on the state. Then it changes at most 2 of the tree tuples.\\
+        The $n$ additive term is because $M'$ has to read the string x of $M$ and encode it in blocks of $m$, finally it has to read the start symbol and blank space of the tape of $M$ which are the 2 steps. Finally $M'$ has to move back to its starting position so there are an additional $\frac{n}{m}$ steps.\\
+        $TIME(f(n))$ only makes sense with $f(n) \geq n$
     \end{proof}
 \end{theorem}
 

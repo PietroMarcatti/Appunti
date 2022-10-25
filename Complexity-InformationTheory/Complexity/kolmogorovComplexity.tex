@@ -79,64 +79,88 @@
         \[ 
             K(x)\leq l(x) +c 
         \]
+        \begin{proof}
+            To obtain this stronger looking upper bound for the Kolmogorov complexity, Li and Vitanyi made an assumption about the tape of the machine and its alphabet. In fact, they consider the input tape of the machine as containing the starting symbol $\triangleright$ followed by all the binary digits of x and after it an infinite sequence of blank spaces $\sqcup$. This way they implicitly give the length of x because the machine won't find a $\sqcup$ under its cursor untile it hasn't traversed all x, gaining the information about it's length.
+        \end{proof}
     \end{theorem}
+        
+    \begin{theorem}[Upper bound for kolmogorov complexity - Cover]
         \[ 
             K(x)\leq K(x\mid l(x)) + 2\log{l(x)}+c 
         \]
         \begin{proof}
-            IF the computer does not know $l(x)$ we must have some way of informing the computer when it has to come to the end of the string of bitrs that describes the sequence. We describe a simple but inefficient method that uses a sequence 01 as a "comma".\\
-            Suppose that $l(x) = n$. To describe $l(x)$, repeat every bit of the binary expansion of n twice; then end the description with a 01 so that the computer knows that it has come to the end of the description of n. For example, the number 5 (binary 101) will be described as 11001101. This description requires $ 2 \lceil \log{n} \rceil +2 $ bits. Thus, the inclusion of the binary representation of $l(x)$ does not add more than $2\log{l(x)}+c$ bits to the length of the program, and we have the bound in the theorem.
+            If the computer does not know $l(x)$ we must have some way of informing the computer when it has to come to the end of the string of bits that describes the sequence. We describe a simple but inefficient method that uses a sequence 01 as a "comma".\\
+            Suppose that $l(x) = n$. To describe $l(x)$, repeat every bit of the binary expansion of n twice; then end the description with a 01 so that the computer knows that it has come to the end of the description of n.\\For example, the number 5 (binary 101) will be described as 11001101. This description requires $ 2 \lceil \log{n} \rceil +2 $ bits. Thus, the inclusion of the binary representation of $l(x)$ does not add more than $2\log{l(x)}+c$ bits to the length of the program, and we have the bound in the theorem.
         \end{proof}
-    \begin{theorem}[Upper bound for kolmogorov complexity - Cover]
-        
     \end{theorem}
-    Study reference for this part is taken from: 
-    \begin{itemize}
-        \item Elements of Information Theory, Cover-Thomas, chapter 8
-        \item An introduction to Kolmogorov Complexity and its applications, M. Li and P. Vitanyi
-    \end{itemize}
-    \subsubsection*{Invariance of Kolmogorov Complexity}
-    $$\forall x \quad |K_U(x)- K_A(x)| \leq c,\; c \;\text{constant}$$
-    \subsubsection*{Theorem}
-    $$ K(x) \leq |x| +c, \text{Li, Vitanyi}$$
-    \subsubsection*{Proof}
-    $U\; \text{Printing Universal Turing Machine}$, we add a bit of information:
-    if the first digit of the input tape is 0, then it simulates the rest of the tape as it is a binary encoding of a turing machine.
-    Else if the first digit is 1 the machine will print in output the remaining significant digits ( not blank ).
-    \subsubsection*{Proposition}
-    The number of strings having Kolmogorov complexity $< h$ is $< 2^h$\\
-    Proof:\\
-    $$2 \leadsto 1, 2^2 \leadsto 2 \ldots $$
-    $$2^0 + 2^1+ \ldots + 2^{h-1}= 2^{h}-1$$
-    These are the machines that can have a binary encoding of lenght at most $h-1$
-    \subsubsection*{Corollary}
-    There is at least one string x such that $K(x)\leq|x|$\\
-    Proof: For a given h 
-    $$\text{at most } 2^{h}-1 \text{ strings with KC} < h$$
-    There are $2^h$ strings of lenght h. At least 1 string of lenght h has a KC $\geq$ h
-    $$ \forall x \quad K(x) \leq |x|+c$$
-    $$\exists x \quad K(x) \geq |x|$$
 
+    \begin{lemma}
+        The set of strings having a Kolmogorov complexity $<a$ has less than $2^a$ elements.
+        \begin{proof}
+            If x has $K(x) < a$ thene there exists the program $m$ that produces x and $|m|<a$. Each $m$ produces at most 1 string. The question then shifts to how many programs of length $<a$ are there at most?
+            \[ 
+                 \sum_{k=0}^{a-1}{2^k} = 2^a -1
+            \]
+            Then there are at most $2^a-1$ possible strings with Kolmogorov complexity $<a$.
+        \end{proof}
+    \end{lemma}
+
+    \begin{theorem}
+        There exists a string x such that
+        \[ 
+            K(x) \geq |x| 
+        \]
+        \begin{proof}
+            Let $|x|=a$, there are $2^a$ strings of length a. At most $2^a-1$ of these have Kolmogorov complexity $\leq a-1$. Then there exists at least one string of length a having Kolmogorov complexity $\geq a$
+        \end{proof}
+    \end{theorem}
+    
     \subsubsection*{Kolmogorov Encoding}
-    $$\varphi_K(x) = bin(m)\quad\text{U.D.}$$
-    $$\varphi_k: A* \longrightarrow \left\{ m | m \text{Turing Machine} \right\}$$
-    $\varphi_k(x)$ is the shortest machine that produces bin(x). This encoding is not computable but it's UD.
-    The Kolmogorov complexity is then: $K(x) = |\varphi_k(x)|$.
-    $$\underset{E_n(K(x))}{EL_n(\varphi_k)} = \sum_{x\in A^n}{p(x)\underset{K(x)}{|\varphi_k(x)|}}$$
-    $$EL_n(\varphi_k) \geq \mathcal{H}(P^n) = n\mathcal{H}(P)$$
-    where P is the probability distribution over A. The first partial result then is: 
-    $$\frac{E_n(K(x))}{n} \geq \mathcal{H}(P)$$
-    To set a bound from the other side we reason as follows: any U.D. code $\varphi$ can be seen as a set of machines for producing strings. \{Decoder $\varphi$ ; $\varphi(x)$ \} is an algorithm that produces x as output.
-    $$\forall x\quad K(x) \leq |Decoder(\varphi)|+|\varphi(x)|$$
-    If applied to Shannon Code:
+    Consider the Kolmogorov code defined as follows
+    \[ 
+        \varphi_K: A* \longrightarrow \left\{ m | m \text{Turing Machine} \right\} 
+    \]
+    $ \varphi_K(x) = bin(m)$ such that $m$ is the shortest machine such that \[ 
+         m(\varepsilon) = x
+    \] 
+    $\varphi_K(x)$ is a U.D. code and a universal machine U decodes $\varphi_K$
+    \[ 
+        |\varphi_K(x)| = K(x) = K_U(x) 
+    \]
+    Focusing on the language of the strings in $SA^n$, the average length of $\varphi_K$ over $A^n$ is
+    \[ 
+        EL_n(\varphi_K) = \sum_{x\in A^n}{p(x)\cdot K(x)} = E_n(K)
+    \]
+    $E_n(K)$ is the average of the Kolmogorov complexity over the strings of length n.
+    From Shannon Theorem we get
+    \[ 
+        EL_n(\varphi_K) \geq \mathcal{H}(P^n) = n\cdot \mathcal{H}_D(P) 
+    \]which leads us to conlcude
+    \[ 
+        E_n(K)\geq n\cdot \mathcal{H}(P) 
+    \]
+    \[ 
+        \frac{E(K) }{n} \geq \mathcal{H}_3(P)
+    \]
+
+    To set a lower bound we reason as follows: any U.D. code $\varphi$ can be seen as a set of machines for producing strings. The couple \{Decoder for $\varphi$ ; $\varphi(x)$ \} is an algorithm that produces x as output.
+    \[ 
+        \forall x\quad K(x) \leq |Decoder(\varphi)|+|\varphi(x)| 
+    \]
+
     \begin{align*}
+        E_n(K(x)) &\leq E(|Decoder \varphi| +|\varphi(x)|)
         E_n(K(x)) &\leq |Decoder \varphi|+ \sum_{x\in A^n}{p(x)|\varphi(x)|}\\
         & \leq |Decoder \varphi| + EL_n(\varphi)\\
-        & \underset{Shannon\;C.}{\leq} |Decoder \varphi| + \mathcal{H}(P^n)+1 \quad \text{Shannon Un-optimality}\\
-        & =|Decoder \varphi| + n\mathcal{H}(P)+1\\
-        & \leq K(P) + n\mathcal{H}(P)+1
     \end{align*}
-    $$\frac{E_n(K(x))}{n} \leq \frac{K(P)}{n}+ \mathcal{H}(P)+\frac{1}{n}$$
-    
+    If applied to $\varphi$ as Shannon Code over strings of length n:
+    \begin{align*}
+        E_n(K(x)) &\leq |Decoder \varphi| + \mathcal{H}(P^n)+1\\
+        E_n(K(x)) &\leq K(P) + n\mathcal{H}(P)+1\\
+        \frac{E_n(K(x))}{n} &\leq \mathcal{H}(P) + \frac{K(P)+1}{n}
+    \end{align*}
+    \[ 
+        \mathcal{H}(P)\leq \frac{E_n(K(x))}{n} \leq \mathcal{H}(P) + \frac{K(P)+1}{n} 
+    \]
     
 
