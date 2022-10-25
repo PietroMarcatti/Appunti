@@ -64,3 +64,38 @@ Example: M is a 2-TM we can solve the same problem in linear time. Is the quadra
 \textsc{Theo 2.1 Papadimitriu}:\\
 if M is a k-TM that decides a language L in time f(n), then there exists a 1-TM M' that decides L in time at most $ \Theta(f(n)^2) $. fundamental hypothesis is that f(n) >= n
 \\
+Papadimitriu 2.8.4
+\[ 
+    \forall n \exists x s.t. K(x) \geq l(x)
+\]
+Exercie 2.8.5\\
+Show that the language of palindromes cannot be decided in $ \omega(n^2) $  less than quadratic time over a 1-TM. (look for Luca trevisan article about it). The idea: you take n = |x| and the string:
+\[ 
+    x_{1}, \ldots,x_{n}\underbrace{00000}{0}x_{n}, \ldots,x_{1}
+\]
+\begin{theorem}[Speedup Theorem 2.2]
+    If $L \in TIME(f(n))$ , then \[ 
+        \forall \epsilon > 0 L \in TIME(\epsilon \cdot f(n)+n +2) 
+    \]
+    The multiplicative constant in front of the higher degree term is dependant on the modal of computation.
+    \begin{proof}
+        hypothesis:
+        $L \in TIME(f(n)) \rightarrow \exists M k-TM decides L in time f(n) $
+        Goal, demonstrate
+        \[ 
+            \exists M' 2-TM decides L in time \varepsilon\cdots f(n) +n+2 
+        \]
+        M' has to simulate m steps of M with a constant number of steps (around 7 steps on M' are a macro-step of M') (m will depend on \varepsilon \leadsto \frac{7}{m}).\\
+        M will make f(n) steps and the steps of M' will be 7 \cdot \frac{f(n)}{m}\\
+        M in m steps can at most read and change m symbols on the tape. So if M' prime has to fit into a single step the m steps of the M machine, its alphabet will have to be $\Sigma ^m$. Each slot of the tape of M' contains an element of the alphabet $\Sigma^m$. M is doing m steps, how many slots of the machine M' can be modified/read during m steps of M? At most 2.\\
+        In order to simulate the m steps of M the machine M' reads the current tuple, the one on the left and the one on the right and it stores the information on the state. Then it changes at most 2 of the tree tuples.\\
+        The n additive term is because M' has to read the string x of M and encode it in blocks of m, finally it has to read the start symbol and blank space of the tape of M which are the 2 steps. Finally M' has to move back to its starting position so there are an additional \frac{n}{m} steps.\\
+        TIME(f(n)) only makes sense with f(n) \geq n
+    \end{proof}
+\end{theorem}
+
+\subsection*{Space Complexity}
+ If we are not using an I\O machine the space used by M on input x is obtained by the configuration of the last step ( as we never delete the fact that we read a given character from the configuration). So it Is \[ 
+    \sum_{i=1}^{k}{|u_i|+|w_i|} \geq |x| +c
+\]
+Recall the definition of I\O Turing Machines (cannot change input).
