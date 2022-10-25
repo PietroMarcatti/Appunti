@@ -1,0 +1,66 @@
+\section*{Computational Complexity}
+We will focus on decision problems. Other classes of problems that we will not explore are: Functional problems and optimization problems.\\
+\begin{description}
+    \item[Decision Problems] : $P: I \longrightarrow \left\{ yes, no \right\}$
+    \item[Functional Problems] :
+    \item[Optimization Problems] :
+\end{description}
+Having a fast (polynomial) solution for an optimization problems implies that i have a fast one also for the Functional version and the decision version of the problem. The same goes inversely with the decision being hard, complex (non polynomial).\\
+The Computational model we will use is Turing Machines, read chapter 1 of the book.\\
+\subsubsection*{Time Complexity}
+This is a decision problem. There's a problem P, a class of models of computation M. The goal is to find in M the fastest machine m that solves P. By fastest we mean that executes least instructions. Fix a notion of dimension of the input which is usually done in the definition of the model of computation.\\
+\textsc{Computational Church Turing Thesis:}\\
+All reasonable models of computation are polynomially related. 
+$$M_1: \Theta(f(n)) \leadsto M_2: \Theta (p(f(n))), \quad p \; polynomial$$
+We know already about turing machines but now we'll introduce Unlimited registry machines (URM):\\
+Has an infinite set of registers ($r_0, r_1, \ldots, r_n$), in any of these registers there can be an arbitrarily long natural number.
+\begin{itemize}
+    \item S(i) means that I sum 1 to the register i.
+    \item Z(i) means that register i becomes 0.
+    \item T(i,j) means that $r_j = r_i$.
+    \item J(i,j,k) means that if the content of the $r_i = r_j$ jump to instruction k
+\end{itemize}
+Example:\\
+P: compute x+1. For the turing machine this means receiving the binary digits of x and i want on output the result of x+1. The complexity is lineary with the number of digits.\\
+With the URM the complexity is 1, i just need S(0). The problem is that we are hiding the size of the input so this model is not reasonable.\\
+Let's make an addition to the URM model and add the instructions P(i)= $r_i = r_i*r_i$ we execute these instructions:
+T(0,1), J(1,2,6), P(0), S(2), J(3,3,2) The output goes: $x, x^2, x^4, x^8, \ldots x^{2^x}$ with complexity $\Theta(n)$. With a turing machine only writing the digits of the output requires at least $\Theta: 2^xlog(x)$.\\
+\textsc{Uniform complexity cost}:\\
+Each instruction of the models has complexity $\Theta(1)$. This is not reasonable when we are using models involving operations that make the involved integers grow too fast. An example of this behaviour is the URM with the product operation.\\
+\textsc{Logarithmic Complexity Cost}:\\
+Each instruction of the models has complexity that depends on the number kof digits it manipulates.\\
+It is fundamental to analyze the complexity of all the instructions in your computational model:
+\begin{itemize}
+    \item S(i): $r_i = r_i+1 \quad \Theta(log(r_i))$
+    \item Z(i): $r_i = 0 \quad \Theta(1)$
+    \item T(i,j): $\Theta(log(r_i))$
+    \item J(i,j,k): $\Theta(min(log(r_i), log(r_j)))$
+    \item P(i): $\Theta((log(r_i)^2))$
+\end{itemize}
+If we now analyze the cost of the models with the Logarithmic complexity cost we get that the URM and the Turing machine are related.\\
+We define as $ P = \{L | L \text{can be decided in polynomial time on a deterministic Turing Machine}\} $. P is invariant with respect to the model of compuation ( conseguence of the extended Church tesis)
+We recall that a configuration for a Turing machine with k tapes is in the form $(q,u_{1},w_{1}, \ldots,u_{k},w_{k})$. The initial configuration is always: $ (s,\triangleright, x, \triangleright,\sqcup, \ldots, \triangleright,\sqcup) $ and a final configuration is always: $ (H,u_{1},w_{1}, \ldots,u_{k},w_{k}) $ where $ H=\{\underbrace{yes,no} halt\} $. For a machine that solves a decision problem L: \[ 
+    M(x) = yes\quad iff x\in L\\
+    M(x) = yes\quad iff x \notin L
+\]
+For a machine that does not terminate on input x we write$ M(x) \uparrow $ and we say it diverges while the notation for a terminating TM is $ M(x) \downarrow $.\\
+The notion of computation: a computation step for a machine M is a binary relationship between two configuration: \[ 
+    (q, u_{1},w_{1}, \ldots,u_{k},w_{k}) \longrightarrow (q^{'},u_{1}^{'},w_{1}^{'}, \ldots,u_{k}^{'},w_{k}^{'})
+\]
+(For reference Papadimitriu section 2.1)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection*{Time Complexity}
+Definition: \textsc{Time complexity}\\
+Let M be a k-TM and x be an input for M we say that M on input x takes time t if: \[ 
+    (s, \triangleright, x, \triangleright, \varepsilon, \ldots, \triangleright, \varepsilon) \longrightarrow ( H,\ldots) 
+\] with $ H \in {yes, no, halt} $. We say that M operates in time at most $ f(n) $ if: \[ 
+    \forall x with |x| = m \quad M on x takes time at most f(|x|) 
+\]
+We will say that a language $ L \in TIME(f(n)) iff \exists M k-TM$ and $M$ decides L and operates in time at most $f(n)$. $TIME(f(n)) = \{L, L', \ldots\} $\\
+Example: L is the language of all strings that are palindromes. $ \Sigma = \{0,1\}\cup\{\sqcup, \triangleright\} $ we get $ \Theta(n^2) $\\\\
+Example: M is a 2-TM we can solve the same problem in linear time. Is the quadratic loss shown here the worst possible loss between two TM machine models with different number of tapes?\\
+\textsc{Theo 2.1 Papadimitriu}:\\
+if M is a k-TM that decides a language L in time f(n), then there exists a 1-TM M' that decides L in time at most $ \Theta(f(n)^2) $. fundamental hypothesis is that f(n) >= n
+\\

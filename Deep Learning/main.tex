@@ -3,6 +3,10 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{theorem}{Theorem}[section]
+
 
 \title{Deep Learning}
 \author{Pietro Marcatti}
@@ -51,12 +55,12 @@ In particular the goal is to find the parameters $w$ and $b$ of the following fu
 $$H_{w,b}(x)= g =(w^T\cdot x+b) = \frac{1}{1+e^{-(w^T\cdot x+b)}}$$
 where $g(z)$ is the sigmoid function so that:
 $$\begin{cases}
-    H_{w,b}(x) >= 0.5 & \text{if } y=1\\
-    H_w,b(x)<0.5 & \text{if } y=0
+    H_{w,b}(x) \geq 0.5 & \text{if } y=1\\
+    H_{w,b}(x)<0.5 & \text{if } y=0
 \end{cases}$$
 To get our discrete classification we map the output of the hypthesis function as follow:
 $$\begin{cases}
-    H_{w,b}(x) >= 0.5 & \text{\textrightarrow "1"}\\
+    H_{w,b}(x) \geq 0.5 & \text{\textrightarrow "1"}\\
     H_w,b(x)<0.5 & \text{\textrightarrow "0"}
 \end{cases}$$
 The decision boundary is $H_{w,b}(x) = 0.5 \rightarrow w^T\cdot x+b=0\rightarrow-3+x_1+2x_2$ supposing we have $b=3$ and $w=[1,2]$. The hypotesis function is $>0.5$ when the argument is $>0$, that is becuause of the shape and output of the sigmoid.
@@ -74,11 +78,83 @@ the logistic classifirer defines the following cost function:
 \begin{equation}
     Cost(h_{w,b}(x^i),y^i)= -y^i\cdot ln(h_{w,b}(x^i))-(1-y^i)\cdot ln(1-h_{w,b}(x^i))
 \end{equation}
-This cost function or loss function is convex and is derivable respect to $w$ and $b$
-In general we call the function to learn the \textbf{hypotesis} but in deep learning it's also called \textbf{model}, the \textbf{cost function} in deep learning is also called \textbf{loss function}.\\\\
-Why is random initialization of weights is important? If we used 0 the first hidden layer would all be 0, because we multiplied all inputs for 0.\\
-This results that the partial derivates for all nodes in the hidden layers are equal, this is called the symmetry problem.\\\\
-We divide our training data set into smaller batches of usually around 16-32-64 samples. We compute forward and backwards on every single sample. Once we complete all the batches we completed an epoch. We can then start again but now, on the first batch, our neural network will have weights that will have already changed thanks to all other batches
+This cost function or loss function is convex and is derivable respect to $w$ and $b$.
+In general we call the function to learn the \textbf{hypotesis} but in deep learning it's also called \textbf{model}, while the \textbf{cost function} in deep learning is also called \textbf{loss function}.
+
+\subsection*{Gradient Descent}
+Gradient descent is a general algorithm for minimizing derivable functions and we are applying it to linear regression.\\
+The gradient descent algorithm repeats until convergence the following update on weigths:
+\[ 
+     \Theta_j = \Theta_j - \alpha \frac{\partial}{\partial\Theta_j}J(\vec{\Theta_0})
+\]
+It is always necessary to evaluate every new parameter before updating any of them as to not calculate the latters with the new values for the first ones.\\
+The hyperparameter $\alpha$ is called the learning rate and it represents the size of the steps that we are taking down the direction of the gradient. For sufficiently small $\alpha$ the cost function should decrease on every iteration. This being said if $\alpha$ is too small it may take a big number of iteration to reach convergence. Finally, a value that is too big for $\alpha$ might cause the cost function to not decrease on every step because we might jump over the "dip", hence it might not converge. It is then a good idea to vary the parameter to experiment with the cost function and its convergence.
+\subsubsection*{Application of gradient descent on logistic regression}
+Once we've established our decision function, in this example the logistic regression, we can procede to apply the gradient descent. To do that we first need to calculate the partial derivatives of the Loss function with respect to every parameter ($\vec{w}$ and $\vec{b}$) so that we can apply the changes. In this example with two inputs:
+\begin{align*}
+    w_1 &:= w_1 - \alpha \frac{\partial J(\vec{w},\vec{b})}{\partial w_1}\\
+    w_2 &:= w_2 - \alpha \frac{\partial J(\vec{w},\vec{b})}{\partial w_2}\\
+    b &:= b - \alpha \frac{\partial J(\vec{w},\vec{b})}{\partial b}\\
+\end{align*}
+
+\section*{Neural Networks}
+Neural Networks expand on the simple ideas of perceptron computing units by adding more layers on neurons betweeen the input and the output. As the shape of the neural network changes so does the way we represent it:
+\begin{itemize}
+    \item $W^{[j]}$: its the matrix of weights controlling the function mapping from layer j-1 to layer j
+    \item $b^{[j]}$: the value of the bias for the j-th layer
+    \item $a^{[j]}$: activation vector for the layer j
+    \item $g^{[j]}$: activation function for the layer j
+\end{itemize}
+\subsection*{Activation Functions}
+In deep neural networks you also have to specify what activation function you want to apply to the activation vectors of each hidden layer. In the hidden layers we rarely see the sigmoid function because it is said to kill the gradient. This refers to the fact that the sigmoid, for particularly large or small inputs, saturates at 1 or 0 respectively. The hyperbolic tangent also suffers from this vanishing gradient problem but it generally performs better than the sigmoid. The sigmoid function is still widely used in the output or final layer to give a probabilistic meaning to our output as it's betweeen [0,1].\\
+What are other types of activation function that we can be used in the hidden layers?
+\begin{description}
+    \item[ReLU or Rectified Linear Unit]:
+        It's particularly easy to train and achieves great performance. Its derivative is particularly easy to calculate, given that you consider the point of non-derivability in 0. 
+    \item[Leaky ReLU]: Leaky ReLU was created to solve the dying ReLU problem which affects neuron with ReLU activation functions. If their parameter is stuck at 0 no matter the input their output will be 0. If this happens no gradient flows and there cannot be any learning. To avoid this it assigns a slightly sloped straight line for the negative values.
+\end{description}
+It is fundamental to use non-linear activation functions otherwise the output of the neural network will be a simple linear combination of the inputs. Let's suppose our activation function is the identity function: $ g^{[1]}(z) = g^{[2]}(z) = z $ 
+\[ 
+    a^{[2]} = z^{[2]}= W^{[2]}a^{[2]}+b^{[2]} =  W^{[2]}(W^{[1]}x+b^{[1]})+b^{[2]} = (W^{[2]}W^{[1]})x + (W^{[2]}b^{[1]}+b^{[2]})
+\]
+We can define $ W' = W^{[2]}W^{[1]} $ and $ b'= W^{[2]}b^{[1]}+b^{[2]}$ then we can rewrite $ a^{[2]} = W'x +b'$. Linear activation function is then useless unless in the last layer when performing a regression task.
+\subsection*{Back propagation}
+Back propagation is the concept and algorithm that allows to update the weights of the neural network to learn. It relies on two simple steps:
+\begin{description}
+    \item[Forward Step:] in this step is activated on one example and the error of each neuron of the output layer is computed.
+    \item[Backwards Step:] in this step the network error is used for updating the weights. Starting at the output layer, the error is propagated backwards through the network layer by layer. This is done recursively computing the local gradient of each neuron.  
+\end{description}
+\begin{definition}[Jacobian Matrix]
+    The derivative of a vector function (a vector whose components are functions) with respect to an input vector x is called a Jacobian Matrix and is represented as:
+    \[ 
+        \frac{\partial y}{\partial x}=
+        \begin{bmatrix}
+            \frac{\partial y_1}{\partial x_1} & \cdots & \frac{\partial y_1}{\partial x_n} \\
+            \vdots & \ddots & \vdots \\
+            \frac{\partial y_m}{\partial x_1} & \cdots & \frac{\partial y_m}{\partial x_n} \\
+        \end{bmatrix}
+    \]
+    
+\end{definition}
+It is particularly important to set a reasonable initial value for the weights. If we used 0 on all weights, all $ z^{[1]} $ would be 0, hence $ a^{[1]}_1 = \ldots =a^{[1]}_n $ because we would always get the same mapping by the activation function. The derivaties used to obtain the gradient would be equal and so the weights and bias would all be changed by the same amount remaining all equal. We refer to this phenomenon as the symmetry problem and to counter it we can simply initialize the weights to a small random value. The reason for such a small value has to do with the previously mentioned vanishing problem. If your network starts working with big numbers it will get to the sigmoid in the output layer and be saturated on the 1 or 0 with very little gradient to move.
+
+\subsection*{Hyperparameters}
+We've already referred to some of our variables as hyperparameters. We can identify an hyperparameter by considering if it is a variable that can be changed to impact the functioning and the performance of our model without it being a parameter such as the weights and the bias. Examples of hyperparameters are:
+\begin{itemize}
+    \item Learning rate
+    \item Number of interaction (or epochs)
+    \item Number of hidden layers
+    \item Number of hidden units in each hidden layers
+    \item Activation functions
+\end{itemize}
+The process of tuning these values to achieve the best result is for us, right now, all empirical.
+
+\section*{Improving our Neural Network}
+In the process of training our neural network we often divide all the data we have available in two or three sets. These are the training and test set, plus optionally, the validation set. The training set contains the data we use to perform the learning of our model. If available we then measure the performance on the validation set in real world mock-up scenario. Eventually, when our model is stable we test it on the test set to get a real measure of it's performance.\\
+It is fundamental that validation and test have the same distribution to ensure meaningful learning.\\
+We divide our training data set into smaller batches of usually around 16-32-64 samples. We compute forward and backwards on every single sample. Once we complete all the batches we completed an epoch. We can then start again but now, on the first batch, our neural network will have weights that will have already changed thanks to all other batches.
+
+\subsection*{Overfit vs. Underfit}
 
 \subsubsection*{Regularization}
 Logistic Regression: Minimization problem with regularization:$ \;\min_{w,b}{J(w,b)}$

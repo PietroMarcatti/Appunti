@@ -13,27 +13,27 @@ $$A={a_1,a_2,a_3,\ldots,a_k}$$
 $$P={p_1,p_2,p_3,\ldots,p_k}$$
 meaning that $p_i$ is the probability to observe the event $a_1$. We can then calculate the average quantity of information as follows:
 \begin{equation}
-    \sum_{i=1}^{k}{p_i\cdot (-\log{p_i})} = \underset{Shannon Entropy}{\mathbb{H}(P)}
+    \sum_{i=1}^{k}{p_i\cdot (-\log{p_i})} = \underset{Shannon Entropy}{\mathcal{H}(P)}
 \end{equation}
 \subsection{Coin Flip Example}
 \textsc{Fair Coin}
 $$A=\{H,T\}$$
 $$P(H)=\frac{1}{2},\quad P(T)=\frac{1}{2}$$
-$$\mathbb{H}(P)=\frac{1}{2}\cdot(-\log{\frac{1}{2}})+\frac{1}{2}\cdot(-\log{\frac{1}{2}})=1$$
+$$\mathcal{H}(P)=\frac{1}{2}\cdot(-\log{\frac{1}{2}})+\frac{1}{2}\cdot(-\log{\frac{1}{2}})=1$$
 Every time we filp the fair coin we expect to gain a bit of information.
 \textsc{Unfari Coin}
 $$A=\{H,T\}$$
 $$P(H)=\frac{9}{10},\quad P(T)=\frac{1}{10}$$
-$$\mathbb{H}(P)=\frac{9}{10}\cdot(-\log{\frac{9}{10}})+\frac{1}{10}\cdot(-\log{\frac{1}{10}})\leadsto 0.32$$
+$$\mathcal{H}(P)=\frac{9}{10}\cdot(-\log{\frac{9}{10}})+\frac{1}{10}\cdot(-\log{\frac{1}{10}})\leadsto 0.32$$
 \subsection{Properties of Entropy}
 \begin{itemize}
-    \item $\mathbb{H}(P)\geq 0$
-    \item $\mathbb{H}(P) = 0$ if there is an event with probability 1
-    \item $\mathbb{H}$ is continuous with respect to $P$
+    \item $\mathcal{H}(P)\geq 0$
+    \item $\mathcal{H}(P) = 0$ if there is an event with probability 1
+    \item $\mathcal{H}$ is continuous with respect to $P$
     \item If an event gets split the entropy should be additive
-    \item $\mathbb{H}(p_1,p_2,\ldots,p_k)\leq \log{k}= \mathbb{H}(\frac{1}{k},\frac{1}{k},\ldots,\frac{1}{k})$
+    \item $\mathcal{H}(p_1,p_2,\ldots,p_k)\leq \log{k}= \mathcal{H}(\frac{1}{k},\frac{1}{k},\ldots,\frac{1}{k})$
 \end{itemize}
-To prove the last property we can first show that for a equi-distribution we get $\mathbb{H}=\log{k}$. To prove that this is also the maximum we use Jensen disequality:
+To prove the last property we can first show that for a equi-distribution we get $\mathcal{H}=\log{k}$. To prove that this is also the maximum we use Jensen disequality:
 $$\forall f, f''(x)<0 \quad in\;[a,b], (a,b)\in \mathbb{R}^2$$
 $$f\Big{(}\sum_{i=1}^{k}{\lambda_i\cdot x_i}\Big{)}\geq\sum_{i=1}^{k}{\lambda_i\cdot f(x_i)}, \quad \sum{\lambda_i} = 1$$
 

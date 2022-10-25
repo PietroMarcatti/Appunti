@@ -68,7 +68,7 @@ where $\varphi_i = |\varphi(a_i)|$
     Our goal is to find prefix codes that minimize $EL$.
     
     \subsection{1st Shannon Theorem 1948}
-    If $\varphi$ is uniquely decodable code then $EL(\varphi)\geq \mathbb{H}_D(P)=\sum_{i=1}^{k}{p_i\cdot log_D{p_i}}$
+    If $\varphi$ is uniquely decodable code then $EL(\varphi)\geq \mathcal{H}_D(P)=\sum_{i=1}^{k}{p_i\cdot log_D{p_i}}$
     The proof relies on Kraft-McMillen theorem and this simple logarithmic property:
     $$log_e{x}\leq x-1, \quad -log_e{x}\geq 1-x$$
     \subsubsection{Proof}
@@ -76,7 +76,7 @@ where $\varphi_i = |\varphi(a_i)|$
     \begin{align*}
         \setlength{\jot}{10pt}
         \begin{WithArrows}
-        &EL(\varphi)-\mathbb{H}_D(P) = \sum_{i=1}^k{p_i\cdot l_i}+\sum_{i=1}^{k}{p_i\cdot log_D{p_i}} \Arrow[xoffset=1cm]{Group by $p_i$ and force $l_i$ as $log_D$} \\
+        &EL(\varphi)-\mathcal{H}_D(P) = \sum_{i=1}^k{p_i\cdot l_i}+\sum_{i=1}^{k}{p_i\cdot log_D{p_i}} \Arrow[xoffset=1cm]{Group by $p_i$ and force $l_i$ as $log_D$} \\
         &=\sum_{i=1}^{k}{p_i\cdot log_D{(D^{l_i}p_i)}} \Arrow[xoffset=-2cm]{Change to base e, take out the common term}\\
         &=\frac{1}{log_e{D}}\cdot \sum_{i=1}^{k}{p_i\cdot log_e{(D^{l_i}p_i)}} \Arrow[xoffset=-2cm]{Group by $-1$}\\
         &=\frac{-1}{log_e{D}}\cdot \sum_{i=1}^{k}{p_i\cdot log_e{\frac{1}{D^{l_i}p_i}}} \Arrow[xoffset=-2cm]{Using the above property}\\
@@ -89,7 +89,7 @@ where $\varphi_i = |\varphi(a_i)|$
     \subsection*{Shannon Code}
     Let's recall the definition of expected lenght and entropy over the probability P and alphabet with cardinality D:
     $$EL(\varphi) = \sum_{i=1}^{k}{p_i\cdot l_i}$$
-    $$ \mathbb{H}_D(P) = \sum_{i=1}^{k}{p_i\cdot (-\log_{D}{p_i})}$$
+    $$ \mathcal{H}_D(P) = \sum_{i=1}^{k}{p_i\cdot (-\log_{D}{p_i})}$$
     Observation: $\log_{D}{\frac{1}{p_i}} \in \mathbb{R},\quad l_i \in \mathbb{N} \longrightarrow l_i=\lceil\log_{D}{\frac{1}{p_i}}\rceil$\\
     If $\sum_{i=1}^{k}{D^{-l_i}} \leq 1$ then we can use the Direct Theorem to prove $\varphi$, with encoding lenghts $l_1, l_2, \ldots l_k$, exists. The encoding is obtained with a greedy strategy on the D-ary tree: \
     $$\sum_{i=1}^{k}{D^{-l_i}} =\sum_{i=1}^{k}{D^{-\lceil \log_{D}{\frac{1}{p_i}} \rceil}}\leq 1$$
@@ -105,9 +105,9 @@ where $\varphi_i = |\varphi(a_i)|$
     \begin{align*}
         EL(S) &= \sum_{i=1}^{k}{p_i (-\log{p_i}+\beta_i)}\\
         &=\sum_{i=1}^{k}{p_i (-\log{p_i})} + \sum_{i=1}^{k}{p_i \beta_i}\\
-        &=\mathbb{H}_D(P) + \sum_{i=1}^{k}{p_i\beta_i}\leq \mathbb{H}_D(P)+1 \quad \sum_{i=1}^{k}{p_i\cdot\beta_i} \leq1
+        &=\mathcal{H}_D(P) + \sum_{i=1}^{k}{p_i\beta_i}\leq \mathcal{H}_D(P)+1 \quad \sum_{i=1}^{k}{p_i\cdot\beta_i} \leq1
     \end{align*}
-    $$\mathbb{H}_D(P) \leq EL(\varphi) \leq \mathbb{H}_D(P)+1$$
+    $$\mathcal{H}_D(P) \leq EL(\varphi) \leq \mathcal{H}_D(P)+1$$
     
 
 
@@ -128,28 +128,28 @@ where $\varphi_i = |\varphi(a_i)|$
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \subsection*{Shannon on strings of lenght n over input alphabet}
-    Example: $A=\left\{ a,b \right\} \;B=\left\{ 0,1 \right\}\; P=\left\{ \frac{3}{4}, \frac{1}{4} \right\}\; \mathbb{H}_2(P)=0.81\;$ 
+    Example: $A=\left\{ a,b \right\} \;B=\left\{ 0,1 \right\}\; P=\left\{ \frac{3}{4}, \frac{1}{4} \right\}\; \mathcal{H}_2(P)=0.81\;$ 
     $EL(\varphi) = 1.25$\\
     Let's define the efficiency of a code as follows:
-    $$Eff. = \frac{\mathbb{H}_D(P)}{EL(\varphi)}\leq 1$$
+    $$Eff. = \frac{\mathcal{H}_D(P)}{EL(\varphi)}\leq 1$$
     Applying to our example we get: 
-    $$Eff. = \frac{\mathbb{H}_2(P)}{EL(\varphi)}=0.64$$
+    $$Eff. = \frac{\mathcal{H}_2(P)}{EL(\varphi)}=0.64$$
     Let's try to calculate the efficiency now with an encoding for pairs of characters:
     $$A'=\left\{ aa, ab,ba,bb \right\}\; P'=\left\{ \frac{9}{16}, \frac{3}{16}, \frac{3}{16}, \frac{1}{16} \right\} = P^2 \;$$ $$
-    \mathbb{H}_D(P')= 1.62 = \mathbb{H}_D(P^2) = 2\cdot \mathbb{H}_D(P)$$
+    \mathcal{H}_D(P')= 1.62 = \mathcal{H}_D(P^2) = 2\cdot \mathcal{H}_D(P)$$
     $$EL(\varphi) = 1.93 Eff. = 0.83$$
     If we pretend we want to send a message 1000 characters long, with the single character encoding we expect a message lenght of 1.25k characters,
     Instead with the pairs encoding we expect $\frac{1.93}{2} \leadsto 0.97k \;$characters.\\\\
     \textbf{Property}: given two events x, y independent
-    $\mathbb{H}(x \wedge y) = H(x) + H(y)$
+    $\mathcal{H}(x \wedge y) = H(x) + H(y)$
     Proof:
     \begin{align*}
         H(x \wedge y ) &= -\sum_{i,j}^{}{p_i \cdot q_j \log{(p_i\cdot q_j)}} = - \sum_{i,j}^{}{p_i \cdot q_j \log{p_i}} - \sum_{i,j}^{}{p_i\cdot q_j \log{q_j}}\\
-        &= -\underset{=1}{\sum_{j}{q_j}} \cdot \sum_{i}^{}{p_i \log{p_i}} - \underset{=1}{\sum_{i}{p_i}} \cdot \sum_{j}{q_j \log{q_j}} = \mathbb{H}(x) + \mathbb{H}(y)
+        &= -\underset{=1}{\sum_{j}{q_j}} \cdot \sum_{i}^{}{p_i \log{p_i}} - \underset{=1}{\sum_{i}{p_i}} \cdot \sum_{j}{q_j \log{q_j}} = \mathcal{H}(x) + \mathcal{H}(y)
     \end{align*}
-    From Shannon Theorem we then have $EL(\varphi_n) \geq \mathbb{H}_D(P^n) = n\cdot \mathbb{H}_D(P)$\\
+    From Shannon Theorem we then have $EL(\varphi_n) \geq \mathcal{H}_D(P^n) = n\cdot \mathcal{H}_D(P)$\\
     For Shannon Codes (and all sub-optimal codes) we have:
-    $$ n\cdot \mathbb{H}_D(P) \leq EL(\varphi_n) < n\cdot \mathbb{H}_D(P)+1$$ If we want to reason in terms of a single input alphabet value
+    $$ n\cdot \mathcal{H}_D(P) \leq EL(\varphi_n) < n\cdot \mathcal{H}_D(P)+1$$ If we want to reason in terms of a single input alphabet value
     we divide the disequality by n. We can see that for $n \leadsto \infty $ the expected lenght is squeezed between the terms of the disequality.
 
 

@@ -1,0 +1,142 @@
+\section*{Complexity}
+    \subsection*{Kolmogorov}
+        \subsubsection*{History}
+        We've talked about Shannon who worked in the US, studied at MIT and Princeton, collaborated with Bell Labs.
+        We've talked about Fano who started at the Politecnico di Torino and then moved to MIT.
+        Then we talked about Huffman who worked at Ohio State University, then founds the University of California Santa Cruz.\\
+        Kolmogorov, unlike the other names we've seen so far, does not come from the west. In 1965 he was working at the University of Moscow\\
+        \subsubsection*{Idea}
+        Consider a computational model and define the complexity of a string as the lenght of the shortest program (in that computational model)
+        that can generate that string. We'll use Turing Machines: $m = (k, \Sigma,\delta, s)$
+        \begin{description}
+            \item[k]: finite set of states
+            \item[$\Sigma$]: finite alphabet\quad  $\triangleright, \sqcup \in \Sigma$
+            \item[$\delta$]: $K \times \Sigma \longrightarrow (K\cup\{yes, no, halt\}) \times  \Sigma \times \left\{\rightarrow, \leftarrow, -\right\}$
+            \item[s]: $s \in K$ start state
+        \end{description}
+    \subsubsection*{Church-Turing Thesis}
+    All computational models are turing-equivalent.\newline
+    Turing machines with k tapes and I/O
+    $m=(K,\Sigma, \delta, s)$
+    \begin{itemize}
+        \item $\delta: \Sigma^k x K \rightarrow \Sigma^k x (K \cup {yes, no, halt}) x \left\{ \rightarrow, \leftarrow, - \right\}^k$
+        \item The input tape (1st tape) cannot be modified but we can move backwards as much as possible
+        \item The output tap (last tape) can only go forwards
+    \end{itemize}
+    \subsubsection*{Universal Machine Theorem}
+    $$\exists u, u \text{Universal Turing Machine} | u(bin(m), x) = m(x)$$
+    How does the universal turing machine works:
+    its tape is somethink like this: start $ \left[ 01\ldots 1010 \right] $ x
+    To be able to go on with the computation if we were in the middle of it, we need to know the configuration of the machine.
+    The configuration is stored in one of the k tapes. We also need the state we are on and the position of the first tape.
+    The tape and the position can be expressed as a triple $(q, w, \varsigma)$
+    \begin{itemize}
+        \item q is the current character
+        \item w is the string left of q
+        \item $\varphi $is the string right of q
+    \end{itemize}
+    The Kolmogorov complexity of a string m is denoted by $K_u(x) = \underset{u(bin(m))=x}{min}|bin(m)|$
+    \subsubsection*{Observation}
+    Unfortunately this notion is not computable. $$
+    \nexists\; A\quad \text{Turing Machine} \quad|\quad A(x) = K_u(x)$$
+    \subsubsection*{Conditional Kolmogorov Complexity}
+    The Conditional Kolmogorov Complexity of x given y is:
+    $$ K_u(x|y) = \underset{u(bin(m),y)=x}{min} |bin(m)| $$
+    This means that, obviously, if we provied some more information $K_u(x|y) \leq K_u(x)$. One of the most common information given is $|x|$.\\
+    
+    \begin{theorem}[Universality of Kolmogorov Complexity]
+        If $\mathcal{U}$ is a universal computer (Turing Machine), for any other computer $\mathcal{A}$ there exists a constant $c_\mathcal{A}$ such that \[ 
+            K_\mathcal{U}(x) \leq K_\mathcal{A} + c_\mathcal{A} 
+        \]
+        for all strings $x \in {0,1}^*$, and the constant $c_\mathcal{A}$ does not depend on x.
+        \begin{proof}
+            Assume that we have a program $p_\mathcal{A}$ for computer $\mathcal{A}$ to print x. Thus, $\mathcal{A}(p_\mathcal{A}) = x$. We can precede this program by a simulation program $\mathcal{s_A}$ which tells the computer $\mathcal{U}$ how to simulate computer $\mathcal{A}$. Computer $\mathcal{U}$ will then interpret the instructions in the program for $\mathcal{A}$, perform the corresponding calculations and print out x. The program for $\mathcal{U}$ is $p = s_\mathcal{A}p_\mathcal{A}$ and its length is
+            \[ 
+                l(p) = l(s_\mathcal{A}) + l(p_\mathcal{A}) = c_\mathcal{A}+l(p_\mathcal{A})
+            \]
+            where $c_\mathcal{A}$ is the lenght of the simulation program. Hence, for all strings x
+            \[ 
+                K_\mathcal{A}(x) = \min_{p:\mathcal{U}(p)=x}{l(p)} \leq \min_{p:\mathcal{A}(p)=x}{l(p)+c_\mathcal{A}} = K_\mathcal{A}(x) +c_\mathcal{A}
+            \]
+        \end{proof}
+    \end{theorem}
+    
+    The crucial point is that the lenght of this simulation program is independent of the length of x, the string to be compressed. For sufficiently long x, the length of this simulation program can be neglected, and we can discuss Kolmogorov complexity without talking about the constants.\\
+    \begin{theorem}[Upper bound for conditional kolmogorov complexity]
+        \[ 
+            K(x\mid l(x))\leq l(x) +c 
+        \]
+        \begin{proof}
+            Let's define a program for printing x as the program that says:
+            \[ 
+                \text{Print the following l-bit sequence:}\; x_{1}x_{2}\ldots,x_{l(x)}
+            \]
+            Note that no bits are required to describe l since l is given. The program is self-delimiting because l(x) is provided and the end of the program is thus clarly defined. The length of this program is $ l(x) +c $ 
+        \end{proof}
+    \end{theorem}
+    An apparently stronger conclusion is found in the book "An introduction to Kolmogorov Complexity and its applications" by M. Li and P. Vitanyi, even though this relies on an important detail. In fact, in this case, the alphabet for the machine is ${0,1,\sqcup}$. If we allow ourselves to make this assumption we can write the following.
+    \begin{theorem}[Upper bound for kolmogorov complexity - Li-Vitanyi]
+        \[ 
+            K(x)\leq l(x) +c 
+        \]
+    \end{theorem}
+        \[ 
+            K(x)\leq K(x\mid l(x)) + 2\log{l(x)}+c 
+        \]
+        \begin{proof}
+            IF the computer does not know $l(x)$ we must have some way of informing the computer when it has to come to the end of the string of bitrs that describes the sequence. We describe a simple but inefficient method that uses a sequence 01 as a "comma".\\
+            Suppose that $l(x) = n$. To describe $l(x)$, repeat every bit of the binary expansion of n twice; then end the description with a 01 so that the computer knows that it has come to the end of the description of n. For example, the number 5 (binary 101) will be described as 11001101. This description requires $ 2 \lceil \log{n} \rceil +2 $ bits. Thus, the inclusion of the binary representation of $l(x)$ does not add more than $2\log{l(x)}+c$ bits to the length of the program, and we have the bound in the theorem.
+        \end{proof}
+    \begin{theorem}[Upper bound for kolmogorov complexity - Cover]
+        
+    \end{theorem}
+    Study reference for this part is taken from: 
+    \begin{itemize}
+        \item Elements of Information Theory, Cover-Thomas, chapter 8
+        \item An introduction to Kolmogorov Complexity and its applications, M. Li and P. Vitanyi
+    \end{itemize}
+    \subsubsection*{Invariance of Kolmogorov Complexity}
+    $$\forall x \quad |K_U(x)- K_A(x)| \leq c,\; c \;\text{constant}$$
+    \subsubsection*{Theorem}
+    $$ K(x) \leq |x| +c, \text{Li, Vitanyi}$$
+    \subsubsection*{Proof}
+    $U\; \text{Printing Universal Turing Machine}$, we add a bit of information:
+    if the first digit of the input tape is 0, then it simulates the rest of the tape as it is a binary encoding of a turing machine.
+    Else if the first digit is 1 the machine will print in output the remaining significant digits ( not blank ).
+    \subsubsection*{Proposition}
+    The number of strings having Kolmogorov complexity $< h$ is $< 2^h$\\
+    Proof:\\
+    $$2 \leadsto 1, 2^2 \leadsto 2 \ldots $$
+    $$2^0 + 2^1+ \ldots + 2^{h-1}= 2^{h}-1$$
+    These are the machines that can have a binary encoding of lenght at most $h-1$
+    \subsubsection*{Corollary}
+    There is at least one string x such that $K(x)\leq|x|$\\
+    Proof: For a given h 
+    $$\text{at most } 2^{h}-1 \text{ strings with KC} < h$$
+    There are $2^h$ strings of lenght h. At least 1 string of lenght h has a KC $\geq$ h
+    $$ \forall x \quad K(x) \leq |x|+c$$
+    $$\exists x \quad K(x) \geq |x|$$
+
+    \subsubsection*{Kolmogorov Encoding}
+    $$\varphi_K(x) = bin(m)\quad\text{U.D.}$$
+    $$\varphi_k: A* \longrightarrow \left\{ m | m \text{Turing Machine} \right\}$$
+    $\varphi_k(x)$ is the shortest machine that produces bin(x). This encoding is not computable but it's UD.
+    The Kolmogorov complexity is then: $K(x) = |\varphi_k(x)|$.
+    $$\underset{E_n(K(x))}{EL_n(\varphi_k)} = \sum_{x\in A^n}{p(x)\underset{K(x)}{|\varphi_k(x)|}}$$
+    $$EL_n(\varphi_k) \geq \mathcal{H}(P^n) = n\mathcal{H}(P)$$
+    where P is the probability distribution over A. The first partial result then is: 
+    $$\frac{E_n(K(x))}{n} \geq \mathcal{H}(P)$$
+    To set a bound from the other side we reason as follows: any U.D. code $\varphi$ can be seen as a set of machines for producing strings. \{Decoder $\varphi$ ; $\varphi(x)$ \} is an algorithm that produces x as output.
+    $$\forall x\quad K(x) \leq |Decoder(\varphi)|+|\varphi(x)|$$
+    If applied to Shannon Code:
+    \begin{align*}
+        E_n(K(x)) &\leq |Decoder \varphi|+ \sum_{x\in A^n}{p(x)|\varphi(x)|}\\
+        & \leq |Decoder \varphi| + EL_n(\varphi)\\
+        & \underset{Shannon\;C.}{\leq} |Decoder \varphi| + \mathcal{H}(P^n)+1 \quad \text{Shannon Un-optimality}\\
+        & =|Decoder \varphi| + n\mathcal{H}(P)+1\\
+        & \leq K(P) + n\mathcal{H}(P)+1
+    \end{align*}
+    $$\frac{E_n(K(x))}{n} \leq \frac{K(P)}{n}+ \mathcal{H}(P)+\frac{1}{n}$$
+    
+    
+
