@@ -374,37 +374,37 @@ and two ordered bases of W
         \item For $A=[a_{1}, \ldots,a_{n}]$, where $a_i$ are the columns of A, we obtain
         \[ 
             Im(\Phi) = {Ax: x \in \mathbb{R}^n} = \left\{ \sum_{i=1}^{n}{x_ia_i}:x_{1}, \ldots,x_{n}\in R \right\} = span[a_{1}, \ldots,a_{n}]\subseteq \mathbb{R}^m
-        \]
+        \]i.e., the image is the span of the columns of A, also called the column space. Therefore, the column space (image) is a subspace of $\mathbb{R}^m$, where m is the "height" of the matrix.
+        \item $rk(A)=dim(Im(\Phi))$
+        \item The kernel/null space $ker(\Phi)$ is the general solution to the homogeneous system of linear equations $Ax = 0$ and captures all possible linear combinations of the elements in $\mathbb{R}^n$ that produce $0 \in \mathbb{R}^m$.
+        \item The kernel is a subspaces of $\mathbb{R}^n$, where n is the "width" of the matrix. 
     \end{itemize}
 \end{remark}
-Dimentionality reduction:
-Image or kernel\\
-for $\Phi : V \rightarrow W$ we define the kernel/null space:
-$$ker(\Phi) = \Phi^{-1}(0_w) = {v \in V, \Phi(v) = 0_w}$$
-$ ker(\Phi) \rightarrow Ax = 0 $ 
-The kernel is a subspace of the $ R^n $ where n is the width of the matrix.  
-\begin{align*}
-    Im(\Phi) &= {Ax: x \in R^n } = \left\{ \sum_{i=1}^{n}{x_ia_i:x_{1}, \ldots,x_{n} \in \mathbb{R}} \right\}\\ &= span[a_{1}, \ldots,a_{n}] \subseteq \mathbb{R}^n
-\end{align*}
-$ rk(A) = dim(Im(\Phi)) $
+
 \begin{theorem}[Rank Nullity]
     For vector space V,W and a linear mapping $ \Phi: V \rightarrow W  $ it holds that \[ 
         dim(ker(\Phi)) + dim(Im(\Phi)) = dim(V)
     \]
+    The rank-nullity theorem is also referred to as the fundamental theorem of linear mappings.
 \end{theorem}
-The mappings that we obtain by building NN are special cases of $ \Phi $ for example $ R^{10\times784} $: the strenght of this approach is that its very simple but the cons is that it's all linear
-\begin{definition}[Affine subspace]
-    Let V be a vector space, x_0 \in v and U \subseteq V a subspace. Then the subset: \[ 
+The mappings that we obtain by building NN are special cases of $ \Phi $ for example $ R^{10\times784} $: the strenght of this approach is that it's very simple but the cons is that it's all linear.
+\subsubsection*{Affine Subspaces}
+\begin{definition}[Affine Subspace]
+    Let V be a vector space, $x_0 \in V$ and $U \subseteq V$ a subspace. Then the subset: \[ 
         L = x_0 + U : = {x_0+u: u\in U} \\
         ={v\in V \mid \exists u : v = x_0 +u} \subseteq V
-    \]
+    \]is called affine subspace or linear manifold of V. U is called direction or direction space, and $x_0$ is called support point. Note that the definition of an affine subspace excludes $\vec{0}$ if $x_0 \notin U$. Therefore, an affine subspace is not a (linear) subspace (vector subspace) of V for $x_0 \notin U$.
 \end{definition}
-In this affine relationship x_0 is the support nd b_1 is the direction.
 \begin{remark}
-    Inhomogeneous system of linear equations and affine subspaces:
-    the solution of the system of linear equations  is either the empty oset or an affinen subspace of Rn of dimension n-rk(A). Every k-dimensional affine subspace is the solution of an Inhomogeneous sysetm of linear equations. 
+    For inhomogeneous systems of linear equations and affine subspaces:
+    the solution of the system is either the empty set or an affine subspace of $\mathbb{R}^n$ of dimension $n-rk(A)$. Every k-dimensional affine subspace is the solution of an inhomogeneous system of linear equations. 
 \end{remark}
-\begin{definition}[affine mappingss]
-    for two vector spaces v, w a linear mapping phi v - W and a in W the mapping.\\
-    every affine mapping is also the compositiono fa linear mapping and a translation such that ...
+\begin{definition}[Affine Mappings]
+    For two vector spaces V, W a linear mapping $\Phi: V \longrightarrow W$ and $a \in W$ the mapping
+    \begin{align*}
+        \phi: &V \longrightarrow W \\
+        &x \mapsto a + \Phi(x)
+    \end{align*}
+    is an affine mapping from V to W. The vector $a$ is called the translation vector of $\Phi$.
+    Every affine mapping $\phi: V \longrightarrow W$ is also the composition of a linear mapping $\Phi: V \longrightarrow W$ and a translation $\tau: W \longrightarrow W$ such that $\phi = \tau \circ \Phi$. The mappings $\Phi$ and $\tau$ are uniquely determined.
 \end{definition}
