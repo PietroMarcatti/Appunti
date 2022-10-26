@@ -1,9 +1,9 @@
 # Fdb version 3
-["pdflatex"] 1666354890 "c:/Users/pietr/Desktop/Appunti/Operative Research/main.tex" "main.pdf" "main" 1666354890
+["pdflatex"] 1666704723 "c:/Users/pietr/Desktop/Appunti/Operative Research/main.tex" "main.pdf" "main" 1666704723
   "Linear Programming/linear-programming.aux" 0 -1 0 "pdflatex"
   "Linear Programming/linear-programming.tex" 1666347803 5409 070a28797b56f8779724cf414726dd21 ""
   "Simplex/simplex.aux" 0 -1 0 "pdflatex"
-  "Simplex/simplex.tex" 1666354887 5362 ebab8b1f7374eb014720db846d6cea4e ""
+  "Simplex/simplex.tex" 1666704718 5364 aab24863b6837c9d8605aaf662b8a5f5 ""
   "c:/Users/pietr/Desktop/Appunti/Operative Research/main.tex" 1666349341 439 f02055d3caf315af910dba5d6670bc59 ""
   "c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1665074734 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1665075964 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -152,7 +152,7 @@
   "c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1665081101 4635757 fee44e15b3aae95ce4ca399b9df8f1bd ""
   "c:/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1665081240 3058773 fc25debb91eaf826a1233bf5b33c6a9a ""
   "c:/texlive/2022/texmf.cnf" 1665081068 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1666354890 34 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "main.aux" 1666704723 34 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "main.tex" 1666349341 439 f02055d3caf315af910dba5d6670bc59 ""
   (generated)
   "Linear Programming/linear-programming.aux"

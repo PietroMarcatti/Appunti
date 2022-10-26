@@ -1,0 +1,29 @@
+\section*{Analytic Geometry}
+A normo on a vector space V is a function \[ 
+    ||\cdot||: V \longrightarrow \mathbb{R},
+    x \longrightarrow ||x|| 
+\]
+which assigne each vector its length such that for all \lambda in R and x,y in V the following hold:
+\begin{itemize}
+    \item absolutely homogeneous
+    \item triangle inequality
+    \item positive definite
+\end{itemize}
+Some norms we will see are the manattan distance calculated by the first norm and the euclidean distance calculated by the second norm.
+\subsection{General inner product}
+To talk about general inner product we must first introduce a more generalized version of linear mappings: bilinear mappngs. We'll then use these to isolate symmetric positive definites. A bilinear mappings doesnt work on a single vector space but on the cartesian product of two vector spaces. We want to focus on biliear mappings that are: \begin{itemize}
+    \item Symmetric: \omega(x,y)= \omega(y,x)
+    \item Positive definite: bilinear combination of x with itself is always positive unless we combine two zero vectors
+\end{itemize}
+A positive definite, symmetric bilinear mapping is called a inner product on V. The pair V and inner product operation is called an inner product space or real vetor space with inner product. If we use the dot product defined in 3.5 we call it an euclidean vector space. The inner product is fully described by a coordinates matrix. We can then move the constraints from the inner product to the matrix. The lenght of a vector is the square root of the inner product of the vector with itself (the case of the euclidean norm) and its called the induced /canonical norm.
+Cauchy-Shwarz inequality |\angle x,y\angle | \leq ||x||||y||
+Distance and metric: 
+consider an inner product space then the distance is the norm of the difference of the two vectors. A metric d satisfies the following:\begin{itemize}
+    \item positive definite
+    \item symmetric
+    \item triangle inequality
+\end{itemize}
+Note: distance and inner product go in opposite direction. the distance is min iff the inner product is max. The cauchy schwarz leads to the generalization of the definition of cosine. Two vectors are orthogonal if and only if their inner product is 0. If their norm is also 1 they are called unit vectors.
+An orthonormal basis for a vector space V if they are all orthogonal to each other and they are all of lenght 1.
+Isometry matrix.\\
+Definition of projection
