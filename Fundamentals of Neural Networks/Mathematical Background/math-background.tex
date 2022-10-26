@@ -323,11 +323,57 @@ This means that the transformation matrix can be used to map coordinates with re
     \includegraphics[width=12cm]{Mathematical Background/example-transformation-matrix-application.png}
 \end{figure}\\
 \textbf{Questions:}\\
-Where do the coefficients $\alpha_{ij}$ of the transformation matrix come from? Can we follow an example of calculating the transformation of one of the vectors from the image?
+%Where do the coefficients $\alpha_{ij}$ of the transformation matrix come from? Can we follow an example of calculating the transformation of one of the vectors from the image?
 \subsubsection*{Basis Change}
+In the following, we will have a closer look at ho w transformation matrices of linear mapping $\Phi: V \longrightarrow W$ change if we change the bases in V and W. Consider two ordered bases of V
+\[ 
+    B=(b_{1}, \ldots,b_{n}) \quad \tilde{B} = (\tilde{b}_{1}, \ldots,\tilde{b}_{n})
+\]
+and two ordered bases of W
+\[ 
+    C=(c_{1}, \ldots,c_{n}) \quad \tilde{C} = (\tilde{c}_{1}, \ldots,\tilde{c}_{n})
+\]. Moreover, $A_\Phi \in \mathbb{R}^{m \times n}$ is the transformation matrix of the linear mapping $\Phi: V \longrightarrow W$ with respect to the bases B and C, and $\tilde{A}_\Phi \in \mathbb{R}^{m\times n}$ is the corresponding transformation mapping with respect to $\tilde{B} and \tilde{C}$. In the following we will investigate how $A$ and $\tilde{A}$ are related, for example how/whether we can transform $A_\Phi$ into $\tilde{A}_\Phi$ if we choose to perform a basis change from $B,C$ to $\tilde{B},\tilde{C}$.
+\begin{theorem}[Basis Change]
+    For a linear mapping $\Phi: V \longrightarrow W$, ordered bases of V
+    \[ 
+        B=(b_{1}, \ldots,b_{n}) \quad \tilde{B} = (\tilde{b}_{1}, \ldots,\tilde{b}_{n})
+    \]and  of W
+    \[ 
+        C=(c_{1}, \ldots,c_{n}) \quad \tilde{C} = (\tilde{c}_{1}, \ldots,\tilde{c}_{n}) 
+    \]
+    and a transformation matrix $A_\Phi$ of $\Phi$ with respect to B and C, the corresponding transformation matrix $\tilde{A}\Phi$ with respect to the bases $\tilde{B} and \tilde{C}$ is given as 
+    \[ 
+        \tilde{A}_\Phi = T^{-1} A_\Phi S 
+    \]
+    Here, $S \in \mathbb{R}^{n\times n}$ is the transformation matrix of $id_V$ that maps coordinates with respect to $\tilde{B}$ onto coordinates with respect to B, and $T \in \mathbb{R}^{m\times m}$ is the transformation matrix of $id_W$ that maps coordinates with respect to $\tilde{C}$ onto coordinates with respect to C.
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=8cm]{Mathematical Background/basischange.png}
+    \end{figure}
+\end{theorem}
+
 \subsubsection*{Image and Kernel}
-Dimentionality reduction:
-Image or kernel\\
-for $\Phi : V \rightarrow W$ we define the kernel/null space:
-$$ker(\Phi) = \Phi^{-1}(0_w) = {v \in V, \Phi(v) = 0_w}$$
-$$Im(\Phi) = $$
+\begin{definition}[Image and Kernel]
+    For $\Phi : V \rightarrow W$ we define the kernel/null space:
+    \[ 
+        ker(\Phi) := \Phi^{-1}(0_w) = {v \in V, \Phi(v) = 0_w} 
+    \]and the image/range
+    \[ 
+         Im(\Phi) := \Phi(V) = \left\{ w \in W \mid \exists v \in V : \Phi(v) = w \right\}
+    \]
+    We also call V and W the domanin and codomain of $\Phi$ respectively.\\
+    Intuitively, the kernel is the set of vectors $v\in V$ that $\Phi$ maps onto the neutral element $0_W \in W$. The image is the set of vectors $w \in W$ that can be "reached" by $\Phi$ from any vector in V.
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=8cm]{Mathematical Background/image-kernel.png}
+    \end{figure}
+\end{definition}
+\begin{remark}[Null Space and Column Space]
+    Let us consider $A \in \mathbb{R}^{m\times n}$ and a linear mapping $\Phi: \mathbb{R}^n \longrightarrow \mathbb{R}^m, \quad x \mapsto Ax$
+    \begin{itemize}
+        \item For $A=[a_{1}, \ldots,a_{n}]$, where $a_i$ are the columns of A, we obtain
+        \[ 
+            Im(\Phi) = {Ax: x \in \mathbb{R}^n} = \left\{ \sum_{i=1}^{n}{x_ia_i}:x_{1}, \ldots,x_{n}\in R \right\} = span[a_{1}, \ldots,a_{n}]\subseteq \mathbb{R}^m
+        \]
+    \end{itemize}
+\end{remark}
