@@ -228,7 +228,7 @@ A set of vectors are linearly independent if and only if no-one of the vectors c
 In a vector space $V$, we are particularly interested in sets of vectors $\mathcal{A}$ that possess the property that any vector $v \in V$ can be obtained by a linear combination of the vectors in $\mathcal{A}$.
 \subsubsection*{Generating Set and Basis}
 \begin{definition}[Generating set and Span]
-    Consider a vector space $V = (\mathcal{V},+,\cdot)$ and set of vectors $\mathcal{A} = {x_1,\ldots,x_k} \subseteq \mathcal{V}$. If every vector $v \in \mathcal{V}$ can be expressed as a linear combination of $x_1, \ldots, x_k$, $\mathcal{A}$ is called a generating set of V. The set of all linear combinations of vectors in $A$ is called the span of $\mathcal{A}$. If $\mathcal{A}$ spans the vector space $V$, we write $V = span[\mathcal{A}]$ or $V = span[x_1,\ldots,x_k]$
+    Consider a vector space $V = (\mathcal{V},+,\cdot)$ and set of vectors $\mathcal{A} = {x_1,\ldots,x_k} \subseteq \mathcal{V}$. If every vector $v \in \mathcal{V}$ can be expressed as a linear combination of $x_1, \ldots, x_k$, $\mathcal{A}$ is called a generating set of V. The set of all linear combinations of vectors in $\mathcal{A}$ is called the span of $\mathcal{A}$. If $\mathcal{A}$ spans the vector space $V$, we write $V = span[\mathcal{A}]$ or $V = span[x_1,\ldots,x_k]$
 \end{definition}
 \begin{definition}[Basis]
     Consider a vector space $V = (\mathcal{V},+,\cdot)$ and $\mathcal{A} \subseteq \mathcal{V}$. A generating set $\mathcal{A}$ of $V$ is called minimal if there exists no smaller set $\tilde{\mathcal{A}}\subsetneq \mathcal{A} \subseteq \mathcal{V}$ that spans $V$. Every linearly independent generating set of $V$ is minimal and is called a basis of $V$
@@ -330,4 +330,30 @@ Dimentionality reduction:
 Image or kernel\\
 for $\Phi : V \rightarrow W$ we define the kernel/null space:
 $$ker(\Phi) = \Phi^{-1}(0_w) = {v \in V, \Phi(v) = 0_w}$$
-$$Im(\Phi) = $$
+$ ker(\Phi) \rightarrow Ax = 0 $ 
+The kernel is a subspace of the $ R^n $ where n is the width of the matrix.  
+\begin{align*}
+    Im(\Phi) &= {Ax: x \in R^n } = \left\{ \sum_{i=1}^{n}{x_ia_i:x_{1}, \ldots,x_{n} \in \mathbb{R}} \right\}\\ &= span[a_{1}, \ldots,a_{n}] \subseteq \mathbb{R}^n
+\end{align*}
+$ rk(A) = dim(Im(\Phi)) $
+\begin{theorem}[Rank Nullity]
+    For vector space V,W and a linear mapping $ \Phi: V \rightarrow W  $ it holds that \[ 
+        dim(ker(\Phi)) + dim(Im(\Phi)) = dim(V)
+    \]
+\end{theorem}
+The mappings that we obtain by building NN are special cases of $ \Phi $ for example $ R^{10\times784} $: the strenght of this approach is that its very simple but the cons is that it's all linear
+\begin{definition}[Affine subspace]
+    Let V be a vector space, x_0 \in v and U \subseteq V a subspace. Then the subset: \[ 
+        L = x_0 + U : = {x_0+u: u\in U} \\
+        ={v\in V \mid \exists u : v = x_0 +u} \subseteq V
+    \]
+\end{definition}
+In this affine relationship x_0 is the support nd b_1 is the direction.
+\begin{remark}
+    Inhomogeneous system of linear equations and affine subspaces:
+    the solution of the system of linear equations  is either the empty oset or an affinen subspace of Rn of dimension n-rk(A). Every k-dimensional affine subspace is the solution of an Inhomogeneous sysetm of linear equations. 
+\end{remark}
+\begin{definition}[affine mappingss]
+    for two vector spaces v, w a linear mapping phi v - W and a in W the mapping.\\
+    every affine mapping is also the compositiono fa linear mapping and a translation such that ...
+\end{definition}
