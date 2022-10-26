@@ -128,38 +128,53 @@ We can first start looking at this relationship by showing the time complexity f
 \end{description}
 
 \begin{theorem}[Theorem 2.1 Papadimitriu]:\\
-Given M a k-TM that decides a language L in time f(n), then there exists a 1-TM M' that decides L in time at most $ \Theta(f(n)^2) $. Fundamental hypothesis is that $f(n)\geq n$
+Given M a k-TM that operates in time f(n), then there exists a 1-TM M' operates in time at most $ \Theta(f(n)^2) $ such that $\forall x \quad M(x) =M'(x)$. Fundamental hypothesis is that $f(n)\geq n$
 \begin{proof}
-    Work in progress.
+    For the sake of brevity we'll only give the idea for the proof. Basically M' has to mimic the k tapes of M with it's only tape. To do that we specify an alphabet that is $\Sigma \cup \munderbar{\Sigma} \cup \left\{ \triangleright', \triangleleft \right\}$. We will use the underlined characters to store the information of where is the cursor on the k-th tape of the machine M and the special starting symbol will be use to delimit the start of every k-th string, meanwhile the $\triangleleft$ delimits the end of each k-th "tape".\\
+    To perform any steps of M, M' will have to scan the entire tape once to store in its state the information about every symbol under the k-th cursor and once more to perform the necessary modifications, needing in total 4 traversals of the entire tape. Particular attention must be given to the case in which the k-th cursor is on the last symbol of its sub-tape and wants to move to the right. To allow for such a move we must shift the entire string starting by marking the tape end symbol with an underbar $\munderbar{\triangleleft}$, then going all the way to the end of the tape of M' and shifting every character one position. We can now move back to $\munderbar{\triangleleft}$, move it to the right as $\triangleleft$ and placing $\sqcup$ in its previous position.
 \end{proof}
 \end{theorem}
 
-Papadimitriu 2.8.4
-\[ 
-    \forall n \exists x s.t. K(x) \geq l(x)
-\]
-Exercie 2.8.5\\
-Show that the language of palindromes cannot be decided in $ \omega(n^2) $  less than quadratic time over a 1-TM. (look for Luca trevisan article about it). The idea: you take n = |x| and the string:
-\[ 
-    x_{1}, \ldots,x_{n}\underbrace{00000}{0}x_{n}, \ldots,x_{1}
-\]
-\begin{theorem}[Speedup Theorem 2.2]
+%
+%Papadimitriu 2.8.4
+%\[ 
+%    \forall n \exists x s.t. K(x) \geq l(x)
+%\]
+%Exercie 2.8.5\\
+%Show that the language of palindromes cannot be decided in $ \omega(n^2) $  less than %quadratic time over a 1-TM. (look for Luca trevisan article about it). The idea: you take n %= |x| and the string:
+%\[ 
+ %   x_{1}, \ldots,x_{n}\underbrace{00000}{0}x_{n}, \ldots,x_{1}
+%\]
+
+\begin{theorem}[Speed-up Theorem ]
     If $L \in TIME(f(n))$ , then \[ 
-        \forall \epsilon > 0 L \in TIME(\epsilon \cdot f(n)+n +2) 
+        \forall \epsilon > 0,\quad \exists L \in TIME(\epsilon \cdot f(n)+n+2) 
     \]
-    The multiplicative constant in front of the higher degree term is dependant on the modal of computation.
+    The multiplicative constant in front of the higher degree term is dependant on the model of computation.
     \begin{proof}
-        hypothesis:
-        $L \in TIME(f(n)) \rightarrow \exists M k-TM decides L in time f(n) $
-        Goal, demonstrate
+        Idea: M' will have to process many digits in a signle "macro" step to reduce the mulitplicative constants.
+        Hypothesis:\\
+        $L \in TIME(f(n)) \rightarrow \exists M k-TM$ decides L in time $f(n)$
+        Demonstration:\\
         \[ 
-            \exists M' 2-TM decides L in time \varepsilon\cdots f(n) +n+2 
+            \exists M'\; 2-TM\; \text{ decides L in time } f'(n)=\varepsilon \cdot f(n)+n+2, \quad \forall \varepsilon >0
         \]
-        $M'$ has to simulate $m$ steps of $M$ with a constant number of steps (around 7 steps on $M'$ constitute a macro-step of $M'$) ($m$ will depend on $\varepsilon \leadsto \frac{7}{m})$.\\
-        $M$ will make $f(n)$ steps and the steps of $M'$ will be $7 \cdot \frac{f(n)}{m}$\\
-        $M$ in $m$ steps can at most read and change $m$ symbols on the tape. So if $M'$ prime has to fit into a single step the $m$ steps of the $M$ machine, its alphabet will have to be $\Sigma ^m$. Each slot of the tape of $M'$ contains an element of the alphabet $\Sigma^m$. $M$ is doing $m$ steps, how many slots of the machine $M'$ can be modified/read during $m$ steps of $M$? At most 2.\\
-        In order to simulate the $m$ steps of $M$ the machine $M'$ reads the current tuple, the one on the left and the one on the right and it stores the information on the state. Then it changes at most 2 of the tree tuples.\\
-        The $n$ additive term is because $M'$ has to read the string x of $M$ and encode it in blocks of $m$, finally it has to read the start symbol and blank space of the tape of $M$ which are the 2 steps. Finally $M'$ has to move back to its starting position so there are an additional $\frac{n}{m}$ steps.\\
+        $M'$ has to simulate $m$ steps of $M$ with a constant number of steps (around 6 steps on $M'$ constitute a macro-step of $M'$) ($m$ will depend on $\varepsilon \leadsto \frac{7}{m})$.\\
+        $M$ will make $f(n)$ steps to complete the computation while the steps of $M'$ will be $6 \cdot \frac{f(n)}{m}$\\
+        $M$ in $m$ steps can at most read and change $m$ symbols on the tape. So if $M'$ prime has to fit into a single step the $m$ steps of the $M$ machine, its alphabet will have to be $\Sigma^m$.This means that we will encode $m$ symbols of the alphabet of M into a single symbol of the alphabet of M'\\
+        Each slot of the tape of $M'$ contains an element of the alphabet $\Sigma^m$.\\
+        A key point is to understande that $M$ with $m$ steps can at most change slots of its tape that were grouped into 2 different slots of the $M'$ machine.\\
+        At the beginning of the computation $M'$ reads the input x and encodes it into tuples of $\Sigma^m$.
+        In order to simulate the $m$ steps of $M$ the machine $M'$ reads the current tuple, the one on the left and the one on the right and it stores that information on the state. Then it changes at most 2 of the three tuples.\\The multiplicative constant 6 comes from the number of moves $M'$ has to make (these can be optimized):
+        \begin{itemize}
+            \item Read the information on the starting tuple and store it in the state and move to the left
+            \item Read the information and store it in the state and move back to the starting tuple
+            \item Move to the right tuple 
+            \item Read the information and store it in the state, move back to the starting tuple
+            \item Change the symbol on the tape and move to either the right or left tuple
+            \item Change the symbol on the tape 
+        \end{itemize}
+        The $n$ additive term is because $M'$ has to read the string x of $M$ and encode it in blocks of $m$, and it has to read the start symbol and blank space of the tape of $M$ which are the 2 steps. Finally $M'$ has to move back to its starting position so there are an additional $\frac{n}{m}$ steps.\\
         $TIME(f(n))$ only makes sense with $f(n) \geq n$
     \end{proof}
 \end{theorem}
