@@ -1,10 +1,10 @@
-\section*{Analytic Geometry}
+\section{Analytic Geometry}
 In this chapter we will add some geometric interpretation and intuition to all of these concepts. In particular, we will look at geometric vectors and comput their lengths and distances or angle between two vectors. To be able to do this, we equip the vector space with an inner product that induces the geometry of the vector space.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=11cm]{Analytical Geometry/mindmap.png}
 \end{figure}
-\subsection*{Norms}
+\subsection{Norms}
 \begin{definition}[Norm]
     A norm on a vector space V is a function 
     \begin{align*}
@@ -25,7 +25,7 @@ The norm we will be using throughout these notes is going to be the Euclidean no
         \eunorm{x} = \sqrt[2]{\sum_{i=1}^{n}{x^2} = \sqrt{x^Tx}}
     \]and it computes the Euclidean distance from x to the origin. The Euclidean norm is also called the $\ell_2$ norm.
 \end{definition}
-\subsection*{Inner Products}
+\subsection{Inner Products}
 Recall the linear mappings where we can rearrange the mapping with respect to addition and multiplication with a scalar. A bilinear mapping $\Omega$ is a mapping with two arguments, and it is linear in each argument, i.e., when we look at a vector space V then it holds that for all $x,y,z \in V, \lambda, \psi \in \mathbb{R}$ that
 \begin{align*}
     \Omega(\lambda x+ \psi y, z) = \lambda\Omega(x,y) + \psi\Omega(y,z)\\
@@ -59,7 +59,7 @@ Recall that any vectors $x,y \in V$ can be written as linear combinations of the
     is called symmetric, positive definite or just positive definite. 
 \end{definition}
 
-\subsection*{Lengths and Distances}
+\subsection{Lengths and Distances}
 \begin{remark}[Cauchy-Schwarz inequality]
     For an inner product vector space $(V, \anglepar{\cdot, \cdot})$ the induced norm $\norm{\cdot}$ satisfies the Cauchy-Schwarz inequality 
     \[ 
@@ -86,7 +86,7 @@ A metric $d$ satisfies the following:
 \begin{remark}
     At first glance, the lists of properties of inner products and metrics look very similar. However, we observe that $\anglepar{x,y}$ and $d(x,y) $ behave in opposite directions. Very similar x and y will result in a large value for the inner product and a small value for the metric.
 \end{remark}
-\subsection*{Angles and Orthogonality}
+\subsection{Angles and Orthogonality}
 In addition to enabling the definition of lenghts of vectors, as well as the distance between two vectors, inner products also capture the geometry of a vector space by defining the angle $\omega$ between two vectors. We use the Cauchy-Schwarz inequality to define angles $\omega$ in inner product spaces between two vectors x,y, and this notation coincides with our intuition in $\mathbb{R}^2$ and $\mathbb{R}^3$. Assume that $x \neq 0, y\neq 0$. Then 
 \[ 
     -1 \leq \frac{\anglepar{x,y}}{\norm{x}\norm{y}} \leq 1 
@@ -107,7 +107,7 @@ Therefore, there exists a unique $\omega \in [0,\pi]$ with
         A^{-1} = A^T 
     \]
 \end{definition}
-\subsection*{Orthonormal Basis}
+\subsection{Orthonormal Basis}
 \begin{definition}[Orthonormal Basis]
     Consider an n-dimensional vector space V and a basis $b_{1}, \ldots,b_{n}$ of V. If 
     \begin{align*}

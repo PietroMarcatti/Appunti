@@ -1,11 +1,11 @@
-\section*{Complexity}
-    \subsection*{Kolmogorov}
-        \subsubsection*{History}
+\section{Complexity}
+    \subsection{Kolmogorov}
+        \subsubsection{History}
         We've talked about Shannon who worked in the US, studied at MIT and Princeton, collaborated with Bell Labs.
         We've talked about Fano who started at the Politecnico di Torino and then moved to MIT.
         Then we talked about Huffman who worked at Ohio State University, then founds the University of California Santa Cruz.\\
         Kolmogorov, unlike the other names we've seen so far, does not come from the west. In 1965 he was working at the University of Moscow\\
-        \subsubsection*{Idea}
+        \subsubsection{Idea}
         Consider a computational model and define the complexity of a string as the lenght of the shortest program (in that computational model)
         that can generate that string. We'll use Turing Machines: $m = (k, \Sigma,\delta, s)$
         \begin{description}
@@ -14,7 +14,7 @@
             \item[$\delta$]: $K \times \Sigma \longrightarrow (K\cup\{yes, no, halt\}) \times  \Sigma \times \left\{\rightarrow, \leftarrow, -\right\}$
             \item[s]: $s \in K$ start state
         \end{description}
-    \subsubsection*{Church-Turing Thesis}
+    \subsubsection{Church-Turing Thesis}
     All computational models are turing-equivalent.\newline
     Turing machines with k tapes and I/O
     $m=(K,\Sigma, \delta, s)$
@@ -23,7 +23,7 @@
         \item The input tape (1st tape) cannot be modified but we can move backwards as much as possible
         \item The output tap (last tape) can only go forwards
     \end{itemize}
-    \subsubsection*{Universal Machine Theorem}
+    \subsubsection{Universal Machine Theorem}
     $$\exists u, u \text{Universal Turing Machine} | u(bin(m), x) = m(x)$$
     How does the universal turing machine works:
     its tape is somethink like this: start $ \left[ 01\ldots 1010 \right] $ x
@@ -36,10 +36,10 @@
         \item $\varphi $is the string right of q
     \end{itemize}
     The Kolmogorov complexity of a string m is denoted by $K_u(x) = \underset{u(bin(m))=x}{min}|bin(m)|$
-    \subsubsection*{Observation}
+    \subsubsection{Observation}
     Unfortunately this notion is not computable. $$
     \nexists\; A\quad \text{Turing Machine} \quad|\quad A(x) = K_u(x)$$
-    \subsubsection*{Conditional Kolmogorov Complexity}
+    \subsubsection{Conditional Kolmogorov Complexity}
     The Conditional Kolmogorov Complexity of x given y is:
     $$ K_u(x|y) = \underset{u(bin(m),y)=x}{min} |bin(m)| $$
     This means that, obviously, if we provied some more information $K_u(x|y) \leq K_u(x)$. One of the most common information given is $|x|$.\\
@@ -115,7 +115,7 @@
         \end{proof}
     \end{theorem}
     
-    \subsubsection*{Kolmogorov Encoding}
+    \subsubsection{Kolmogorov Encoding}
     Consider the Kolmogorov code defined as follows
     \[ 
         \varphi_K: A* \longrightarrow \left\{ m | m \text{Turing Machine} \right\} 

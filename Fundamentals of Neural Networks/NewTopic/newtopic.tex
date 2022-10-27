@@ -1,0 +1,31 @@
+\section{New Topic}
+Let's follow the computation of our program to recognise the 10 digits, our input matrix is (1 x 784), our weights matrix W (784 x 10) our bias matrix (10 x 1).\\
+Matrix representation of neural networks:
+\[ 
+     L = XW + B
+\]L = logits. These are the steps:\[ 
+    Pr(A(x)) = \sigma(xW +b) 
+\]
+\[ 
+    L(x) = -log(Pr(A(x)=a)) \quad cross entrpy loss function
+\]
+\[ 
+    \nabla_l X(\Phi) = \left( \frac{\partial X(\Phi)}{\partial l_1}, \ldots, \frac{\partial X(\Phi)}{\partial l_m} \right) 
+\]
+\[ 
+    \Delta W = -\mathcal{L}X^T\nabla_l X(\Phi) 
+\]How to create the nabla in matrix form??\\
+Important we want to manipulate input in batches. Now the input matrix is now (m x 784), m batch size. When adding bias you might have to adjust the size of the matrix to work with the m rows of the batch input matrix. Tensor flow is the programming language and Python is the environment. Tensorflow plays with tensors (often typed). Vectors in Tensorflow only have one dimension! In the environment we set-up our nn-model by defining parameters and an architecture. We go trhough 3 stages: 
+\begin{itemize}
+    \item create the tensors
+    \item Turn it into a variable
+    \item Initialize it
+\end{itemize}
+A tensorflow program:
+\begin{itemize}
+    \item Load data
+    \item set-up the model (batch-size)
+    \item learn the variables (parameters)
+\end{itemize}
+Along the way of training the model we must keep in mind to compute the accuracy.\\ Rule of thumb: the smaller the batch size the smaller the learning rate.\\
+We can see with simple linear algebra matrix multiplication properties that adding a new layer doesn't add anything so we must add some non linearity. This non linearity is expressed in the form of activation function. 

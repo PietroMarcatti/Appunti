@@ -1,11 +1,11 @@
-\section*{Linear Algebra - A Mathematical Background}
+\section{Linear Algebra - A Mathematical Background}
 A mind-map summarising the key concept of this chapter and their relationship:
 \begin{figure}[htbp]
     \centering
     \includegraphics[width= 12cm]{Mathematical Background/mind-map.png}
 \end{figure}
 
-\subsection*{Systems of Linear Equations}
+\subsection{Systems of Linear Equations}
 Systems of linear equations play a central part of linear algebra. Many problems can be formulated as systems of linear equations, and linear algebra gives us the tools for solving them.\\
 In general, for a real-valued system of linear equations we obtain either no, exactly one, or infinitely many solutions. We can introduce a useful compact notation for systems of linear equations ($SLE$) collecting the coefficients $a_{ij}$ into vectors and collect the vectors into matrices.
 \begin{align}
@@ -53,7 +53,7 @@ In general, for a real-valued system of linear equations we obtain either no, ex
     A system of linear equations is defined as homogeneous if $\vec{b} = \vec{0}$
 \end{definition}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection*{Matrices}
+\subsection{Matrices}
 Matrices play a central role in linear algebra and other than to compactly represent $SLE$s they can be used to represent linear functions (linear mappings).
 
 \begin{definition}[Matrix]
@@ -97,7 +97,7 @@ Unfortunately not every matrix possesses and inverse. If this inverse does exist
 \begin{definition}[Symmetric Matrix]
     A matrix $\mathbf{A} \in \mathbb{R}^{n\times n}$ is symmetric if $\mathbf{A} = \mathbf{A}^T$
 \end{definition}
-\subsubsection*{Compact Representations of SLE}
+\subsubsection{Compact Representations of SLE}
 If we consider a system of linear equations and use the rules for matrix multiplication, we can write this equation system in a more compact form:
 \[
     \begin{bmatrix}
@@ -133,9 +133,9 @@ Generally a system of linear equations can be compactly represented in their mat
     \end{itemize}
 \end{remark}
 
-\subsection*{Vector Spaces}
+\subsection{Vector Spaces}
 So far we have seen that systems of linear equations can be compactly represented using matrix-vector notation. In the following chapter we will have a closer look at vector spaces, i.e., a structured space in which vectors live.
-\subsubsection*{Groups}
+\subsubsection{Groups}
 We are ready to formalize the characteristics of vectors and scalar multiplication but we need to introduce the concept of a group. A group is a set of elements and an operation defined on these elements that keeps some structure of the set intact.
 Groups play an important role in computer science. Besides providing a fundamental framework for operations on sets, they are heavily used in cryptography, coding theory and graphics.
 \begin{definition}[Group]
@@ -150,7 +150,7 @@ Groups play an important role in computer science. Besides providing a fundament
 \begin{remark}[Abelian Group]
     If additionally $\forall x,y \in \mathcal{G}: x\otimes y = y\otimes x$, then $G = (\mathcal{G,\otimes})$ is an Abelian group (commutative).
 \end{remark}
-\subsubsection*{Vector Spaces}
+\subsubsection{Vector Spaces}
 We will now consider an extension of the definition of group that in addition to an inner operation $+$ also contain an outer operation $\cdot$, the multiplication of a vector $x\in \mathcal{G}$ by a scalar $\lambda \in \mathbb{R}$.
 \begin{definition}[Vector space]
     A real-valued vector space $V = (\mathcal{V}, +, \cdot)$ is a set $\mathcal{V}$ with two operations
@@ -172,7 +172,7 @@ The elements $x \in V$ are called vectors.
 \end{remark}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection*{Vector Subspaces}
+\subsubsection{Vector Subspaces}
 Intuitively, vector subspaces are sets contained in the original vector space with the property that when we perform space operations on elements within this subspace, we will never leave it. In this sense they are "closed". We will see how we can use vector subspaces to perform dimensionality reduction.
 \begin{definition}[Vector subspace]
     Let $V = (\mathcal{V}, +, \cdot)$ be a vector space and $\mathcal{U} \subseteq \mathcal{V}, \mathcal{U} \neq \emptyset$. Then $U = (\mathcal{U},+,\cdot)$ is called vector subspace of V (or linear subspace) if $U$ is a vector space with the vector space operations + and $\cdot$ restricted to $\mathcal{U} \times \mathcal{U}$ and $\mathbb{R} \times \mathcal{U}$. We write $U \subseteq V$ to denote a subspace $U$ of $V$.
@@ -195,7 +195,7 @@ Only example D in the followin figureì is a subspace of $R^2$ (with the inner/o
 \begin{remark}
     Every subspace $U \subseteq (R^n, + ,\cdot)$ is the solution space of a homogeneous SLE $\mathbf{A}\vec{x} = \vec{0}$ for $\vec{x} \in R^n$
 \end{remark}
-\subsubsection*{Linear Indipendence}
+\subsubsection{Linear Indipendence}
 In the following subsection we will take a closer look at what we can do with vectors. In particular, we can add vectors together and multiply them with scalars. The closure property guarantees that we end up with another vector in the same vector space. It is possible, we will see, to find a set of vectors with which we can represent every vector in the vector space by adding them together and scaling them. This set of vectors is a basis. Before we can explore further these concept we need to define linear combinations and linear indipendence.
 
 \begin{definition}[Linear combination]
@@ -224,9 +224,9 @@ Intuitively a set of linearly independent vectors consists of vectors that have 
 \end{remark}
 A set of vectors are linearly independent if and only if no-one of the vectors can be obtained as a linear combination of the others.\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection*{Basis and Rank}
+\subsection{Basis and Rank}
 In a vector space $V$, we are particularly interested in sets of vectors $\mathcal{A}$ that possess the property that any vector $v \in V$ can be obtained by a linear combination of the vectors in $\mathcal{A}$.
-\subsubsection*{Generating Set and Basis}
+\subsubsection{Generating Set and Basis}
 \begin{definition}[Generating set and Span]
     Consider a vector space $V = (\mathcal{V},+,\cdot)$ and set of vectors $\mathcal{A} = {x_1,\ldots,x_k} \subseteq \mathcal{V}$. If every vector $v \in \mathcal{V}$ can be expressed as a linear combination of $x_1, \ldots, x_k$, $\mathcal{A}$ is called a generating set of V. The set of all linear combinations of vectors in $\mathcal{A}$ is called the span of $\mathcal{A}$. If $\mathcal{A}$ spans the vector space $V$, we write $V = span[\mathcal{A}]$ or $V = span[x_1,\ldots,x_k]$
 \end{definition}
@@ -243,7 +243,7 @@ In our study we will only consider finite-dimensional vector spaces $V$. In this
     \end{enumerate}
 \end{remark}
 
-\subsubsection*{Rank}
+\subsubsection{Rank}
 The number of linearly independent columns of a matrix $\mathbf{A} \in \mathbb{R}^{m\times n}$ equals the number of linearly independent rows and is called the rank of $\mathbf{A}$ and is denoted by $rk(\mathbf{A})$.\\
 The columns of $\mathbf{A} \in \mathbb{R}^{m\times n}$ span a subspace $U \subseteq \mathbb{R}^m$ with $dim(U) = rk(\mathbf{A})$. Later we will call this subspace the image or range.\\
 For all $\mathbf{A} \in \mathbb{R}^{n\times n}$ it holds that $\mathbf{A}$ is regular (invertible) if and only if $rk(\mathbf{A}) = n$\\
@@ -252,7 +252,7 @@ a full-rank matrix is the lesser of the number of rows and columns, i.e.,
 $rk(A) = min(m, n)$. A matrix is said to be rank deficient if it does not
 have full rank.
 
-\subsection*{Linear Mappings}
+\subsection{Linear Mappings}
 In this section we will study mappings on vector spaces that preserve their structure, which will allow us to define the concept of a coordinate. In the beginning of the chapter we said that vectors are objects that can be added together and multiplied by a scalar, and the resulting object is still a vector. We wish to preserve this property when applying the mapping. Consider two real vector spaces $V,W$, a mapping $\Phi : V \longrightarrow W $ preserves the structure of the vector space if
 \begin{align}
     \Phi(\vec{x}+\vec{y}) &= \Phi(\vec{x})+\Phi(\vec{y})\\
@@ -277,7 +277,7 @@ It turns out that we can represent linear mappings as matrices. Recall that we c
 \begin{theorem}
     Two finite-dimensional vector spaces $V$ and $W$ are isomorphic if and only if $dim(V) = dim(W)$
 \end{theorem}
-\subsubsection*{Matrix Representation of Linear Mappings}
+\subsubsection{Matrix Representation of Linear Mappings}
 From the theorem just presented we can derive that any n-dimensional vector space is isomorphic to $R^n$. We can consider a basis ${b_1,\ldots,b_n}$ of an n-dimensional vector space $V$. In the following subsection the order of the basis vectors will be important, therefore, we write
 \[
     B = (b_1,\ldots,b_n)
@@ -324,7 +324,7 @@ This means that the transformation matrix can be used to map coordinates with re
 \end{figure}\\
 \textbf{Questions:}\\
 %Where do the coefficients $\alpha_{ij}$ of the transformation matrix come from? Can we follow an example of calculating the transformation of one of the vectors from the image?
-\subsubsection*{Basis Change}
+\subsubsection{Basis Change}
 In the following, we will have a closer look at ho w transformation matrices of linear mapping $\Phi: V \longrightarrow W$ change if we change the bases in V and W. Consider two ordered bases of V
 \[ 
     B=(b_{1}, \ldots,b_{n}) \quad \tilde{B} = (\tilde{b}_{1}, \ldots,\tilde{b}_{n})
@@ -352,7 +352,7 @@ and two ordered bases of W
     \end{figure}
 \end{theorem}
 
-\subsubsection*{Image and Kernel}
+\subsubsection{Image and Kernel}
 \begin{definition}[Image and Kernel]
     For $\Phi : V \rightarrow W$ we define the kernel/null space:
     \[ 
@@ -388,7 +388,7 @@ and two ordered bases of W
     The rank-nullity theorem is also referred to as the fundamental theorem of linear mappings.
 \end{theorem}
 The mappings that we obtain by building NN are special cases of $ \Phi $ for example $ R^{10\times784} $: the strenght of this approach is that it's very simple but the cons is that it's all linear.
-\subsubsection*{Affine Subspaces}
+\subsubsection{Affine Subspaces}
 \begin{definition}[Affine Subspace]
     Let V be a vector space, $x_0 \in V$ and $U \subseteq V$ a subspace. Then the subset: \[ 
         L = x_0 + U : = {x_0+u: u\in U} \\

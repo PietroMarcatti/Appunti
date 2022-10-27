@@ -1,4 +1,4 @@
-\section*{Computational Complexity}
+\section{Computational Complexity}
 Determining the complexity of a problem means giving bounds on the complexity of any possible algorithm for solving a problem.
 We will focus on decision problems which is a class of problems for which the goal is to say, given an instance of the problem, if it has an answer or not. Other classes of problems that we will not explore are: Functional problems and optimization problems.\\
 \begin{description}
@@ -7,7 +7,7 @@ We will focus on decision problems which is a class of problems for which the go
     \item[Optimization Problems] :
 \end{description}
 Having a fast (polynomial) solution for an optimization problems implies that i have a fast one also for the Functional version and the decision version of the problem. The same goes inversely with the decision being hard, complex (non polynomial).\\
-\subsubsection*{Computation Model - Turing Machines}
+\subsubsection{Computation Model - Turing Machines}
 The model of computation we are going to use to talk about computational complexity are Turing Machines which we are going to define here for ease of use.\\
 \begin{definition}[Turing Machine]
     A Turing Machine is a quadruple $M= (K, \Sigma, \delta, s)$. Here K is a finite set of states; $s \in K$ is the initial state. $\Sigma$ is a finite set of symbols, we say $\Sigma$ is the alphabet of M. We assume that K and $\Sigma$ are disjoint sets. $\Sigma$ always contains the special symbols $\sqcup, \triangleright$: the blank and the first symbol o starting symbol. Finally $\delta$ is a transition function, which maps $K\times \Sigma$ to $(K \cup {h,"yes","no"})\times \Sigma \times {\leftarrow, \rightarrow,-- }$. We assume that h (the halting state), "yes" (the acceptin state), "no" (the rejecting state) and the cursor directions $\leftarrow, \rightarrow, --$, for "stay" are not in $K \cup \Sigma$. The function $\delta$ is the "program" of the machine. It specifies, for each combination of current state $q\in K$ and current symbol $\sigma \in \Sigma$, a triple $\delta(q,\sigma) = (p,\rho,D)$
@@ -16,7 +16,7 @@ The model of computation we are going to use to talk about computational complex
     We can define the operation of a Turing machine formally using the notion of a configuration. Intuitively, a configuration contains a complete description of the current state of the computation. Formally a configuration of M is a triple (q,u,w), where $ q \in K$ is a state, and $w,u$ are strings in $\Sigma^*$. $u$ is the string to the left of the cursor, including the symbol scanned by the cursor, and $u$ is the string to the right of the cursor, possibly empty. Finally q is the current state. 
 \end{definition}
 
-\subsubsection*{Time Complexity}
+\subsubsection{Time Complexity}
 This is a decision problem. There's a problem P, a class of models of computation M. The goal is to find in M the fastest machine m that solves P. By fastest we mean that executes least instructions. We need to fix a notion of dimension of the input which is usually done in the definition of the model of computation.\\
 \begin{definition}[Time complexity for M TM, on input x]
     We say that M, Turing Machine, on input x has time complexity t if 
@@ -32,7 +32,7 @@ This is a decision problem. There's a problem P, a class of models of computatio
     with $t\leq f(|x|)$
     This definition is a worst case time complexity. 
 \end{definition}
-\subsubsection*{URM}
+\subsubsection{URM}
 We already know about turing machines but now we'll introduce Unlimited Registry Machines (URM):\\
 Every URM has an infinite set of registers ($R_0, R_1, \ldots, R_n$), in any of these registers there can be an arbitrarily long natural number.
 \begin{itemize}
@@ -70,7 +70,7 @@ If we now analyze the cost of the models with the Logarithmic complexity cost we
     In this case reasonable means that we have to use the logarithmic criteria.
 \end{thesis}
 We define as $ P = \{L | L \text{can be decided in polynomial time on a deterministic Turing Machine}\} $. P is invariant with respect to the model of compuation ( consequence of the extended Church tesis).
-\subsubsection*{Review of k-tape TM}
+\subsubsection{Review of k-tape TM}
 Later we'll now demonstrate that the loss in time complexity that we experience by moving from one reasonable model of computation to another is at most quadratic.\\
 To show this result we reintroduce now some concepts about a k tape Turing Machine or k-TM. A configuration for a k-TM takes the following form
 \[ 
@@ -103,7 +103,7 @@ The notion of computation: a computation step for a machine M is a binary relati
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\subsection*{Time Complexity}
+\subsection{Time Complexity}
 \begin{definition}[Time complexity]
     Given M a k-TM and x the input for M, we say that M on input x takes time $t$ if
     \[ 
@@ -120,7 +120,7 @@ The notion of computation: a computation step for a machine M is a binary relati
     \]
     Example: L is the language of all strings that are palindromes. $ \Sigma = \{0,1\}\cup\{\sqcup, \triangleright\} $ we get $ \Theta(n^2) $
 \end{definition}
-\subsubsection*{Polynomial relationship between models of computation}
+\subsubsection{Polynomial relationship between models of computation}
 We can first start looking at this relationship by showing the time complexity for the problem of deciding the language of palindromes on a 1-TM and a k-TM. Here we summarize the program ideas:
 \begin{description}
     \item[1-TM]: We suppose that the tape is originally $\triangleright, x_{1}, \ldots,x_{n}, \sqcup$. The machine starts reading the first character $x_1$, stores the information about the digit in its state, replaces $x_1$ with $\triangleright$ then moves right until it finds $\sqcup$. At this point it goes back one step and confronts the character from the state and the one under the cursror. If they match it goes back all the way to the new $\triangleright$ and starts over, otherwise it rejects.
@@ -179,7 +179,7 @@ Given M a k-TM that operates in time f(n), then there exists a 1-TM M' operates 
     \end{proof}
 \end{theorem}
 
-\subsection*{Space Complexity}
+\subsection{Space Complexity}
  If we are not using an I\O machine the space used by M on input x is obtained by the configuration of the last step ( as we never delete the fact that we read a given character from the configuration). So it Is \[ 
     \sum_{i=1}^{k}{|u_i|+|w_i|} \geq |x| +c
 \]

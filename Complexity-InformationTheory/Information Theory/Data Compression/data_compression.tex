@@ -86,7 +86,7 @@ where $\varphi_i = |\varphi(a_i)|$
         \end{WithArrows}
     \end{align*}
     An optimum code achieves the equality between the expected lenght and the entropy of the distribution.
-    \subsection*{Shannon Code}
+    \subsection{Shannon Code}
     Let's recall the definition of expected lenght and entropy over the probability P and alphabet with cardinality D:
     $$EL(\varphi) = \sum_{i=1}^{k}{p_i\cdot l_i}$$
     $$ \mathcal{H}_D(P) = \sum_{i=1}^{k}{p_i\cdot (-\log_{D}{p_i})}$$
@@ -100,7 +100,7 @@ where $\varphi_i = |\varphi(a_i)|$
     $ P=\left\{ 1-\frac{1}{32}, \frac{1}{32} \right\}$
     $l_b = \log_2{2^5} = 5$ $\lceil \log_2{1-\frac{1}{32}}\rceil = 1 = l_a$
     But this is not efficient because we are assigning unnecessarily long codes to characters with low probability.
-    \subsubsection*{Sub-Optimality of Shannon Codes}
+    \subsubsection{Sub-Optimality of Shannon Codes}
     We can demonstrate that Shannon Codes are suboptimal:
     \begin{align*}
         EL(S) &= \sum_{i=1}^{k}{p_i (-\log{p_i}+\beta_i)}\\
@@ -113,7 +113,7 @@ where $\varphi_i = |\varphi(a_i)|$
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \subsection*{Shannon-Fano Code}
+    \subsection{Shannon-Fano Code}
     Given the alphabet A with characters $a_1, a_2, \ldots, a_k $ mapping to the probabilities $ p_1\leq p_2\ldots \leq p_k$. The aim is to balance the sum of the probabilities assigned to the branches of the root. To obtain balance we try to minimize this absolute value: $|\sum_{i=1}^{h}{p_i}- \sum_{i=h+1}^{k}{p_i}|$. We then repeat the calculation recursively.\\
     Example: 
     $$A= \left\{ a,b,c,d,e,f \right\}$$
@@ -127,7 +127,7 @@ where $\varphi_i = |\varphi(a_i)|$
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \subsection*{Shannon on strings of lenght n over input alphabet}
+    \subsection{Shannon on strings of lenght n over input alphabet}
     Example: $A=\left\{ a,b \right\} \;B=\left\{ 0,1 \right\}\; P=\left\{ \frac{3}{4}, \frac{1}{4} \right\}\; \mathcal{H}_2(P)=0.81\;$ 
     $EL(\varphi) = 1.25$\\
     Let's define the efficiency of a code as follows:
@@ -155,13 +155,13 @@ where $\varphi_i = |\varphi(a_i)|$
 
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \subsection*{Huffman Codes}
+    \subsection{Huffman Codes}
     Given the input alphabet and the probability distribution
     $A = \left\{ a_1, a_2, \ldots, a_k \right\} \; P={p_1\leq p_2 \ldots \leq p_k}$
     We start by taking the two leasts probable characters and we put them at the leaves, creating a phantom character with probability
     the sum of the two. I keep repeating this process until we obtain a complete tree.
 
-    \subsection*{History}
+    \subsection{History}
     \begin{itemize}
         \item 1949 Shannon-Fano code
         \item 1952 Huffman code
@@ -178,7 +178,7 @@ where $\varphi_i = |\varphi(a_i)|$
         \item Unix decides to avoid the taxation by "downgrading" to LZ77
     \end{itemize}
     
-    \subsection*{LZ-77}
+    \subsection{LZ-77}
     The idea is to focus on a part of the message i've already codified and i refer to it as search buffer.
     The portion just in front of the search buffer is the look-ahead buffer. The lenght of both buffers is a parameter of the implementation.
     I then operate like this: I look for the longest prefix of the look-ahead buffer that also appears as a substring in the search buffer.
@@ -190,7 +190,7 @@ where $\varphi_i = |\varphi(a_i)|$
         \item l: length of the prefix-suffix
         \item s: the first mis-matching character
     \end{itemize}
-    \subsection*{Example}
+    \subsection{Example}
     $input = babbababbabbabba $ Buffer size: 5\\
     Encoding:
     \begin{description}

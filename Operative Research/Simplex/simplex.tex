@@ -1,4 +1,4 @@
-\section*{Simplex}
+\section{Simplex}
 The simplex algorithm is the algorithm that solves linear programming problems. The worst theoretical complexity of the simplex algorithm is exponential but the cases in which it behaves as such must be crafted on purpose. Otherwise, in a general scenario the algorithm is polynomial.
 The simplex solves an LP assuming it's in standard form, let the LP be:
 \[ 
@@ -24,7 +24,7 @@ The LP can either be infeasable, unbounded or has optimum.
     \item if one of the improving edges is an unbouded extreme ray, stop: problema unbounded
     \item otherwise follow an improving edge up to the next verteex $v^{i+1}$ and repreat from there
  \end{enumerate}
- \subsubsection*{Vertices and basic solutions}
+ \subsubsection{Vertices and basic solutions}
  P has dimension n. Its faces are associated to the constraints defining $P^>$. A vertex is identified by the facets intersercting at v (at least n). We can indeed say something stronger: the columns of $ A^j $ such that $ v_j>0 $ are linearly independent (this implies that at each vertex there are at least n components = 0)
 \\\\Insert theorem\\\\
 Let us call the tyupe of solutions like those happeneing at the verices of P basic solutions. Namely, a solution is basic if the columns corresponding to its non-zero comonents are linearly independetnt.

@@ -84,7 +84,7 @@ the logistic classifirer defines the following cost function:
 This cost function or loss function is convex and is derivable respect to $w$ and $b$.
 In general we call the function to learn the \textbf{hypotesis} but in deep learning it's also called \textbf{model}, while the \textbf{cost function} in deep learning is also called \textbf{loss function}.
 
-\subsection*{Gradient Descent}
+\subsection{Gradient Descent}
 Gradient descent is a general algorithm for minimizing derivable functions and we are applying it to linear regression.\\
 The gradient descent algorithm repeats until convergence the following update on weigths:
 \[ 
@@ -92,7 +92,7 @@ The gradient descent algorithm repeats until convergence the following update on
 \]
 It is always necessary to evaluate every new parameter before updating any of them as to not calculate the latters with the new values for the first ones.\\
 The hyperparameter $\alpha$ is called the learning rate and it represents the size of the steps that we are taking down the direction of the gradient. For sufficiently small $\alpha$ the cost function should decrease on every iteration. This being said if $\alpha$ is too small it may take a big number of iteration to reach convergence. Finally, a value that is too big for $\alpha$ might cause the cost function to not decrease on every step because we might jump over the "dip", hence it might not converge. It is then a good idea to vary the parameter to experiment with the cost function and its convergence.
-\subsubsection*{Application of gradient descent on logistic regression}
+\subsubsection{Application of gradient descent on logistic regression}
 Once we've established our decision function, in this example the logistic regression, we can procede to apply the gradient descent. To do that we first need to calculate the partial derivatives of the Loss function with respect to every parameter ($\vec{w}$ and $\vec{b}$) so that we can apply the changes. In this example with two inputs:
 \begin{align*}
     w_1 &:= w_1 - \alpha \frac{\partial J(\vec{w},\vec{b})}{\partial w_1}\\
@@ -100,7 +100,7 @@ Once we've established our decision function, in this example the logistic regre
     b &:= b - \alpha \frac{\partial J(\vec{w},\vec{b})}{\partial b}\\
 \end{align*}
 
-\section*{Neural Networks}
+\section{Neural Networks}
 Neural Networks expand on the simple ideas of perceptron computing units by adding more layers on neurons betweeen the input and the output. As the shape of the neural network changes so does the way we represent it:
 \begin{itemize}
     \item $W^{[j]}$: its the matrix of weights controlling the function mapping from layer j-1 to layer j
@@ -108,7 +108,7 @@ Neural Networks expand on the simple ideas of perceptron computing units by addi
     \item $a^{[j]}$: activation vector for the layer j
     \item $g^{[j]}$: activation function for the layer j
 \end{itemize}
-\subsection*{Activation Functions}
+\subsection{Activation Functions}
 In deep neural networks you also have to specify what activation function you want to apply to the activation vectors of each hidden layer. In the hidden layers we rarely see the sigmoid function because it is said to kill the gradient. This refers to the fact that the sigmoid, for particularly large or small inputs, saturates at 1 or 0 respectively. The hyperbolic tangent also suffers from this vanishing gradient problem but it generally performs better than the sigmoid. The sigmoid function is still widely used in the output or final layer to give a probabilistic meaning to our output as it's betweeen [0,1].\\
 What are other types of activation function that we can be used in the hidden layers?
 \begin{description}
@@ -121,7 +121,7 @@ It is fundamental to use non-linear activation functions otherwise the output of
     a^{[2]} = z^{[2]}= W^{[2]}a^{[2]}+b^{[2]} =  W^{[2]}(W^{[1]}x+b^{[1]})+b^{[2]} = (W^{[2]}W^{[1]})x + (W^{[2]}b^{[1]}+b^{[2]})
 \]
 We can define $ W' = W^{[2]}W^{[1]} $ and $ b'= W^{[2]}b^{[1]}+b^{[2]}$ then we can rewrite $ a^{[2]} = W'x +b'$. Linear activation function is then useless unless in the last layer when performing a regression task.
-\subsection*{Back propagation}
+\subsection{Back propagation}
 Back propagation is the concept and algorithm that allows to update the weights of the neural network to learn. It relies on two simple steps:
 \begin{description}
     \item[Forward Step:] in this step is activated on one example and the error of each neuron of the output layer is computed.
@@ -141,7 +141,7 @@ Back propagation is the concept and algorithm that allows to update the weights 
 \end{definition}
 It is particularly important to set a reasonable initial value for the weights. If we used 0 on all weights, all $ z^{[1]} $ would be 0, hence $ a^{[1]}_1 = \ldots =a^{[1]}_n $ because we would always get the same mapping by the activation function. The derivaties used to obtain the gradient would be equal and so the weights and bias would all be changed by the same amount remaining all equal. We refer to this phenomenon as the symmetry problem and to counter it we can simply initialize the weights to a small random value. The reason for such a small value has to do with the previously mentioned vanishing problem. If your network starts working with big numbers it will get to the sigmoid in the output layer and be saturated on the 1 or 0 with very little gradient to move.
 
-\subsection*{Hyperparameters}
+\subsection{Hyperparameters}
 We've already referred to some of our variables as hyperparameters. We can identify an hyperparameter by considering if it is a variable that can be changed to impact the functioning and the performance of our model without it being a parameter such as the weights and the bias. Examples of hyperparameters are:
 \begin{itemize}
     \item Learning rate
@@ -152,14 +152,14 @@ We've already referred to some of our variables as hyperparameters. We can ident
 \end{itemize}
 The process of tuning these values to achieve the best result is for us, right now, all empirical.
 
-\section*{Improving our Neural Network}
+\section{Improving our Neural Network}
 In the process of training our neural network we often divide all the data we have available in two or three sets. These are the training and test set, plus optionally, the validation set. The training set contains the data we use to perform the learning of our model. If available we then measure the performance on the validation set in real world mock-up scenario. Eventually, when our model is stable we test it on the test set to get a real measure of it's performance.\\
 It is fundamental that validation and test have the same distribution to ensure meaningful learning.\\
 We divide our training data set into smaller batches of usually around 16-32-64 samples. We compute forward and backwards on every single sample. Once we complete all the batches we completed an epoch. We can then start again but now, on the first batch, our neural network will have weights that will have already changed thanks to all other batches.
 
-\subsection*{Overfit vs. Underfit}
+\subsection{Overfit vs. Underfit}
 
-\subsubsection*{Regularization}
+\subsubsection{Regularization}
 Logistic Regression: Minimization problem with regularization:$ \;\min_{w,b}{J(w,b)}$
 $$J(w,b)= \frac{1}{m}\left[ \sum_{i=1}^{m}{Cost(h_{w,b}(x^{(i)}), y^{(i)})+\frac{\lambda}{2}\sum_{j=1}^{n}{w_i^2}} \right]$$
 $\lambda$ is called the regularization parameter, usually b is ignored in the regularization process.
@@ -174,7 +174,7 @@ Regularization helps preventing overfitting because by using a big value for $\l
 Too many dead nodes means underfitting? Would it ever be useful to have a small $\lambda$\\\\
 
 
-\subsection*{Normalization}
+\subsection{Normalization}
 Mean normalization transforms dta to have a mean of zero and a standard deviation of 1. Such normalization is the preferred normalization for Neural Networks. Given a feature $ x_i $ the mapped feature is $ x^i  = \frac{x_i-\mu_i}{\sigma_i}$ where $ \mu_i, \sigma_i $ are the mean and standard deviation computed on the training set. It is important to normalize each feature separately as its data come from different distributions and the feature number is exactly what the index $ x_i $ refers to.\\
 The MinMaxNormalization shifts the data such that all features are exactly between 0 and 1. 
 \[ 
@@ -187,7 +187,7 @@ It's very important to apply the same transformation to the trainin set and the 
 \end{figure}
 The correct procedure is to normalize the training set and then once we have a stable model we can normalize also the test set with the same min and max values computed for the training set.
 
-\section*{NLP and Word Embedding}
+\section{NLP and Word Embedding}
 Natural language processing is a field of deep learning in which you focus on recognizing elements of written text speech particles. Other fields of use are the summarization of text, question answering, automatic email response and forwarding, chatbots ecc ecc\\
 Word embedding is a field of deep learning. It aims to represent a word as feature vectors, and consequently as numbers. The simplest way is to assign each word of a vocabulary a number but this way you could sort words which doesn't map as a semantic characterstic for words. A different way is to use a one-hot vector for each words. These vectors are the size of the vocabulary and only for the word we want to represent we put 0 in the corresponding position, otherwise 0. This representation has some pros: it's simple and it doesnt imply ordering. The cons: huge vectors and no embedded meaning.
 

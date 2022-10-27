@@ -1,4 +1,4 @@
-\section*{Linear Programming}
+\section{Linear Programming}
 Teorema: Cnsider a polyhedron
     $P = \left\{ x \in \mathbb{R}^n : Ax\leq b \right\} = \left\{ x: A^=x = b^=, A^<x \leq b^< \right\}$
     It can be shown that $dim(P) = n - rank(A^=)$.
@@ -25,7 +25,7 @@ Teorema: Cnsider a polyhedron
         \item internal representation: a set of vectros such that P is their convex hull
     \end{itemize}
 
-    \section*{Modelling for Linear Programming}
+    \section{Modelling for Linear Programming}
     Per convenzione in problemi di minimo mettiamo tutti i vincoli $\geq$, viceversa per i massimi mettiamo $\leq$.
 
     The goal function is a linear function. Each variable $x_i$ has a cost that depends, linearly, on the variable's value. By doubling the value, the cost also doubles and so on. Let $c_i$ be the
@@ -34,7 +34,7 @@ Teorema: Cnsider a polyhedron
     The decision is then shifted to how much more than the threshold $\tau$ do i want to produce?
     The meaning of the binary variable z is: "is y>0?". 
     The same reasoning can be applied multiple times to represent economies of scale setting up steps at which each individual unit lowers its cost.
-    \subsection*{Linear Constraints}
+    \subsection{Linear Constraints}
     A disequality is loose for $(x_i, x_2, x_k) \leftarrow (\gamma_1, \gamma_2, \gamma_k$)
 
     If a non-negative variable must take only values within a range [L,U], we enforce this condition by two constraints,
@@ -58,7 +58,7 @@ Teorema: Cnsider a polyhedron
     $$z \leq -x+ My\quad z\geq x+M(1-y)$$
 
 
-    \section*{Linear Programming}
+    \section{Linear Programming}
     A linear programming problem is the maximization or minimization of a linear functino over a set of real-valued vectros constrained by a finite number of linear inequalities and/or equations. An instance of a linear programming problem is a linear program.\\
     We can define a matrix A whose rows are the vectors $a_1^T, \ldots , a_m^T$. Assume $|I| = m_1, |E| = m_2, |C|=n_1 and |U|=n_2$. We can partition A:
     $$
