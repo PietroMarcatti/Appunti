@@ -184,3 +184,75 @@ Given M a k-TM that operates in time f(n), then there exists a 1-TM M' operates 
     \sum_{i=1}^{k}{|u_i|+|w_i|} \geq |x| +c
 \]
 Recall the definition of I\O Turing Machines (cannot change input).
+M k-tm over x takes space $ \sum_{i=1}^{k}{|w_i|+|u_i|} $
+where the $w_i$ and $u_i$ are the ones from the last layer.
+Different consideration, if M is a i/o turing machine the space is $\sum_{i=2}^{k-1}{|w_i|+|u_i|}$. M which is an i/o k-tm decides L in space complexity f(n) if $\forall x : |x|=n \; M(x)\downarrow \;$ using space ad most $f(n)$. The language L belongs to the class $L \in SPACE(f(n)) \; iff \; \exists M i/o TM $ that decies L in space $f(n)$. i/o turing machines are linearly related to a generic k-tm turing machine so we'll use i/o machines to talk and determin space complexity and generic k-tm turing machines for time complexity. (proof not needed)There's also speed up theorem for space.
+\begin{theorem}[space speed up]
+    $L \in SPACE(f(n)) : \forall \varepsilon >0 \; L \in SPACE(\varepsilon\cdot f(n) +2)$
+\end{theorem}
+\subsection*{RAM computational model}
+RAM stands for Random Access Machine. It is made of an infinite set of work registers, the content of $r_i$ can be arbitrarily large. Moreover there are more registers with arbitrarily large integers and they are the input registers. Its program ( $P=(\pi_{1}, \ldots,\pi_{n})$ ) is a finite set of instructions taken from the set:
+\begin{description}
+    \item[READ J]: $r_0 = i_j$
+    \item[READ $\uparrow$j] = $r_0 = i_{r_j}$
+    \item[STORE J] = $r_j = r_0$
+    \item[STORE $\uparrow$ j]  $r_{r_j}=r_0$
+    \item[LOAD J] $r_0 = r_j$
+    \item[LOAD $\uparrow$ j] $r_0 = r_{r_j} $
+    \item[LOAD =j] $r_0 = j$
+    \item[ADD] $r_0 = r_0+r_j$
+    \item[ADD $\uparrow$ j] $r_0 = r_0+r_{r_j}$
+    \item[ADD =j]    $r_0 = r_0+j$
+    \item[SUB] $r_0 = r_0-r_j$
+    \item[SUB $\uparrow$ j] $r_0 = r_0-r_{r_j}$
+    \item[SUB =j]    $r_0 = r_0-j$
+    \item[HALF] $r_0 = \left\lfloor \frac{r_0}{2} \right\rfloor$
+    \item[JUMP j] $k = j$, (k is the program counter) 
+    \item[JPOS j] if $r_0>0 $then $k = j$
+    \item[JNEG j] if $r_0<0$ then $k = j$
+    \item[JZERO j] if $r_0=0$ then $k = j$
+    \item[HALT] $k=0$
+\end{description}
+Operational semantics: the meaning of a program is a graph with a starting configuration and a relationship between a different configuration.\\
+denotational semantics: you map the program to the function computed by P, static verification tecniques, abstract interpretation. Optional study reference Robin Milner Calculus of communication systems\\
+\begin{definition}[RAM configuration]
+    Given a RAM P, to define its configuration we need the couple:
+    \[ 
+        C=(k,R) 
+    \]
+    where k is the program counter and R is the set of working and index regsiters with their content
+    \[ 
+        R = \left\{ (R_{j1}, r_{j1}), \ldots,(R_{jn}, r_{jn}) \right\} 
+    \]
+\end{definition}
+and a configuration step: 
+\[ 
+    (k, R) \overset{P,I}{\longrightarrow} ( k', R') 
+\]
+Defintion of computation step with many cases:
+For instance the program P is $P=(\pi_{1}, \ldots,\pi_{n})$ and the instruction $\pi_k = ADD j$ and $R={(R_{j1}, r_{j1}), \ldots,(R_{jh }, r_{jh}}$ from the configuration \[ 
+    (k, R) \overset{P,I}{\longrightarrow} ( k+1,(R\setminus\{(R_0,r_0)\}\cup \{(R_0, r_0+r_j)\}) )
+\]
+To shorten the fact that we compute k steps we write: $\overset{P, I^k}{\longrightarrow}$\\
+Function computed by a RAM P
+\[ 
+    \phi : D \longrightarrow \mathbb{N} ,\quad D \subseteq \mathbb{N}^h 
+\]
+\[ 
+    \forall I \in D, \quad (1, \emptyset) \overset{P,I^\ell}{\longrightarrow} (0, R) 
+\]with $(\underset{R_0}{0},\phi(I)) \in R$\\
+P on input I takes time $t$ if $(1, \emptyset) \overset{P,I^t}{\longrightarrow} (0,R)$\\
+P operates in time $f(n)$ if $\forall I: l(I) = n $ P on I takes time $f(n)$ where $l(I) = \sum_{j=1}^{h}{l(i_j)}$ where $l(i_j)$ is the number of bits of that integer $i_j$.\\\\
+Simulation of a TM with a RAM:\\
+SInce the RAM only operates on integer we have to encode the alphabet of the TM into integers.
+\[ 
+    D_{\Sigma}= \{(i_i,\ldots, i_n,0) | n\geq 0 \forall 1\leq j\leq n \quad 1 \leq i_j\leq l,  \} 
+\]
+M decides $L \subseteq \Sigma^*$, while a RAM P simulates the Turing machine M (that decides L) if P computes the function  \[ 
+    \phi_L : D_{\Sigma} \longrightarrow \mathbb{N}
+\]where \[ 
+    \phi_L : (i_{1}, \ldots,i_{n}, 0) = \begin{cases}
+        0 & \sigma_{1}, \ldots,\sigma_{n} \notin L\\
+        1 & \sigma_{1}, \ldots,\sigma_{n} \in L  
+    \end{cases} 
+\]
