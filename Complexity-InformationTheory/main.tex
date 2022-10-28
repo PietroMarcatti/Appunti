@@ -6,14 +6,18 @@
 \usepackage{witharrows}
 \usepackage{cancel}
 \usepackage{accents}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{remark}{Remark}[section]
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{proof}[section]{Proof}
-\newtheorem{lemma}[section]{Lemma}
-\newtheorem{thesis}[section]{Thesis}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proof}{Proof}
+\newtheorem{lemma}{Lemma}
+\newtheorem{thesis}{Thesis}
 \newcommand\munderbar[1]{%
-  \underaccent{\bar}{#1}}
+\underaccent{\bar}{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\eunorm}[1]{\left\lVert#1\right\rVert_{2}}
+\newcommand{\anglepar}[1]{\left\langle#1\right\rangle}
+\newcommand{\absolute}[1]{\left\lvert#1\right\rvert}
 
 \title{Complexity and Information Theory}
 \author{Pietro Marcatti}

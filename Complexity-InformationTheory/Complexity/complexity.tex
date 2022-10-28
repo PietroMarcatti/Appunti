@@ -180,18 +180,23 @@ Given M a k-TM that operates in time f(n), then there exists a 1-TM M' operates 
 \end{theorem}
 
 \subsection{Space Complexity}
- If we are not using an I\O machine the space used by M on input x is obtained by the configuration of the last step ( as we never delete the fact that we read a given character from the configuration). So it Is \[ 
-    \sum_{i=1}^{k}{|u_i|+|w_i|} \geq |x| +c
-\]
-Recall the definition of I\O Turing Machines (cannot change input).
-M k-tm over x takes space $ \sum_{i=1}^{k}{|w_i|+|u_i|} $
-where the $w_i$ and $u_i$ are the ones from the last layer.
-Different consideration, if M is a i/o turing machine the space is $\sum_{i=2}^{k-1}{|w_i|+|u_i|}$. M which is an i/o k-tm decides L in space complexity f(n) if $\forall x : |x|=n \; M(x)\downarrow \;$ using space ad most $f(n)$. The language L belongs to the class $L \in SPACE(f(n)) \; iff \; \exists M i/o TM $ that decies L in space $f(n)$. i/o turing machines are linearly related to a generic k-tm turing machine so we'll use i/o machines to talk and determin space complexity and generic k-tm turing machines for time complexity. (proof not needed)There's also speed up theorem for space.
-\begin{theorem}[space speed up]
+\begin{definition}[Space Complexity]
+    Suppose that, for a k-string Turing Machine M and input x, computation of M
+    \[ 
+        (s,\triangleright, x, \ldots, \triangleright, \varepsilon) \overset{M^*}{\longrightarrow} (H, w_q, u_1, \ldots, w_k,u_k) 
+    \] where $H \in \left\{ h, "yes", "no" \right\}$ is a halting state. Then the space required by M on input x is $\sum_{i=1}^{k}{\absolute{w_i}+\absolute{u_i}}$. If, however, M is a machine with input output (I/O TM), then the space required by M on input x is $\sum_{i=2}^{k-1}{\absolute{w_i}+\absolute{u_i}}$.\\
+    Suppose now that $f$ is a function from $\mathbb{N}$ to $\mathbb{N}$. We say that Turing Machine M operates within space bound $f(n)$ if, for any input x, M requires at most $f(\absolute{x}) $.\\
+    Finally, let L be a language. We say that L is in the space complexity class SPACE($f(n)$) if there is a Turing Machine with input output that decides L and operates within space bound $f(n)$. 
+\end{definition}
+I/O turing machines are linearly related to a generic k-string Turing Machines, so we'll use I/O machines to talk and determine space complexity and generic k-string Turing Machines for time complexity.
+\begin{theorem}[Space Speed Up Theorem]
     $L \in SPACE(f(n)) : \forall \varepsilon >0 \; L \in SPACE(\varepsilon\cdot f(n) +2)$
 \end{theorem}
+
+
 \subsection*{RAM computational model}
-RAM stands for Random Access Machine. It is made of an infinite set of work registers, the content of $r_i$ can be arbitrarily large. Moreover there are more registers with arbitrarily large integers and they are the input registers. Its program ( $P=(\pi_{1}, \ldots,\pi_{n})$ ) is a finite set of instructions taken from the set:
+A Random Access Machine, or RAM, is a computing device which, like the Turing Machine, consists of a program acting on a data structure. A RAM's data structure is an array of registers, each capable of containing an arbitrarily large integer, possibly negative. These registers are divided into working registers named $r_i$ and input registers $i_j$.\\
+Formally a RAM program $P=(\pi_{1}, \ldots,\pi_{n})$ is a finite sequence of instructions, where each instruction $\pi_i$ is one of the following.
 \begin{description}
     \item[READ J]: $r_0 = i_j$
     \item[READ $\uparrow$j] = $r_0 = i_{r_j}$
@@ -213,38 +218,35 @@ RAM stands for Random Access Machine. It is made of an infinite set of work regi
     \item[JZERO j] if $r_0=0$ then $k = j$
     \item[HALT] $k=0$
 \end{description}
-Operational semantics: the meaning of a program is a graph with a starting configuration and a relationship between a different configuration.\\
-denotational semantics: you map the program to the function computed by P, static verification tecniques, abstract interpretation. Optional study reference Robin Milner Calculus of communication systems\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Operational semantics: the meaning of a program is a graph with a starting configuration and a relationship between a different configuration.\\
+%denotational semantics: you map the program to the function computed by P, static verification tecniques, abstract interpretation. Optional study reference Robin Milner Calculus of communication systems\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{definition}[RAM configuration]
-    Given a RAM P, to define its configuration we need the couple:
+    A configuration of a RAM is a pair
     \[ 
         C=(k,R) 
     \]
-    where k is the program counter and R is the set of working and index regsiters with their content
+    where k is the program counter and tells the instruction to be executed and R is the set of working and index regsiters with their content
     \[ 
-        R = \left\{ (R_{j1}, r_{j1}), \ldots,(R_{jn}, r_{jn}) \right\} 
+        R = \left\{ (r_{j1}, j_{j}), \ldots,(r_{jk}, j_{k}) \right\} 
     \]
 \end{definition}
-and a configuration step: 
-\[ 
-    (k, R) \overset{P,I}{\longrightarrow} ( k', R') 
+\begin{definition}[Computation step]
+    Let us fix a RAM program P and input $I = (i_{1}, \ldots,i_{n})$. Suppose that $C=(k,R)$ and $C'=(k', R')$ are configurations. We say that $(k,R)$ yields in one step $(k',R')$ , written $(k, R) \overset{P,I}{\longrightarrow} ( k', R')$, if the following holds: $k'$ is the new value of $k$ after the execution of $\pi_k$ the k-th instruction of P. R', on the other hand, is the same as R with the difference that registers involved in the $\pi_k$ instruction have to altered accordingly.\\
+    For instance the program P is $P=(\pi_{1}, \ldots,\pi_{n})$ and the instruction $\pi_k = ADD j$ and $R={(r_{j1}, j_{1}), \ldots,(r_{jh }, j_{h}}$ from the configuration \[ 
+    (k, R) \overset{P,I}{\longrightarrow} ( k+1,(R\setminus\{(r_0,r_0)\}\cup \{(r_0, r_0+r_j)\}) )
 \]
-Defintion of computation step with many cases:
-For instance the program P is $P=(\pi_{1}, \ldots,\pi_{n})$ and the instruction $\pi_k = ADD j$ and $R={(R_{j1}, r_{j1}), \ldots,(R_{jh }, r_{jh}}$ from the configuration \[ 
-    (k, R) \overset{P,I}{\longrightarrow} ( k+1,(R\setminus\{(R_0,r_0)\}\cup \{(R_0, r_0+r_j)\}) )
-\]
-To shorten the fact that we compute k steps we write: $\overset{P, I^k}{\longrightarrow}$\\
-Function computed by a RAM P
-\[ 
-    \phi : D \longrightarrow \mathbb{N} ,\quad D \subseteq \mathbb{N}^h 
-\]
-\[ 
-    \forall I \in D, \quad (1, \emptyset) \overset{P,I^\ell}{\longrightarrow} (0, R) 
-\]with $(\underset{R_0}{0},\phi(I)) \in R$\\
-P on input I takes time $t$ if $(1, \emptyset) \overset{P,I^t}{\longrightarrow} (0,R)$\\
-P operates in time $f(n)$ if $\forall I: l(I) = n $ P on I takes time $f(n)$ where $l(I) = \sum_{j=1}^{h}{l(i_j)}$ where $l(i_j)$ is the number of bits of that integer $i_j$.\\\\
-Simulation of a TM with a RAM:\\
-SInce the RAM only operates on integer we have to encode the alphabet of the TM into integers.
+\end{definition}
+This completes the definition of the relation $\overset{P,I}{\longrightarrow}$. We can now define $\overset{P,I^k}{\longrightarrow}$ (yields in k steps) and $\overset{P,I^+}{\longrightarrow}$ (yields).
+\begin{definition}[Function computed by RAM]
+    Let P be a RAM program, let D be a set of finite sequences of integers, and let $\phi$ be a function from D to the integers. We say that P computes $\phi$ if, and for any $I \in D, (1,\emptyset) \overset{P,I^*}{\longrightarrow} (0,R)$, where $(0, \phi(I)) \in R$
+\end{definition}
+
+The RAM program P on input I takes time $t$ if $(1, \emptyset) \overset{P,I^t}{\longrightarrow} (0,R)$. We then say that
+P operates in time $f(n)$ if $\forall I: l(I) = n $, P on I takes time $f(n)$ where $l(I) = \sum_{j=1}^{h}{l(i_j)}$ where $l(i_j)$ is the length of the binary representation of that integer $i_j$.
+\subsubsection*{Simulation of a Turing Machine with RAM}
+Since the RAM only operates on integer we have to encode the alphabet of the TM into integers.
 \[ 
     D_{\Sigma}= \{(i_i,\ldots, i_n,0) | n\geq 0 \forall 1\leq j\leq n \quad 1 \leq i_j\leq l,  \} 
 \]
