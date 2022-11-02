@@ -173,6 +173,9 @@ Where $W^{[l]}\in \mathbb{R}^{n^{[l]}\times n^{[l-1]}}$\\
 Regularization helps preventing overfitting because by using a big value for $\lambda$ we minimize weigths close to 0 and some of them are basically dead (almost 0)\\\\
 Too many dead nodes means underfitting? Would it ever be useful to have a small $\lambda$\\\\
 
+\subsection*{Vanishing and Esploding Gradients}
+We can observe this phenomenon when dealing with very deep neural networks. In summary, we want to initialize the weights around 1, otherwise through repeated multiplication we would end up with very large or extremely small numbers in the weights matrix. 
+
 
 \subsection{Normalization}
 Mean normalization transforms dta to have a mean of zero and a standard deviation of 1. Such normalization is the preferred normalization for Neural Networks. Given a feature $ x_i $ the mapped feature is $ x^i  = \frac{x_i-\mu_i}{\sigma_i}$ where $ \mu_i, \sigma_i $ are the mean and standard deviation computed on the training set. It is important to normalize each feature separately as its data come from different distributions and the feature number is exactly what the index $ x_i $ refers to.\\
@@ -189,7 +192,14 @@ The correct procedure is to normalize the training set and then once we have a s
 
 \section{NLP and Word Embedding}
 Natural language processing is a field of deep learning in which you focus on recognizing elements of written text speech particles. Other fields of use are the summarization of text, question answering, automatic email response and forwarding, chatbots ecc ecc\\
-Word embedding is a field of deep learning. It aims to represent a word as feature vectors, and consequently as numbers. The simplest way is to assign each word of a vocabulary a number but this way you could sort words which doesn't map as a semantic characterstic for words. A different way is to use a one-hot vector for each words. These vectors are the size of the vocabulary and only for the word we want to represent we put 0 in the corresponding position, otherwise 0. This representation has some pros: it's simple and it doesnt imply ordering. The cons: huge vectors and no embedded meaning.
+Word embedding is a field of deep learning. It aims to represent a word as feature vectors, and consequently as numbers. The simplest way is to assign each word of a vocabulary a number but this way you could sort words which doesn't map as a semantic characterstic for words. A different way is to use a one-hot vector for each words. These vectors are the size of the vocabulary and only for the word we want to represent we put 0 in the corresponding position, otherwise 0. This representation has some pros: it's simple and it doesnt imply ordering. The cons: huge vectors and no embedded meaning.\\
+The next idea is to represent words in a semantic space through vectors that can carry the essence of the meaning. We could, for example, place words on a real scale where the negative half expresses how negative the essence of the word is on the contrary the positive axis imply positivity.\\ We could expand this model to include two dimensions, they could for example represent how abstract or, inversely, concrete a word is. This kind of representation is defintely a step up and we have a low dimensionality representation for words and there is an embedded meaning from which to derive semantic distance or closeness.
+\subsection*{Word embedding process}
+We take a corpus (be it general purpose or specialized for a given context). The embedding algorithm will use a high feature space (around 300) to try and position the words of the corpus in such space. We then want to validate the goodness of the model by using it in NLP tasks.\\
+\subsubsection*{Word2Vec algorithm}
+Is a technique for builiding a rich semantic word embedding space (by google 2013). The key idea is to have similar embeddings for words that have similar meaning and context.It works by creating a fake task: given a specific word in the middle of a sentence (the input word), the network is going to tell us the probability for every word in our vocabulaty of being near-by the word we chose. The "near-by" amount is a parameter that we define, usually 5 before and 5 after the input word. \\
+The resulting neural network is composed by input, one hidden and output layer. There is no activation function on the hidden layer neurons. The dimensionality of the hidden layer is equal do the dimensionality of the embeddin (example 300)
+
 
 \include{exercise-book.tex}
 \end{document}

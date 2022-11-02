@@ -28,4 +28,69 @@ A tensorflow program:
     \item learn the variables (parameters)
 \end{itemize}
 Along the way of training the model we must keep in mind to compute the accuracy.\\ Rule of thumb: the smaller the batch size the smaller the learning rate.\\
-We can see with simple linear algebra matrix multiplication properties that adding a new layer doesn't add anything so we must add some non linearity. This non linearity is expressed in the form of activation function. 
+We can see with simple linear algebra matrix multiplication properties that adding a new layer doesn't add anything so we must add some non linearity. This non linearity is expressed in the form of activation function.
+\subsection{Multilayered NNs}
+Our model can work with multiple layered NNs but we cannot obtain any improvement if we don't include some linearity in the sense of an activation function on the neurons. Examples of activation functions are ReLU (rectified linear unity) and the Sigmoid, they are placed between the output of one layer and the input of the next one.\\
+A key problem that we quickly encounter is the vanishing gradient that the ReLU solves better than the Sigmoid. Another improvement over the ReLU is the Leaky ReLU.
+\[ 
+    Pr(A(x)) = \underset{soft-max}{\sigma} (\underset{ReLU}{\rho}(xU+\underset{first-layer bias}{b_u})V+\underset{second-layer bias}{b_v}) 
+\]
+\begin{definition}[Neural Network]
+    A neural network is a sorted triple (N,V,w) with two sets N,V and a function w, where N is the set of neurons and V is a set whose elements are connections between neurons. The function w: V-> R defines the weights where w((i,j)), the weight between neuron i and j is shortened w_{i,j}
+\end{definition}
+The data flow is more than just a graph: data enters a neuron where it follows three steps:
+\begin{itemize}
+    \item Propagation function
+    \item Activation function
+    \item Output function
+\end{itemize}
+\begin{definition}[Propagation function and network input]
+    Let I be the set of neurons. Then the network input of j, called net_j, is calculated by the propagation function f_prop as follows
+    \[ 
+        net_j = f_prop(o_i_1,\ldots, o_i_n, w_{i_1,j} \ldots w_{i_1,j}) 
+    \]
+    Most often the f_prop is the weighted sum and operates on previous layers' output
+\end{definition}
+\begin{definition}[Activation state/ activation in general] Let j be a neurosn. The activation state a_j, in short activation, is explicitly assigned to j, indicates the extento f the neurons activity and results from the activation function.
+    \[ 
+        a_j(t) = f_act(net_j(t), a_j(t-1), \Theta_j) 
+    \]
+    
+\end{definition}
+Most often, the output function is the identity function.
+\begin{definition}[Output function]
+    Let j be a neuron. the output function
+    \[ 
+        f_out(a_j)= o_j 
+    \]
+\end{definition}
+\subsection*{Network Topologies}
+Feed forward has input nodes, hidden/processing nodes, and output nodes. most often layers are fully connected. They can be varied adding shortcuts between input and output cuttin through the network\\
+Recurrence of three types: direct (self loop), indirect, lateral. in recurrent neural networks it's not as clear what neurons are the outputs. The use and impact of recurrence in neural networks is extremely complex and is still being researched.
+\begin{definition}[Bias neuron]
+    always firing neuron with some weight connected to all neurons of next layer.
+\end{definition}
+\subsection{Order of activation}
+To describe the order of activation we can have two models:
+the syncronous model in which at every tick of the clock all neurons take their input and compute their output. The asyncronous model, instead, can define a different, particular way in which neurons activate and output. It could be random or a random permutation
+\subsection*{Input/Output and dimension}
+Input vector and output vectors definition from the book
+\section{Learning Paradigms and Terminology}
+In describing the learning paradigms and the terminology we must keep in mind an objective: to be able to generalize the concepts observed. How do we act on a NN to improve its ability towards generalization? There are at least 7 actions that we can take:
+\begin{itemize}
+    \item developing new connections
+    \item ..deleting existing connections
+    \item changing connecting weights
+    \item changing the threshold values of neurons
+    \item varying one or more of the three neuron functions
+    \item developing new neurons
+    \item deleting existing neurons (and of course connections)
+\end{itemize}
+The training set is made of patterns p_{1}, \ldots,p_{n}, we then have two questions:
+\begin{itemize}
+    \item How do nn learn?
+    \item When do NN stop learning?
+\end{itemize}
+defintion of unsupervised learning, reinforcement learning and supervised learning, Difference between online and offline learning
+\subsection*{Learning curve and error measurement}
+definition of specific error, definition of total error for offline learning
