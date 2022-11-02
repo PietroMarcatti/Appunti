@@ -1,0 +1,173 @@
+\section{Learning Paradigms and Terminology}
+In describing the learning paradigms and the terminology we must keep in mind an objective: to be able to generalize the concepts observed.
+\begin{definition}[Neural Network]
+    A neural network is a sorted triple $(N,V,w)$ with two sets $N,V$ and a function w, where N is the set of neurons and V is a set ${(i,j)|i,j\in\mathbb{N}}$ whose elements are connections between neurons. The function $w: V \longrightarrow \mathbb{R}$ defines the weights where $w((i,j))$, the weight between neuron i and j, is shortened $w_{i,j}$
+\end{definition}
+The data flow is more than just a graph: data enters a neuron where it follows three steps:
+\begin{description}
+    \item[Propagation function] Often a weighted sum, transforms outputs of other neurons to net input
+    \item[Activation function] Transforms net input and sometimes old activation to new activation
+    \item[Output function] Often the identity function, transforms activation to output for other neurons
+\end{description}
+\begin{definition}[Propagation function and network input]
+    Let $I = \left\{ i_{1}, \ldots,i_{n} \right\}$ be the set of neurons such that $\forall z\in \left\{ 1, \ldots, n \right\} : \exists w_{i_z,j}$. Then the network input of j, called $net_j$, is calculated by the propagation function $f_prop$ as follows
+    \[ 
+        net_j = f_prop(o_{i_1},\ldots, o_{i_n}, w_{i_1,j} \ldots w_{i_n,j}) 
+    \]
+    Most often the $f_prop$ is the weighted sum and operates on previous layers' output
+\end{definition}
+\begin{definition}[Threshold value]
+    Let j be a neuron. The threshold value $\Theta_j$ is uniquely assigned to j and marks the position of the maximum gradient value of the avtivation function.
+\end{definition}
+
+\begin{definition}[Activation state/ activation in general] Let j be a neuron. The activation state $a_j$, in short activation, is explicitly assigned to j, indicates the extent of the neurons activity and results from the activation function.
+    \[ 
+        a_j(t) = f_act(net_j(t), a_j(t-1), \Theta_j) 
+    \]
+    
+\end{definition}
+Most often, the output function is the identity function. Unlike the other variables within the neural network the activation functions is often defined globally for all neurons, or at least for a set of neurons and only the threshold values are different for each neurons. The following are commong activation functions:
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=8cm]{Learning Paradigms/activation_functions.png}
+\end{figure}
+\newpage
+\begin{definition}[Output function]
+    Let j be a neuron. The output function
+    \[ 
+        f_out(a_j)= o_j 
+    \]
+    calculates the output value of $o_j$ of the neuron j from its avtivation state $a_j$.
+\end{definition}
+    Generally the output function is defined globally. Often this function is the identity function $f_out(a_j) = a_j,\; o_j = a_j$
+\begin{definition}[Bias neuron]
+    A bias neuron is a neuron whose output value is always 1. It is used to represent neuron biases as connection weights, which enables any weight training algorithm to train the biases at the same time.
+\end{definition}
+\subsection{Network Topologies}
+\subsubsection{Feed-Forward}
+The Feed-forward network topology has input nodes, hidden/processing nodes, and output nodes. Most often layers are fully connected. They can be varied adding shortcuts between input and output cutting through the network while in the simplest topology each neuron is only connected to neurons of the adjacent layer.
+\begin{figure}[htbp]
+    \hspace*{-2cm}
+    \centering
+    \begin{subfigure}{8cm}
+      \centering
+      \includegraphics[width=6cm]{Learning Paradigms/simplest_ffnn.png}
+      \caption{Simplest Feed-forward NN}
+      \label{fig:sub1}
+    \end{subfigure}%
+    \begin{subfigure}{8cm}
+      \centering
+      \includegraphics[width =6cm]{Learning Paradigms/shortcut_ffnn.png}
+      \caption{Feed-forward NN with shortcuts}
+      \label{fig:sub2}
+    \end{subfigure}
+    \caption{Feed-forward topologies}
+    \label{fig:feedforward}
+    \end{figure}
+\subsubsection{Recurrent}
+By recurrence in the context of NN we mean the process of a neuron influencing itself by any means or by any connection.
+In recurrent NN it's not as clear what neurons are the outputs. The use and impact of recurrence in neural networks is extremely complex and is still being researched. Recurrence can be of three types: direct (self loop), indirect, lateral.
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{6cm}
+      \centering
+      \includegraphics[width=5cm]{Learning Paradigms/direct_recurrence.png}
+      \caption{Direct recurrence}
+      \label{fig:sub1}
+    \end{subfigure}%
+    \begin{subfigure}{6cm}
+      \centering
+      \includegraphics[width =5cm]{Learning Paradigms/indirect_recurrence.png}
+      \caption{Indirect recurrence}
+      \label{fig:sub2}
+    \end{subfigure}
+    \begin{subfigure}{6cm}
+        \centering
+        \includegraphics[width =5cm]{Learning Paradigms/lateral_recurrence.png}
+        \caption{Lateral recurrence}
+        \label{fig:sub3}
+      \end{subfigure}
+    \caption{Recurrence in NN}
+    \label{fig:recurrence}
+    \end{figure}
+\subsection{Order of activation}
+To describe the order of activation we have two classes:
+\begin{description}
+    \item[Synchronous activation]: all neurons change their values synchronously ( they simultaneusly calculate network input, activation and output, and pass them on). The syncronous activation corresponds closest to its biology counterpart but not particularly effective for real world hardware, especially if used on Feed-forward NN.
+    \item[Asynchronous activation]: here, the neurons do not change their values simultaneusly but at different points of time. For this, there exist different orderds:
+    \begin{description}
+        \item[Random Order] a random neuron i is chosen and its $net_i, a_i, o_i$ are updated. For n neurons a cycle is the n-fold execution of this step. Some neurons might be updated more than once and other never.
+        \item[Random Permutation] in this case each neuron is chosen exactly once but in a random order, during one cycle.
+        \item[Topological Order] the neurons are updated during one cycle and according to a fixed order. The order is defined by network topology. 
+    \end{description} 
+\end{description}
+\begin{definition}[Input Vector]
+    A network with n input neurons needs n inputs $x_{1}, \ldots,x_{n}$. They are considered as input vecotr $ x = (x_{1}, \ldots,x_{n})$. As a consequence the input dimension is referred to as n.
+\end{definition}
+\begin{definition}[Output Vector]
+    A network with m output neurons provides m outputs $y_{1}, \ldots,y_{n}$. They are considered as output vecotr $ y = (y_{1}, \ldots,y_{n})$. As a consequence the output dimension is referred to as m.
+\end{definition}
+
+\subsection*{Learnin paradigms}
+How do we act on a NN to improve its ability towards generalization? There are at least 7 actions that we can take:
+\begin{itemize}
+    \item developing new connections
+    \item deleting existing connections
+    \item changing connecting weights
+    \item changing the threshold values of neurons
+    \item varying one or more of the three neuron functions
+    \item developing new neurons
+    \item deleting existing neurons (and of course connections)
+\end{itemize}
+\begin{definition}[Training set]
+    A training set (named P) is a set of training patterns $p_{1}, \ldots,p_{n}$, which we use to train our neural net. 
+\end{definition}
+Two questions quickly arise when thinking about the network's ability to learn 
+\begin{itemize}
+    \item How do NNs learn?
+    \item When do NNs stop learning?
+\end{itemize}
+There are three essential paradigms of learning by presenting the differences between their training set.
+Unsupervised learning is the biologically most plausible method, but is not suitable for all problems. Only the input patterns are given; the network tries to identify similar patterns and to classify them into similar categories.
+\begin{definition}[Unsupervised Learning]
+    The training set only consists of input patterns, the network tries by itself to detect similarities and to generate pattern classes.
+\end{definition}
+In reinforcement learning the network receives a logical or a real value after completion of a sequence, which defines whether the result is right or wrong. Intuitively it is clear that this procedure should be more effective than unsupervised learning since the network receives specific criteria for problem-solving.
+\begin{definition}[Reinforcement Learning]
+    The training set consists of input patterns, after completion of a sequence a value is returned to the network indicating whether the result was right or wrong and, possibly, how right or wrong it was.
+\end{definition}
+In supervised learning the training set consists of input patterns as well as their correct results in the form of the precise activation of all output neurons. Thus, for each training set that is fed into the network the output, for instance, can directly be compared with the correct solution and the network weights can be changed according to their difference.
+\begin{definition}[Supervised Learning]
+    The training set consists of input patterns with correct results so that the network a precise error vector can be returned.
+\end{definition}
+\begin{definition}[Offline learning]
+    Several training patterns are entered into the network at once, the errors are accumulated and it learns for all patterns at the same time.
+\end{definition}
+\begin{definition}[Online learning]
+    The network learns directly from the errors of each training sample.
+\end{definition}
+\subsection{Learning curve and error measurement}
+\begin{definition}[Training patterns]
+    A training pattern is an input vector p with the components $p_{1}, \ldots,p_{n}$ whose desired output is known. By entering the training pattern into the network we receive an output that can be compared with the teaching input, which is the desired output. The set of training patterns is called P. It contains a finite number of ordered pair (p, t) of training patterns with corresponding desired output.
+\end{definition}
+\begin{definition}[Teaching Input]
+    Let j be an output neuron. The teaching input $t_j$ is the desired and correct value j should output after the input of a certain training pattern. Analogously to the vector p the teaching inputs $t_{1}, \ldots,t_{n}$ of the neurons can also be combined into a vector $t$. $t$ always refers to a specific training pattern $p$ and is, as already mentioned, contained in the set P of the training patterns.
+\end{definition}
+\begin{definition}[Error Vector]
+    For serveral output neurons $\Omega_{1}, \ldots,\Omega_{n}$ the difference between output vector and teaching input under a training input p
+    \[ 
+        E_p = \begin{bmatrix}
+            t_1-y_1 \\
+            \vdots\\
+            t_n-y_n
+        \end{bmatrix} 
+    \]is referred to as error vector. 
+\end{definition}
+The learning curve indicates the progress of the error, which can be determined in various ways.
+\begin{definition}[Specific Error]
+    The specific error $Err_p$ is based on a single training sample, which means it is generated online.\\
+    Additionally, the Root Mean Square and the Euclidean Distance are often used.
+\end{definition}
+\begin{definition}[Total Error]
+    The total error $Err$ is based on all training samples, that means it is generated offline.
+\end{definition}
