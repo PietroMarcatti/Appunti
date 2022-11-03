@@ -171,3 +171,12 @@ The learning curve indicates the progress of the error, which can be determined 
 \begin{definition}[Total Error]
     The total error $Err$ is based on all training samples, that means it is generated offline.
 \end{definition}
+The hebbian learning rule (Unsupervised learning) $\Delta w_{i,j} = \lambda o_i a_j$ and its generalized form: $\Delta w_{ij} = \lambda h(o_i,w_{ij})y()$. The perceptron is a feed-forward network with shortcuts insipired by the biological eye. In its simplest form the perceptron is a logical circuit. The delta rule as a gradient based learning strategy for SLPs. Definition of error function $Err : W \longrightarrow \mathbb{R}$
+\[ 
+    \Delta W = -\lambda \nabla Err(W) 
+\]
+\begin{align*}
+    \Delta w_{i,\Omega} &= -\eta \frac{\partial Err(W)}{\partial w_{i,\Omega}}\\
+    &=\sum_{p\in P}{}
+\end{align*}
+definition of delta rule from the book. Testing the SLP on the XOR function. As the dimension grows the problem of solving linearly separable functions gets worse and worse and fewer are solvable.  A multilayer perceptron is an universal function approximator. The perceptron algorithm, convergence and complexity, ($\vec{x}^k$ the k-th example, $\vec{a}^k$ k-th answer, $f(\vec{x}^k) = \vec{w}\cdot \vec{x}^k$
