@@ -171,12 +171,81 @@ The learning curve indicates the progress of the error, which can be determined 
 \begin{definition}[Total Error]
     The total error $Err$ is based on all training samples, that means it is generated offline.
 \end{definition}
-The hebbian learning rule (Unsupervised learning) $\Delta w_{i,j} = \lambda o_i a_j$ and its generalized form: $\Delta w_{ij} = \lambda h(o_i,w_{ij})y()$. The perceptron is a feed-forward network with shortcuts insipired by the biological eye. In its simplest form the perceptron is a logical circuit. The delta rule as a gradient based learning strategy for SLPs. Definition of error function $Err : W \longrightarrow \mathbb{R}$
+The Hebbian rule is the basis for most of the more complicated learnig rules. In its original idea we can think of it as a formal way to express a simple concept: strengthen more all the strong bonds and loosen even further all the loose bonds
+\begin{definition}[Hebbian rule]
+    If neuron j receives an input from neuron i and if both neurons are strongly active at the same time, then increase the weight $w_{i,j}$
+    $\Delta w_{i,j} = \eta o_i a_j$
+\end{definition}
+\begin{definition}[Generalized Hebbian rule]
+    The generalized form of the Hebbian rule only specifies the proportionality of the change in weight to the product of two undefined functions, but with defined values
+    \[ 
+        \Delta w_{ij} = \eta h(o_i,w_{i,j})g(a_j,t_j)
+    \]
+\end{definition}
+With our newly acquired understanding of learning paradigms and field terminology we can give a better definition of Perceptron
+\begin{definition}[Perceptron]
+    The perceptron is a feedforward network insipired by the human eye. It has at least one trainable weight layer and every neuron layer is completely connected to the following layer.
+\end{definition}
+\subsection{The delta rule as a gradient base learning strategy}
+In this subsection we deviate from the binary threshold value as activation function because at least for back-propagation of error we need a differntiable or even a semi-linear activation function. Suppose that we have a singlelayer perceptron with randomly set weights which we want to teach a function by means of training samples. The set of these training samples is called P. It contains the pairs (p,t) of the training sample p and its teaching input t. Now our learning target will certainly be that for all training samples the output y of the network is approximately the desired output t. This means that we first have to understand the total error Err as a function of the weights.
+\begin{definition}[Error Function]
+    The Error function
+    \[ 
+        Err : W \longrightarrow \mathbb{R} 
+    \]regards the set of weights W as a vector and maps the values onto the normalized output error.
+\end{definition}
+So we try to decrease or to minimize the error by simply tweaking the weights by calculating the gradient $\nabla Err(W)$ or the error function Err(W)
 \[ 
-    \Delta W = -\lambda \nabla Err(W) 
-\]
+    \Delta W \sim -\nabla Err(W) 
+\]Due to this relation there is a proportionality constant $\eta$ for which the equality holds:
+\[ 
+    \Delta W = -\eta \nabla Err(W) 
+\]We rewrite the gradient of the error function according to all weights as an usual partial derivative. Thus, we tweak every single weight and observe the error function changes:
 \begin{align*}
     \Delta w_{i,\Omega} &= -\eta \frac{\partial Err(W)}{\partial w_{i,\Omega}}\\
-    &=\sum_{p\in P}{}
+    &=\sum_{p\in P}{-\eta \frac{\partial Err_p(W)}{\partial w_{i,\Omega}}}
 \end{align*}
-definition of delta rule from the book. Testing the SLP on the XOR function. As the dimension grows the problem of solving linearly separable functions gets worse and worse and fewer are solvable.  A multilayer perceptron is an universal function approximator. The perceptron algorithm, convergence and complexity, ($\vec{x}^k$ the k-th example, $\vec{a}^k$ k-th answer, $f(\vec{x}^k) = \vec{w}\cdot \vec{x}^k$
+\begin{definition}[Delta rule]
+    If we determine that the function h of the Hebbian theory only provides the output $o_i$ of the predecessor neuron i and if the function g is the difference between the desired activation $t_\Omega$ and the actual activation $a_\Omega$, we will receive the delta rule, also known as Widrow-Hoff rule:
+    \[ 
+        \Delta w_{i,\Omega} = \eta \cdot o_i \cdot (t_\Omega -a_\Omega)= \eta o_i \delta_\Omega
+    \]
+\end{definition}
+\subsection{SLP limitations and MLP}
+If we try to find a SLP that can correctly learn the logic function XOR we can quickly see that the problem is impossible. This is because the SLP model is only capable of representing linearly separable data. Furthermore we can see that as the dimension grows fewer and fewer binary functions are linearly separable.  A multilayer perceptron represents an universal function approximator which is proven by the Theorem of Cybenko. 
+\begin{definition}[Multilayer perceptron]
+    Perceptrons with more than one layer of variably weighted connections are reffered to as multilayer perceptrons (MLP).
+\end{definition}
+\subsection{Convergence and Complexity of the Perceptron}
+The problem of fitting a half-space or a linear separator consists of n labeled examples $x_{1}, \ldots,x_{n}$ in d-dimensional space. Each example has label $+1$ or $-1$. The task is to find a d-dimensional vector w, if one exists, and a threshold t such that
+\begin{align*}
+    w\cdot x_i > t \text{ for each } x_i \text{ labeled }+1\\
+    w\cdot x_i < t \text{ for each } x_i \text{ labeled }-1
+\end{align*}
+A vector-threshold pair (w,t) satisfying the inequalities is called a linear separator. We begin with a technical modification adding an extra coordinate to each $x_i, w$, writing $\hat{x}_i=(x_i,1)$ and $\hat{w} =(w,-t)$. Suppose $l_i$ is the $\pm 1$ label on $x_i$. Then, the inequalities can be rewritten as 
+\[ 
+    (\hat{w} \cdot \hat{x})l_i > 0 \quad 1 \leq i \leq n 
+\]
+Adding the extra coordinate increased the dimension by 1 but now the separator contains the origin.
+\begin{theorem}
+    If there is a $w^*$ satisfying $(w^*\cdot x_i)l_i\geq 1$ for all i, then the Perceptron algorithm finds a solution w with $(w\cdot x_i)l_i >0$ for all i in at most $r^2\absolute{w^*}^2$ updates where $r = \max_{i}{\absolute{x_i}}$
+    \begin{proof}
+        Let $w^*$ satisfy the if condition of the theorem. We will keep track of two quantities, $w^Tw^*$ and $\absolute{w}^2$. Each update increases $w^Tw^*$ by at least 1.
+        \[ 
+            (w+x_il_i)^Tw^* = w^Tw^* + x_i^Tl_iw^* \geq w^Tw^*+1
+        \]
+        On each update, $\absolute{w}^2$ increases by at most $r^2$
+        \[ 
+            (w+x_il_i)^T(w+x_il_i) =\absolute{w}^2+ 2x_i^Tl_iw+\absolute{x_il_i}^2 \leq \absolute{w}^2 +\absolute{x_i}^2 \leq \absolute{w}^2+r^2 
+        \]
+        where the middle inequality comes from the fact that an update is only performed on an $x_i$ when $x_i^Tl_iw\leq 0$. If the perceptron algorithm makes m updates, then $w^Tw^* \geq m$ and $\absolute{w}^2 \leq mr^2$ or equivalently $\absolute{w}\absolute{w^*}\geq m$ and $\absolute{w} \leq r \sqrt{m}$. Then
+        \begin{align*}
+            m \leq& \absolute{w}\absolute{w^*} \\
+            \frac{m}{\absolute{w^*}} \leq& \absolute{w}\\
+            \frac{m}{\absolute{w^*}} \leq & r \sqrt{m} \\
+            \sqrt{m} \leq & r\absolute{w^*}\\
+            m \leq & r^2\absolute{w^*}^2
+        \end{align*}
+    \end{proof}
+\end{theorem}
+
