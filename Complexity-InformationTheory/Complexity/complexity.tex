@@ -258,3 +258,47 @@ M decides $L \subseteq \Sigma^*$, while a RAM P simulates the Turing machine M (
         1 & \sigma_{1}, \ldots,\sigma_{n} \in L  
     \end{cases} 
 \]
+\begin{theorem}[]
+    If $L \in TIME(f(n))$ there esists a program P that computes $\phi_L$ and P operates in O(f(n))
+    \begin{proof}
+        $M = (\Sigma, K, \delta, s)$ Turing machine needs to be simulated by a RAM program P. A generic intermediate step of the computation will present the following configuration:
+        \begin{itemize}
+            \item Register R0 will be used for the computation.
+            \item Register R1 stores the name of the register containing the symbol that is read by the Turing machine at each step.
+            \item Register R3 and following will store each one character contained on the tape of the Turing Machine.
+        \end{itemize}
+        At the beginning of the computation the RAM will have all registers empty and the input string on its input registers. Then it starts a loop copying the input numbers starting from register R3. The loop goes on if it reads from memory something different from 0. Finally it writes the number 3 in the R1 register to signal that the corresponding register is the one under the cursor.\\ To simulate a generic step: $\delta(q,\rho_j) = (p,\rho_l,\rightarrow)$\\
+        $N_{q,\rho_j}$ LOAD $\uparrow 1$\\
+        $N_{q,\rho_j+1}$ SUB = $\rho_j$\\
+        $N_{q,\rho_j+2}$ JZERO $N_{q,\rho_j+4}$\\
+        $N_{q,\rho_j+3}$ JUMP $N_{q,\rho_j+1}$\\
+        $N_{q,\rho_j+4}$ LOAD = $\rho_l$\\
+        $N_{q,\rho_j+5}$ STORE $\uparrow 1$ \\
+        $N_{q,\rho_j+6}$ LOAD 1\\
+        $N_{q,\rho_j+7}$ ADD = 1\\
+        $N_{q,\rho_j+8}$ STORE 1\\
+        $N_{q,\rho_j+9}$ JUMP $N_{q,\rho_1}$\\
+        One instruction of M is simulated on P with at most $9 \times \absolute{\Sigma} $instructions which is $O(f(n)) + O(n)$, the additional linear component is to set up the machine. As always we need to add the hypothesis $f(n) \geq n$.
+    \end{proof}
+\end{theorem}
+\subsubsection*{Simulating a RAM with a Turing machine}
+\begin{theorem}
+    If we have a RAM program P that computes a function $\phi$ in time f(n), then there exists a 7-tape Turing Machine with I/O M that computes the same function in time $O((f(n))^3)$
+    \begin{proof}
+        First tape is for input and last tape for output of course. The second tape we use it to store the content of the registers R (the pairs $\left\{ (i, r_i) \ldots\right\})$ of P. On this tape we will find a long sequence of binary numbers (i written in binary, a separator and the binary content of the separator). When I need to write a number that is bigger than the space available on the tape I overwrite them all with blanks. I then move all the way to the end of the tape ( double separator ), delete the second one and write my new register/value pair.\\        
+        The third tape stores the program counter k of P. The other three tapes are used for the arithmetic operations.\\\\
+        How many instructions of M do I need to simulate one instruction of P?\\
+        How long is the content of the tapes of M during the simulation?\newline
+        Let's focus on the instruction $ADD \uparrow j: \quad r_0 = r_0+r_{r_j}$. We start scanning the 2nd tape and copy the content of $r_0$ on the 4th tape. A second scan is needed to find the content of the register $r_j$ and copy the content on the 6th tape.\\
+        Then I scan the second tape to find the register whose name is written on the 6th tape, I copy its content on the 5th tape.\\ I compute the sum operation between the content of the 4th and 5th tape and write them on the 6th tape.\\
+        After this i must go on the 2nd tape, find the register $r_0$, substitute it and its content with blanks. We continue all the way to the end of the tape and add the new pair $r_0$ and its updated content.\\
+        For every instruction we use a constant number of scans of the 2nd tape. To estimate the number of instruction of M to simulate P we then must find out how long at most the 2nd tape is during the computation.\\ After t steps of P how large can be at most $(i,r_i)$? Let's denote as B the biggest constant (number used for immediate operations), and its length $l(B)$
+        \begin{lemma}
+            After t steps of P i and $r_i$ can have length at most 
+            \[ 
+                l(I) +l(B)+t 
+            \]Summing two nunbers we can at most produce a new number that has 1 more bit 
+        \end{lemma}
+        Each of the pairs on the 2nd tape is long at most $2*(\underset{n}{l(I)}+\underset{const.}{l(B)}+f(n))$. Keeping in mind the assumption $f(n)\geq n$ each of the pair is $O(f(n))$. After f(n) steps we can at most have f(n) of these pairs. Putting together these two observation we can say that the content of the 2nd tape during the computation is long at most $O(f(n)^2)$.\\ One instruction of P requires $O(f(n)^2)$ steps to be simulated by M. So if M needs to simulate f(n) instruction of P the total is $O(f(n)^3)$ instructions of M.
+    \end{proof}
+\end{theorem}
