@@ -200,6 +200,28 @@ We take a corpus (be it general purpose or specialized for a given context). The
 Is a technique for builiding a rich semantic word embedding space (by google 2013). The key idea is to have similar embeddings for words that have similar meaning and context.It works by creating a fake task: given a specific word in the middle of a sentence (the input word), the network is going to tell us the probability for every word in our vocabulaty of being near-by the word we chose. The "near-by" amount is a parameter that we define, usually 5 before and 5 after the input word. \\
 The resulting neural network is composed by input, one hidden and output layer. There is no activation function on the hidden layer neurons. The dimensionality of the hidden layer is equal do the dimensionality of the embeddin (example 300)
 
-
+\section{Convolutional Neural Netowrks}
+Convolutional neural networks are closely related and widely used in computer vision. Image classification in particular is a core task in computer vision. Single and multiple object localization on images and videos.
+\section{Images}
+There's a semantic gap between the human understanding and view of an image and the one of a machine. For a machine our image is just a tensor of values between [0, 255]; if the image is in colour then we have three times the data to specifiy che blue, green and red component. A challenge that quickly arises is any change of view point which makes it that all the pixel values chanage. Background clutter is another challenge in computer vision, it refers to the presence in the image of a background with little contrast with respect to the object. Illumination alters the value of the pixels and should also take into account. An attempt to solve image classification is the process of extracting fine edges in the image to find corners. Right now the best approach for computer vision is a data-driven approach:
+\begin{itemize}
+    \item collect a dataset of images and labels
+    \item use machine learning algorithms to trian a classifirer
+    \item evaluate the classifier on new images
+\end{itemize}
+\subsection{Convolution Neural Networks for Image Classification}
+Suppose we have a 64x64x3 image and we want to say if it is a cat. We restructure the three matrices related to the colours a single vector of length 12288 elements and start working from that with a neural network we are alredy familiar wtih. The problem is that with slightly bigger images (1000x1000x3 = 3 Millions) there's a problem handling that many parameters. For this reason the community started using covolutions. Convolutions are performed by applying a filter through inner product over every possible sub-matrix in the input matrix. 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=12cm]{convolution_example.png}
+\end{figure}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=12cm]{vertical_edge_example.png}
+\end{figure}
 \include{exercise-book.tex}
+Many handcrafted filters were created but right now, with Deep learning, we want to learn them. Since convolutions reduce the dimensionality of the matrix, if you want to preserve it you can add padding all around your matrix.\\
+The amount of pixels by which you move your filter matrix over the input matrix is called stride, where a stride of 1 means moving pixel by pixel. A good balance between stride (speed) and accuracy must be found and it's dependant on the input images and the goal. For example, in big images the semantic meaning of neighbouring pixels is very similar and the information gained by having a strid of 1 is little so we might want to move faster.
+\subsubsection{Convolutions on RGB images}
+In the case of RGB images we have three filters or just a tensor of dimensionality 3. It is also possible to use two sets of filters to scout for different type of information from the original matrix. The matrix produced by the convolution is added with a bias for each convolutional matrix multiplication. The result of these operations is fed to an activation function ( often ReLU).
 \end{document}
