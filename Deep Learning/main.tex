@@ -219,9 +219,12 @@ Suppose we have a 64x64x3 image and we want to say if it is a cat. We restructur
     \centering
     \includegraphics[width=12cm]{vertical_edge_example.png}
 \end{figure}
-\include{exercise-book.tex}
 Many handcrafted filters were created but right now, with Deep learning, we want to learn them. Since convolutions reduce the dimensionality of the matrix, if you want to preserve it you can add padding all around your matrix.\\
 The amount of pixels by which you move your filter matrix over the input matrix is called stride, where a stride of 1 means moving pixel by pixel. A good balance between stride (speed) and accuracy must be found and it's dependant on the input images and the goal. For example, in big images the semantic meaning of neighbouring pixels is very similar and the information gained by having a strid of 1 is little so we might want to move faster.
 \subsubsection{Convolutions on RGB images}
 In the case of RGB images we have three filters or just a tensor of dimensionality 3. It is also possible to use two sets of filters to scout for different type of information from the original matrix. The matrix produced by the convolution is added with a bias for each convolutional matrix multiplication. The result of these operations is fed to an activation function ( often ReLU).
+
+
+
+\include{exercise-book.tex}
 \end{document}

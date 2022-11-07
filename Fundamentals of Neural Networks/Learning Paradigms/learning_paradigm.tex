@@ -248,4 +248,19 @@ Adding the extra coordinate increased the dimension by 1 but now the separator c
         \end{align*}
     \end{proof}
 \end{theorem}
+In the case that the input data is not linearly separable we can add an extra dimension by employing kernel functions. With adding extra dimension we mean adding computed features. Key point: after the transofmration $\varphi$ i need to go back to the perceptron algorithm. Filters and kernel (linear transformation) are two sides of the same coin. The kernel functions will assist me in computing a value after $\varphi$. Filters concentrate on a "patch" and compute locally a value. Issue: we now must run the perceptron algorithm on the new data, the new weights are linear combinations of the $\varphi(\vec{x_i})$
+\[ 
+    \sum_{i=1}^{n}{c_i\varphi(x_i)}
+\]all we need is the value of $\varphi$ on $x_i$
+\[ 
+    w^T\varphi(x_j)= \sum_{i=1}^{n}{c_i\varphi(x_i)^T\varphi(x_j)}
+\]
+To compute what we want we just need the kernel function
+\[ 
+    k(x_i,x_j) = \varphi(x_i)^T\varphi (x_j)
+\]
+definition of kernel matrix and lemma 5.2. Intuition: if we know how phi operates on the examples we know enough about it. Theorem 5.3. Notice that the kernle matrix is always defined as a dot product. Gaussian kernel $ k(x,y) = e^{-c\absolute{x-y}^2}$
+We need to find the kernel ourselves (also part of the elements of the kernel can be learned with examples). to find the kernel we need to understand a metric which differntiates our classes of data and capture it, encapsulate it through a kernel function.
 
+\section{Convolutional neural networks}
+The goal is to analyse the relationship and the overlap between the terms kernel, filters and convolution. Question: why should we have a fully connected matrix from one layer to the next one? Convolutional neural networks are best introduced when discussing applications to vision. In convolutional neural networks we talk about filters (convolutional filters and kernel filter): a window that slides over an image. A filter highlights differences present in the data wherever the pattern filtered is encountered. We convolve a filter with a patch of an image, this way we get that we convolve a filter with an image. Formally a convolution is a computation of a generalized dot product. kernel function definiton from deep learning book.\\Key point: where do we get the values for a filter? Before deep learning they were thoughtfully crafted but now these are parameters that we can learn. The architecture of convolutional neural networks: \\Bank of filters put between the input and the output are 3-dimensional (or more) tensors. Stride (vertical and horizontal) is the number of cells to move to apply again the filter. We have valid or same stride: first one reduced the input (most of the times), same maintains size (with stride 1). 
