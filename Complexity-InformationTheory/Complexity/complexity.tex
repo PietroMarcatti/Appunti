@@ -245,7 +245,7 @@ This completes the definition of the relation $\overset{P,I}{\longrightarrow}$. 
 
 The RAM program P on input I takes time $t$ if $(1, \emptyset) \overset{P,I^t}{\longrightarrow} (0,R)$. We then say that
 P operates in time $f(n)$ if $\forall I: l(I) = n $, P on I takes time $f(n)$ where $l(I) = \sum_{j=1}^{h}{l(i_j)}$ where $l(i_j)$ is the length of the binary representation of that integer $i_j$.
-\subsubsection*{Simulation of a Turing Machine with RAM}
+\subsubsection{Simulation of a Turing Machine with RAM}
 Since the RAM only operates on integer we have to encode the alphabet of the TM into integers.
 \[ 
     D_{\Sigma}= \{(i_i,\ldots, i_n,0) | n\geq 0 \forall 1\leq j\leq n \quad 1 \leq i_j\leq l,  \} 
@@ -258,7 +258,7 @@ M decides $L \subseteq \Sigma^*$, while a RAM P simulates the Turing machine M (
         1 & \sigma_{1}, \ldots,\sigma_{n} \in L  
     \end{cases} 
 \]
-\begin{theorem}[]
+\begin{theorem}
     If $L \in TIME(f(n))$ there esists a program P that computes $\phi_L$ and P operates in O(f(n))
     \begin{proof}
         $M = (\Sigma, K, \delta, s)$ Turing machine needs to be simulated by a RAM program P. A generic intermediate step of the computation will present the following configuration:
@@ -267,38 +267,84 @@ M decides $L \subseteq \Sigma^*$, while a RAM P simulates the Turing machine M (
             \item Register R1 stores the name of the register containing the symbol that is read by the Turing machine at each step.
             \item Register R3 and following will store each one character contained on the tape of the Turing Machine.
         \end{itemize}
-        At the beginning of the computation the RAM will have all registers empty and the input string on its input registers. Then it starts a loop copying the input numbers starting from register R3. The loop goes on if it reads from memory something different from 0. Finally it writes the number 3 in the R1 register to signal that the corresponding register is the one under the cursor.\\ To simulate a generic step: $\delta(q,\rho_j) = (p,\rho_l,\rightarrow)$\\
-        $N_{q,\rho_j}$ LOAD $\uparrow 1$\\
-        $N_{q,\rho_j+1}$ SUB = $\rho_j$\\
-        $N_{q,\rho_j+2}$ JZERO $N_{q,\rho_j+4}$\\
-        $N_{q,\rho_j+3}$ JUMP $N_{q,\rho_j+1}$\\
-        $N_{q,\rho_j+4}$ LOAD = $\rho_l$\\
-        $N_{q,\rho_j+5}$ STORE $\uparrow 1$ \\
-        $N_{q,\rho_j+6}$ LOAD 1\\
-        $N_{q,\rho_j+7}$ ADD = 1\\
-        $N_{q,\rho_j+8}$ STORE 1\\
-        $N_{q,\rho_j+9}$ JUMP $N_{q,\rho_1}$\\
-        One instruction of M is simulated on P with at most $9 \times \absolute{\Sigma} $instructions which is $O(f(n)) + O(n)$, the additional linear component is to set up the machine. As always we need to add the hypothesis $f(n) \geq n$.
+        At the beginning of the computation the RAM will have all registers empty and the input string on its input registers. Then it starts a loop copying the input numbers starting from register R3. The loop goes on if it reads from memory something different from 0. Finally it writes the number 3 in the R1 register to signal that the corresponding register is the one under the cursor.\\The program P will have a set of instruction to simulate every possible state $q \in K$. Each of these set is then divided into $k = \absolute{\Sigma}$ subsequences, each for every possible symbol. Suppose our generic step starts at instruction number $N_{q,\rho_j}$ and our generic step is $\delta(q,\rho_j) = (p,\rho_l,D)$\\
+        \begin{enumerate}
+            \item[$N_{q,\rho_j}$] LOAD $\uparrow 1$ \quad (fetch the symbol scanned by the cursor)
+            \item[$N_{q,\rho_j+1}$] SUB = $\rho_j$ \quad (subtract j, the number of the symbol tested)
+            \item[$N_{q,\rho_j+2}$] JZERO $N_{q,\rho_j+4}$ \quad (if the simbol is $\rho_j$ we have work to do)
+            \item[$N_{q,\rho_j+3}$] JUMP $N_{q,\rho_{j+1}}$ \quad (otherwise, try next symbol)
+            \item[$N_{q,\rho_j+4}$] LOAD = $\rho_l$ \quad ($\rho_l$ is the symbol written)
+            \item[$N_{q,\rho_j+5}$] STORE $\uparrow 1$ \quad (write $\rho_l$)
+            \item[$N_{q,\rho_j+6}$] LOAD 1 \quad (the position of the cursor)
+            \item[$N_{q,\rho_j+7}$] ADD = d \quad (d is 1 if $D=\rightarrow$, -1 if $D=\leftarrow$, 0 if $D=-$)
+            \item[$N_{q,\rho_j+8}$] STORE 1
+            \item[$N_{q,\rho_j+9}$] JUMP $N_{p,\rho_1}$ \quad (start simulation of state p)
+        \end{enumerate}
+        One instruction of M is simulated on P with at most $9 \times \absolute{\Sigma} $instructions which is $O(f(n)) + O(n)$, the additional linear term is to set up the machine. As always we need to add the hypothesis $f(n) \geq n$.
     \end{proof}
 \end{theorem}
-\subsubsection*{Simulating a RAM with a Turing machine}
+\subsubsection{Simulating a RAM with a Turing machine}
 \begin{theorem}
     If we have a RAM program P that computes a function $\phi$ in time f(n), then there exists a 7-tape Turing Machine with I/O M that computes the same function in time $O((f(n))^3)$
     \begin{proof}
-        First tape is for input and last tape for output of course. The second tape we use it to store the content of the registers R (the pairs $\left\{ (i, r_i) \ldots\right\})$ of P. On this tape we will find a long sequence of binary numbers (i written in binary, a separator and the binary content of the separator). When I need to write a number that is bigger than the space available on the tape I overwrite them all with blanks. I then move all the way to the end of the tape ( double separator ), delete the second one and write my new register/value pair.\\        
-        The third tape stores the program counter k of P. The other three tapes are used for the arithmetic operations.\\\\
+        First tape is for input and last tape for output of course. The second tape is used to store the content of the registers R, it constists of a sequence of strings of the form $b(i):b(r_i)$ separated by ';' and possibly sequences of blanks.Each time the value of Register $i$ is updated, the previous $b(i):b(r_i)$ pair is erased (we overwrite them with $\sqcup$) and a new pair is attached at the end of the tap, shifting the end symbol $\triangleleft$ accordingly.The third tape stores the program counter k of P while the other three tapes are used for the arithmetic operations.\\\\
         How many instructions of M do I need to simulate one instruction of P?\\
         How long is the content of the tapes of M during the simulation?\newline
         Let's focus on the instruction $ADD \uparrow j: \quad r_0 = r_0+r_{r_j}$. We start scanning the 2nd tape and copy the content of $r_0$ on the 4th tape. A second scan is needed to find the content of the register $r_j$ and copy the content on the 6th tape.\\
-        Then I scan the second tape to find the register whose name is written on the 6th tape, I copy its content on the 5th tape.\\ I compute the sum operation between the content of the 4th and 5th tape and write them on the 6th tape.\\
-        After this i must go on the 2nd tape, find the register $r_0$, substitute it and its content with blanks. We continue all the way to the end of the tape and add the new pair $r_0$ and its updated content.\\
-        For every instruction we use a constant number of scans of the 2nd tape. To estimate the number of instruction of M to simulate P we then must find out how long at most the 2nd tape is during the computation.\\ After t steps of P how large can be at most $(i,r_i)$? Let's denote as B the biggest constant (number used for immediate operations), and its length $l(B)$
+        Then I scan the second tape again to find the register whose name is written on the 6th tape, I copy its content on the 5th tape.\\ I compute the sum operation between the content of the 4th and 5th tape and write them on the 6th tape.\\
+        After this i must go on the 2nd tape, find the register $r_0$, substitute it and its content with blanks, move all the way to the end of the tape and add the new pair $r_0$ with its updated content.\\
+        For every instruction we use a constant number of scans of the 2nd tape. To estimate the number of instruction of M needed to simulate P we then must find out how long at most the 2nd tape is during the computation.\\ To answer this question we must understand how long a single pair $(i,r_i)$ of P can be after t steps? Let's denote as B the biggest constant (number used for immediate operations), and its length $l(B)$
         \begin{lemma}
-            After t steps of P i and $r_i$ can have length at most 
+            After t steps of P $i$ and $r_i$ can have length at most 
             \[ 
-                l(I) +l(B)+t 
-            \]Summing two nunbers we can at most produce a new number that has 1 more bit 
+                l(I)+l(B)+t 
+            \]Summing two numbers we can at most produce a new number that has 1 more bit
         \end{lemma}
-        Each of the pairs on the 2nd tape is long at most $2*(\underset{n}{l(I)}+\underset{const.}{l(B)}+f(n))$. Keeping in mind the assumption $f(n)\geq n$ each of the pair is $O(f(n))$. After f(n) steps we can at most have f(n) of these pairs. Putting together these two observation we can say that the content of the 2nd tape during the computation is long at most $O(f(n)^2)$.\\ One instruction of P requires $O(f(n)^2)$ steps to be simulated by M. So if M needs to simulate f(n) instruction of P the total is $O(f(n)^3)$ instructions of M.
+        Each of the pairs on the 2nd tape is long at most $2*(\underset{n}{l(I)}+\underset{const.}{l(B)}+f(n))$. Keeping in mind the assumption $f(n)\geq n$ each of the pair is $O(f(n))$. After f(n) steps we can at most have f(n) of these pairs. Putting together these two observation we can say that the content of the 2nd tape during the computation is long at most $O(f(n)^2)$.\\ One instruction of P requires $O(f(n)^2)$ steps to be simulated by M. So if M needs to simulate f(n) instructions of P the total is $O(f(n)^3)$ instructions of M.
     \end{proof}
 \end{theorem}
+
+\subsection{Non-deterministic Turing Machine}
+\begin{definition}[Nondeterministic Turing Machine]
+    A Nondeterministic Turing Machine is a quadruple $N = (K,\Sigma, \Delta,s)$.\\Contrarily to its deterministic counterpart $\Delta$ is no longer a function from $K\times \Sigma$ to $(K\cup\left\{ h,"yes","no" \right\})\times \Sigma \times \left\{ \leftarrow,\rightarrow,- \right\}$ but instead a relation $\Delta \subset (K\times \Sigma)\times \left[ (K\cup\left\{ h,"yes","no" \right\})\times \Sigma \times \left\{ \leftarrow,\rightarrow,- \right\} \right]$. That is, for each state-symbol combination there may be more than one appropriate next steps, or none at all. 
+\end{definition}
+We define N.D. T.M configurations just as we did for their deterministic counterpart with the exception that "yields" is no longer a function and is instead a relation and a computation step is a subset of the cartesian product of the configurations. We define as degree of nondeterminism of a configuration the number of valid configurations that are obtained with a single computation step.\\The computation of N over input x can be expressed as tree (more formally a DAG) and we say that N accepts x if and only if at least one of its computation sequences terminates with "yes". Inversely we say that N rejects x if and only if all computation sequences terminate with "no".
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=10cm]{Complexity/ndtm-computation-tree.png}
+\end{figure}\\
+We define $f(n)$ as the function that produces as output the height of the computation tree of N over input x. We say that N operates on input x in time $f(n)$. 
+\begin{definition}[Time complexity of N.D. T.M]
+    A N.D. T.M is said to work in time $f(n)$ if it has time complexity over the input x $\forall x \in \Sigma^*$ at most $f(n)$ such that $\absolute{x}=n$.
+\end{definition}
+\begin{definition}[Decidability of a language over N.D. T.M.]
+    A N.D. T.M. N decides a language L if $\forall x \in \Sigma^*$
+    \[ 
+        \begin{cases}
+            \text{if } x\in L \text{ then there exists a computation of N over x that terminates with yes} \\
+            \text{if } x\notin L \text{ then all the computations of N over x terminate with no} 
+        \end{cases}
+    \]
+\end{definition}
+
+\subsubsection{Complexity classes}
+We define the time complexity class P of the languages that can be decided in polynomial time over a deterministic Turing Machine as follows:
+\[ 
+    P = \bigcup_{k\in \mathbb{N}}{TIME(n^k)}
+\]We remember that a language belongs to this class regardless of the model of computation used, as long as it was reasonable, this is a consequence of the Extended Church-Turing thesis. Then we continue defining the time complexity class NP of the languages that can be decided in polynomial time over a nondeterministic Turing Machine:
+\[ 
+    NP = \bigcup_{k\in \mathbb{N}}{NTIME(n^k)}
+\]The relationship between these two classes has been in discussion for decades and is still uncertain. Something we can say for sure is that $P \subseteq NP$ as we can always think of a deterministic TM as a nondeterministic TM which always has degree of nondeterminism equal to 1.
+\begin{theorem}
+    Suppose that language L is decided by a nondeterministic TM N in time $f(n)$. Then it is decided by a 3-tape deterministic Turing Machine M in time $\mathcal{O}(c^{f(n)})$, where $c> 1$ is some constant depending on N. Using complexity class notation we can restate this result in the shorter form:
+    \[ 
+        NTIME(f(n)) \subseteq \bigcup_{c>1}{TIME(c^{f(n)})} 
+    \]
+    \begin{proof}
+        We can think of the exaustion of all possible computation step sequences as a series of choices leading to a final state. Any of this series is a sequence of integers in the range [0,d-1], (d-1 being the height of the computation tree). The simulating machine M has to visit in post-order the computation tree of N. This tree has at most $d^{f(n)}$ nodes where d is the highest degreee of nondeterminism of any of the configurations. This means that a "fast" deterministic model, like a program in C, will visit the tree in linear time with respect to its size $d^{f(n)}$. A deterministic TM will take at most $(d^{f(n)})^b$ where b is the highest degree of the polynomial relationship between our "fast" model and a standard deterministic machine. 
+    \end{proof}
+\end{theorem}
+\begin{definition}[Space complexity of a N.D. T.M.]
+    Given a k-tape nondeterministic Turing machine with input and output $N=(K, \Sigma, \Delta, s)$ we say that N decides language L within space $f(n)$ if N decides L and, for any $x\in (\Sigma-{\sqcup})^*$, if $(s,\triangleright,x,\ldots,\triangleright,\varepsilon) \overset{N^*}{\longrightarrow}(q,w_1,u_1,\ldots,w_s,u_s)$ then $\sum_{j=2}^{s-1}{\absolute{w_iu_i}}\leq f(\absolute{x})$. That means that we require that N, under no cirumstances, uses space in its "scratch" strings greater than function $f$ in the input length. 
+\end{definition}
+We can then define the space complexity class $NSPACE(f(n))$ as the set of all languages that can be decided by a N.D. T.M. using space $f(n)$. 

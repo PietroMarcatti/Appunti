@@ -1,0 +1,17 @@
+\section{Convolutional Neural Networks}
+
+The goal is to analyse the relationship and the overlap between the terms kernel, filters and convolution. Question: why should we have each computing unit from one layer completely connected to every other computing unit to the next one?\\
+Convolutional neural networks are one example of partially connected neural netoworks and are best introduced when discussing applications related to vision.\\
+When thinking about solving visual problems such as scene recognition the focus is on the difference in pixel values, not their absolute values. In convolutional neural networks we use filters (convolutional filters and kernel filter) to determine and hightlight such differences. A filter is a window, typically pretty small, that slides over an image. A filter highlights differences present in the data wherever the pattern filtered is encountered. We convolve a filter with a patch of an image, this way we get that we convolve a filter with an image. Formally a convolution is a computation of a generalized dot product.
+\begin{definition}[Kernel Function]
+    We consider the convolution kernel to be a function, the kernel function. We get the value V of this function at a position x,y on an image I as follows:
+    \[ 
+        V(x,y) = (I\cdot K) (x,y) = \sum_{m}{\sum_{n}{I(x+m,y+n)K(m,n)}}
+    \]
+\end{definition}
+Key point: where do we get the values for a filter? Before deep learning they were thoughtfully crafted but now these are parameters that we can learn.
+\subsection{The architecture of convolutional neural networks}
+Usually we have a lot of different filters and the goal of each filter is to pick up a specific feature in the image. We can refer to this set of filters a bank of filter. The architecture of a convolutional neural networks takes the output of the bank of filters step and feeds it through a standard fully connected layer followed by a softmax. A convolutional filter bank is at least a three-dimensional tensor in which the dimensions are height, width and number of channels. 
+\begin{definition}[Stride]
+    Stride can be vertical and horizontal and is defined as the number of cells to move before applying again the filter.\\Furthermore the stride can be of tipe Valid or Same: the first kind reduces the input sizes (most of the times), same maintains size (with stride 1). 
+\end{definition}
