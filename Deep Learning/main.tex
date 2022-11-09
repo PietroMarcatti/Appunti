@@ -223,8 +223,32 @@ Many handcrafted filters were created but right now, with Deep learning, we want
 The amount of pixels by which you move your filter matrix over the input matrix is called stride, where a stride of 1 means moving pixel by pixel. A good balance between stride (speed) and accuracy must be found and it's dependant on the input images and the goal. For example, in big images the semantic meaning of neighbouring pixels is very similar and the information gained by having a strid of 1 is little so we might want to move faster.
 \subsubsection{Convolutions on RGB images}
 In the case of RGB images we have three filters or just a tensor of dimensionality 3. It is also possible to use two sets of filters to scout for different type of information from the original matrix. The matrix produced by the convolution is added with a bias for each convolutional matrix multiplication. The result of these operations is fed to an activation function ( often ReLU).
-
-
+\subsubsection{Key Idea}
+In traditional neural networks every input neuron is connected to all neurons of the next layer. In a convolutional layer we reshape the input tensor as a vector and each neuron of the second layer is going to be connected to the neurons involved in each image patch being filtered. The weights of the connection are going to be the values of the filter and are going to be learned. The weights used on every patch, which again are the filter values, are the same, this practice is called weight sharing. 
+\subsubsection*{Back-propagation in CNN}
+In CNN the backpropagation algorithm work as follow:
+\begin{itemize}
+    \item in the forward pass perform explicit computation with all the weights (some of them are the same)
+    \item in the backward pass compure the gradient $\frac{\partial J}{\partial w_{1}}, \ldots,\frac{\partial J}{\partial w_{n}}$ for all the weights
+    \item When updating the weights use the average of the gradients from the shared weights:
+    \[ 
+        w_1 = w_1-\alpha\left( \frac{\partial J}{\partial w_{1}}+\frac{\partial J}{\partial w_{4}}+\frac{\partial J}{\partial w_{7}}  \right)
+    \]
+\end{itemize}
+Usually, on images with more than one channel filter weights are not shared among channels.\\
+There are three types of layer used in a CNN:
+\begin{itemize}
+    \item Convolution layer
+    \item Poolin layer
+    \item Fully connected (standard) layer
+\end{itemize}
+\subsubsection*{Pooling layer: max pooling}
+The pooling layer in a max-pooling operation moves around the image in patches just like the convolution layer but instead of applying a filter it extracts and outputs the max value of that patch.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=10cm]{max_pooling.png}
+\end{figure}
+Other functions can be used in a pooling layer but empirical evidence shows that taking the max is the most effective operation. 
 
 \include{exercise-book.tex}
 \end{document}
