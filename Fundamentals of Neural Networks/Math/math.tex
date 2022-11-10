@@ -1,0 +1,22 @@
+\section{Math}
+Definition of projection (in general it means concentrating on a particular direction, feature, set of features). Since the projection pi is a linear mapping there esists a transformation matrix $ P_\pi^2 = P_\pi $\\ Definition of projection onto a line. Key point The projection of vec x on U is the element of U "closest£ to vec x. "closest" = $ \norm{vec x - \pi_u(vec x)} $ is minimal = $ vec x - \pi_U(vec x) \perp vec b $ where vec b is the base of U. Steps: 
+\begin{itemize}
+    \item Finding the coordinates lambda. the orthogonality condicion yields
+    \item Secon step is always easy $ \pi_U(x) = \lambda b = \frac{\anglepar{x,b}}{\norm{b}^2}b = \frac{b^tx}{\norm{b}^2}b $ 
+    \item Just rewrite to determine a matrix such that $ \pi_U(vec x) = P_\pi vec x $ -> P is $ \frac{vec b vec b^T}{vec b^T vec b} $ 
+\end{itemize}  
+To project on a higher dimensional space: same 3 steps (and same notion of closeness, turned in an inner product imposed to be 0)
+steps:
+\begin{itemize}
+    \item $U \subseteq \mathbb{R}^n dim(U = m)\geq 1 B= (\vec{b}_{1}, \ldots,\vec{b}_{n})$ ordered base of U. $\pi_U(vec x)$ is written using B and the inner product with $\vec{b}_{1}, \ldots,\vec{b}_{n}$ must be 0
+    \[ 
+        \pi_U (x) = \sum_{i=1}^{m}{\lambda_ib_i = B\lambda}
+    \]More stuff and then the normal equation $B^TB\lambda = B^Tx$ and $\lambda = (B^TB)^{-1}B^Tx$ psuedo inverse of B (which is not square) It can always be computed if BTB is invertible . This is true since B is a basis for U
+    \item $ \pi_U(x) = B(B^TB)^{-1} $ 
+    \item Me lo sono perso
+\end{itemize}
+Projection is a tool for finding approximate solutions (by deleting some solutions). Projecting is easier when the base is orthonormal because BTB = I. Through Gram-Schmidt Orthogonalization we can turn any basis into an orthonormal one: one dimension at a time.
+\subsection{Matrix Decomposition}
+The determinant of A is a function that sends the matrix to a real number. A is invertible iff det(A)= 0 , this means that rk(A)=n. Two vectors in R2 is linearly independent iff they form a proper parallelogram. Laplace expansion theorem.Sarru's rule. Determinant for triangular matrices. Trace of a matrix definition. Characteristic polynomial definition.
+\subsubsection{Eigenvalues and Eigenvector}
+vectors whose LINE does not change, definition of eigenvalue and eigenvectors + properties. Definition of eigenspace and eigenspectrum. Algebraic multiplicity and geometric multiplicity
