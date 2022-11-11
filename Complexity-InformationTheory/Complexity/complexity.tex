@@ -347,4 +347,57 @@ We define the time complexity class P of the languages that can be decided in po
 \begin{definition}[Space complexity of a N.D. T.M.]
     Given a k-tape nondeterministic Turing machine with input and output $N=(K, \Sigma, \Delta, s)$ we say that N decides language L within space $f(n)$ if N decides L and, for any $x\in (\Sigma-{\sqcup})^*$, if $(s,\triangleright,x,\ldots,\triangleright,\varepsilon) \overset{N^*}{\longrightarrow}(q,w_1,u_1,\ldots,w_s,u_s)$ then $\sum_{j=2}^{s-1}{\absolute{w_iu_i}}\leq f(\absolute{x})$. That means that we require that N, under no cirumstances, uses space in its "scratch" strings greater than function $f$ in the input length. 
 \end{definition}
-We can then define the space complexity class $NSPACE(f(n))$ as the set of all languages that can be decided by a N.D. T.M. using space $f(n)$. 
+We can then define the space complexity class $NSPACE(f(n))$ as the set of all languages that can be decided by a N.D. T.M. using space $f(n)$.
+
+\section{Undecidability of Halting Problem}
+Proof based on the existence of Universal Turing machines, trhough enumeration of TM done by diagonalization. (Look at Quantum Computing since Dam) Read chap 3 of Papadimitriu
+
+\section{Relationships between complexity classes}
+Complexity classes are defined by fixing the following:
+\begin{itemize}
+    \item A model of computation (TM)
+    \item A mode of computation (deterministic or non-deterministic)
+    \item A resource to measure (time, space ecc...)
+    \item A function used as a bound
+\end{itemize}
+Regarding the last point: the function f(n) used must at least be computable but we'll see that this is not enough. We'll se that $ \exists f computable \quad TIME(f(n)) = TIME(2^{f(n)}) $ when we cover the GAP theorem. We'll also see the Hierarchy Theorem that in short says: \\
+If f is proper, then $TIME(f(n)) \subsetneq TIME(f(n)^3)$
+\begin{definition}[Proper complexity function]
+    Idea: not only f needs to be computable, but to compute f(n) must be computable with not more than f(n) time and space.\\
+    Formally, a function $ f: \mathbb{N}\longrightarrow \mathbb{N} $ is proper if: \begin{itemize}
+        \item f is non-decreasing
+        \item $ \exists M_f k-TM$ with I/O such that $ \forall x with \absolute{x}= n $
+        \[ 
+            (s,\triangleright, x ,\triangleright, \varepsilon, \ldots, \triangleright, \varepsilon) \overset{M_f,t}{\longrightarrow}(halt, \underset{\triangleright \times \sqcup}{x_1, x_2}, \triangleright, \sqcup^{j_2}, \ldots,  \underset{f(x) \text{ in unary}}{\triangleright \sqcap^{f(\absolute{x})}}, \sqcup) 
+        \]
+        and $ t = O(n+f(n))$, $j_i = O(f(n)) \forall i= 2, \ldots,k-1$ and $t, j_i$ do not depend on x. 
+    \end{itemize}
+    The additional n term in the time complexity is because we are defining a set of functions that are bound for both TIME and SPACE complexity definition. In the case of TIME it is only reasonable to look for function that are at least linear, but with space we can also have less than that. If f and g are proper, also $f+g$, $f\times g$, $f^g$, $f(g(n))$ are all also proper
+\end{definition}
+\begin{definition}
+    A TM M is precise if $\exists f,g \mid \forall n\geq 0 \forall x | \absolute{x} = n $ M(x) terminates after f(n) steps using space g(n). 
+\end{definition}
+\begin{property}
+    If $L \in TIME(f(n))$ and f is proper then there exists M precise that decides L in time $\mathbf{O(f(n))}$ ( So not exactly f(n), but precisely $O(f(n))$).
+    \begin{proof}
+        $L \in TIME(f(n)) \leadsto M'$ decides L in f(n) but M' is maybe not precise. So we build a new machine that works as follows:\\
+        We take all the necessary inputs for $M_f$ the machine that computes f because it is proper and each time M' makes a step it deletes one of the 1's produced in output (in unary) from $M_f$ after having computed f(n). This way if i realize that for that specific input x the machine terminates early i know how many steps to waste doing nothing so that it ends after exactly f(n) steps. ( Read proof in the book and find the mistake)
+    \end{proof}
+\end{property}
+\subsection{Complements of Non-deterministic classes}
+If C is a complexity class (either det. or nondet., space or time), we define:
+\[ 
+    co-C = \left\{ \bar{L} \mid L \in C \right\} 
+\]Pay attention that $co-C \neq \bar{C}$\\\\
+$P = U_{k\in\mathbb{N}}TIME(n^k)$, and we have a language $L \in P$ it means that $\exists M det. TM$ that decides L, we can easily get $\bar{L}$ by inverting accepting and rejecting states of M to get $\bar{M}$ that decides $\bar{L}$ and $\bar{L} \in P$
+\begin{itemize}
+    \item co-P = P
+    \item TIME(f(n)) = co-TIME(f(n))
+    \item SPACE(f(n)) = co-SPACE(f(n))
+\end{itemize}
+Taking $L \in NP$ and $x \in L$, it means that in its computation tree over x there exists a leave terminating with yes. It necessarily means that $x\notin \bar{L}$. We cannot simply invert the final states to get a nondet. TM that decides $\bar{L}$, we get a TM, it works in f(n) but it doesn't decide the complement. For this reason we cannot classify the relationship between NP and co-NP.
+\begin{theorem}[Hierarchy Theorem]
+    Halting problem: $H = \left\{ M;x \mid M(x) \downarrow \right\}$.\\ Two main results: the halting problem is recursively enumerable, H is not recursive (theorems from chapter 3). \\
+    $H_f = \left\{ M,x \mid \text{M accepts x in at most } f(\absolute{x}) steps \right\}$ if f is proper $H_f \in TIME(f(n)^3)$ and $H_f\notin TIME(f(n))$
+\end{theorem}
+The Hierarchy theorem really proves that the class P is a union of languages that belong to different polynomial time classes and there isn't a highest degree polynomial into which i can embed all other problems.
