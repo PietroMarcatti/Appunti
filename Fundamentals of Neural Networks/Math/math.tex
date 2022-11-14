@@ -143,3 +143,88 @@ The following are some of the properties of determinants:
 \begin{definition}[Geometric multiplicity]
     Let $\lambda_i$ be an eigenvalue of a square matrix A. Then the geometric multiplicity of $\lambda_i$ is the number of linearly independent eigenvectors associated with $lambda_i$. In other words, it is the dimensionality of the eigenspace spanned by the eigenvectors associated with $\lambda_i$. 
 \end{definition}
+\begin{theorem}
+    Given a matrix A Rmn we can always obtain a symmetric, positive semidefinite matrix S in Rnn by defining \[ 
+        S : = A^TA 
+    \]
+    Remark: if rk(A) = n, then $S:=A^TA$ is symmetric, positive definite. 
+\end{theorem}
+\begin{theorem}
+    The eigenvectors $x_{1}, \ldots,x_{n}$ of a matrix A in Rnn with n distinct eigenvalues $\lambda_{1}, \ldots,\lambda_{n}$ are linearly independent. 
+\end{theorem}
+This is the sense in which eigenvectors "decide" the linear mapping. 
+\begin{theorem}[Spectral theorem]
+    IF A in Rnn is symmetric, there exsists an orthonormal basis of the corresponding vector space V consisting of eigenvectors of A and each eigenvalue is real. 
+\end{theorem}
+this theorem tells us that A can be decomposed in $PDP^T$
+\begin{theorem}
+    The determinnnt of a matrix A in Rnn is the product of its eigenvalues:
+    \[ 
+        det(A) = \Pi_{i=1}^{n}{\lambda_i} 
+    \]
+    where $\lambda_i \in \mathbb{C}$ are (possibly repeated) eigenvalues of A
+\end{theorem}
+\begin{theorem}
+    The trace of a matrix A in Rnn is the sum of its eigenvalues:
+    \[ 
+         tr(A) = \sum_{i=1}^{n}{\lambda_i}
+    \]
+\end{theorem}
+Eigenvalues describe the transformation of volume/perimeter of a unit (hyper) cube.
+Decompositions: we want to disassembly linear maps in order to keep only relevant information. here bases play an important role
+\begin{theorem}[Cholesky decomposition]
+    A symmetric, positive definite matrix A can be factorized into a product $A = LL^T$ where L is a lower-triangular matrix with positive diagonal elements.
+    L is called the cholesky factor of A, and L is unique.
+\end{theorem}
+To find L we just need to spell out the constraint. Observation: all the elements of L are positive.
+\begin{definition}[Diagonalizable]
+    A matrix in Rnn is diagonalizable if it is similar to a diagonal matrix, i.e. if there exists an invertible matrix P in rnn such that $D = P^{-1}AP$
+\end{definition}
+Similar matrices are different descriptions of the same map. Diagonalizing A is equivalent to expressing the linear mapping in the base of eigenvectors. Use the eigenvectors for basis change (direction) and the eigenvalues for the diagonal matrix (stretching)
+\[ 
+    D =
+    \begin{bmatrix}
+        \lambda_1 & \cdots & 0 \\
+        \vdots & \ddots & \vdots \\
+        0 & \cdots & \lambda_n
+    \end{bmatrix} 
+    \quad P = (\vec{p}_{1}, \ldots,\vec{p}_{n})
+\]
+$AP = PD$ 
+\begin{theorem}[Eigendecomposition]
+    A square matrix A in Rnn can be factored into \[ 
+        A = PDP^{-1} 
+    \]
+    where P in Rnn and D is a diagonal matrix whose diagonal entries tare the eigenvalues of A, if and only if the eigenvectors of A form a basis of Rn
+    
+\end{theorem}
+\begin{theorem}
+    A symmetric matrix S in Rnn can always be diagonalized
+    \[ 
+        S = PDP^{-1} 
+    \]
+\end{theorem}
+Insert geometric picture, P fixes the direction and D fixes the lengths.\\
+What if A is not square? 
+\begin{theorem}[SVD theorem]
+    Let A in Rmn be a rectangular matrix of rank $r \in [0,\min(m,n)]$. The SVD of A is a decomposition of the form
+
+    with an orthogonal matrix U in Rmm with column vectors $u_i, i = 1, \ldots,m$ and an orthogonal matrix V in Rnn with column vectors $v_j, j = 1, \ldots,n$. Moreover, $\Sigma$ is an m x n matrix with $ \sum_{ii} = \sigma_i \geq 0$ and $\Sigma_{ij} = 0, i\neq j$ 
+\end{theorem}
+Geometrically it is as before but without "matching" domain-codomain dimensions. Insert picture and matrices 
+\begin{definition}[Spectral norm of a matrix]
+    For x in $Rn \setminus {0}$ the spectral norm of a matrix A in Rmn is defined as 
+    \[ 
+        \norm{A}_2 = \max_{x}{\frac{\norm{A}_2}{\norm{x}_2}} 
+    \]
+\end{definition}
+\begin{theorem}
+    The spectral norm of A is its largest singular value $\sigma_i$
+\end{theorem}
+\begin{theorem}[Eckart-Young Theorem]
+    Consider a matrix A in Tmn of rank r and let B in Rmn be a matrix of rank k. For any $k\leq r$ with $\hat{A}(k) = \sum_{i=1}^{k}{\sigma_iu_iv_i^T}$ it holds that
+    \begin{align*}
+        \hat{A}(k) &= \argmin_{rk(B)=k}{\norm{A-B}_2}\\
+        \norm{A-\hat{A}(k)}_2 &= \sigma_{k+1}
+    \end{align*}
+\end{theorem}
