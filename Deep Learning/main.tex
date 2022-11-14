@@ -248,7 +248,33 @@ The pooling layer in a max-pooling operation moves around the image in patches j
     \centering
     \includegraphics[width=10cm]{max_pooling.png}
 \end{figure}
-Other functions can be used in a pooling layer but empirical evidence shows that taking the max is the most effective operation. 
+Other functions can be used in a pooling layer but empirical evidence shows that taking the max is the most effective operation.\\
+Convolutions tend to reduce dimensionality of the input and it can happen that we loose details which causes a drop in accuracy.
+\subsection{Visualizations - AlexNet Architecture}
+AlexNet is one of the first successful applications of Deep Learning and convolutional neural networks. Its architecture uses a series of convolution in a phase called feature extraction and then after flattening the output of the convolutional part of the network, features are learned through a more traditional dense approach.\\
+\subsubsection{Transfer Learning}
+Suppose you have two datasets T and S: dataset S is fully annotated, very big and we can build a model $h_s$ for it. Dataset T instead is small but still annotated. We can use the model $h_s$ to learn a bettern $h_t$. This practice is called transfer learning. You can initialize the weight of the model for T to the value that the pre-trained model for S possess. This practice is most effective when S is bigger than the target T.\\ Of course the model for T will still need fine-tuning after the transfer of learning. To decide what and how many layers to fine-tune we can use this approach:
+\begin{itemize}
+    \item When T is very small with too few data, only fine-tune the dense layers
+    \item When T is at least a little bit bigger try fine-tuning also the CNN layers but focus more on the last layers as the first ones capture low level feature and don't change much.
+\end{itemize}
+Alternatively you can use CNNs as a feature extractor to then feed into a traditonal or deep learning network. (Especially if T is very small)
+\subsection{Modern ConvNets}
+The VGG16 CNN presented by Oxford University is slightly deeper than AlexNet and uses only 3x3 filters because two 3x3 filters have a receptive field of one 5x5 filter. Deeper stacks of smaller filters are likely more powerful than a single larger filter:
+\begin{itemize}
+    \item You get more non-linearity for the same "size" of pattern learning
+    \item There are less parameters
+    \begin{itemize}
+        \item A stack of three filters of 3x3(x3) = 27
+        \item One larger 7x7 = 49
+    \end{itemize}
+\end{itemize}
+\subsubsection{Residual Networks}
+Using a Residual Network you can design very deep Neural Networks. Residual networks add shortcuts from earlier layers to layers that are further ahead in the architecture. A reason for adding these shortcuts is to use a layer to change the data drastically and focus on something very specific but at the same time we don't want to forget, loose track of the original data. If the dimensionality of the weight matrix don't match you can add an extra weight matrix to fix the issue. Reaserch has show that Residual Networks help prevent negative improvement as you train for more epochs.
+\subsubsection*{1x1 Convolutions}
+It can be useful to apply 1x1 convolutions on tensors that have many channels that you would like to reduce. Using multiple 1x1 convolutions on the same high channel number tensor we can reshape it to have the number of channels that we want. In doing multiple 1x1 convolutions we incorporate many non-linearity factors.
+\subsubsection*{Inception Neural Network}
+An idea that was proposed is to apply learning on filters of different sizes applied to tensors with many channels. The problem that resulted is that it was extremely computational costly. To solve this problem, before performing the 3x3 or 5x5 convolution they applied 1x1 convolutions to reduce the dimensionality. Operating like this relieved so much operational complexity. This set of convolutional passes are considered as a unit module and can be put together to form a chain of computation to increase the complexity of our model. It is also possible to introduce intermediate branches to calculate intermediate loss and 
 
 \include{exercise-book.tex}
 \end{document}
