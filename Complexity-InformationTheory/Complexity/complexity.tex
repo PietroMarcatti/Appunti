@@ -400,4 +400,47 @@ Taking $L \in NP$ and $x \in L$, it means that in its computation tree over x th
     Halting problem: $H = \left\{ M;x \mid M(x) \downarrow \right\}$.\\ Two main results: the halting problem is recursively enumerable, H is not recursive (theorems from chapter 3). \\
     $H_f = \left\{ M,x \mid \text{M accepts x in at most } f(\absolute{x}) steps \right\}$ if f is proper $H_f \in TIME(f(n)^3)$ and $H_f\notin TIME(f(n))$
 \end{theorem}
-The Hierarchy theorem really proves that the class P is a union of languages that belong to different polynomial time classes and there isn't a highest degree polynomial into which i can embed all other problems.
+The Hierarchy theorem really proves that the class P is a union of languages that belong to different polynomial time classes and there isn't a highest degree polynomial into which I can embed all other problems.
+\begin{lemma}
+    $H_f \in TIME(f(n)^3)$ if $f$ is proper.
+    \begin{proof}
+        $U_f$ takes in input the encoding of machine M and the encoding of x in binary and we call this length n. On a second tape we copy x in $O(f(n))$. By definition of proper function there exists $M_f'$ that computes $f'$ since $f'$ is proper. This machine will compute in binary $f'(f(x))$ in unary in a different tape. It will do it in $O(f(n))$ steps. On a different tape, the machine $ U_f $ will need to store the configuration of M and to perform the simulation of one step $U_f$ will need a constant number of scans of the first tape and the configuration tape. The machine $U_f$ has to simulate $O(f(n))$ steps of M. Then to measure the steps required for each simulated step we need to find the length of the configuration tape as the input is of length n by definition. Each of the strings in the configuration tape has length $f(n)$ because M can at most write that many symbols in the same amount of steps for each tape. If we say that $k_m$ is the constant representing the number of tapes of M. At any step of the simulation, the configuration tape is long $O(k_m\cdot f(n))$ which is certainly $O(f(n)^2)$ ( we are even exagerating, just to be safe). Putting all together we have that $U_f$ decides $H_f$ in $O(f(n)^3)$ steps which means $H_f \in TIME(f(n)^3)$
+    \end{proof}
+\end{lemma}
+\begin{lemma}
+    $H_f \notin TIME(f(\lfloor \frac{n}{2}\rfloor))$
+    \begin{proof}
+        By contraddiction:
+        \[ 
+            \exists M_{H_f} \text{ decides } H_f \text{ in at most } f(\lfloor \frac{n}{2}\rfloor) \text{steps}
+        \]
+        Consider D, $D(M) = yes$ if and only if $M_{H_f}(M;M) = no$\\
+        $D(M) = $yes iff $M(M) = no$ or $M(M)\uparrow$ or $M(M)=yes$ after more than $f(\absolute{x})+5\absolute{x}+4$ steps.\\\\ How much time is required by D? It receives M as input and wants to exploit the powerful machine $M_{H_f}$ so it needs to produce on the second tape the correct input (M,M), after having that D behaves exactly like $M_{H_f}$ and complements the result. $M_{H_f}$ will terminate in $f(\lfloor\frac{2n+1}{2}\rfloor) = f(n)+5n+4$ (ATTENTION THAT THE BOOK DOESN'T ADD THIS SUPPLEMENTARY TERMS REQUIRED TO COPY THE INPUT ON THE SECOND TAPE TWICE)\\\\
+        Which is the result of $D(D)$?\\
+        If we assume D(D)= no then $M_{H_f}(D;D) = $yes, but this means that $D;D \in H_f$ which would require that D(D)= yes. This is a contraddiction. To prove the contraddiction we also need the other case: D(D) = yes then $M_{H_f}(D;D) =$no, this means that $D;D \notin H_f$ and that happens either because $D(D)\uparrow$ or because $D(D) = $ yes in more than $f(\absolute{D})+5\absolute{D}+4 $ steps. This shows contraddiction in every case giving us our proof.
+    \end{proof}
+\end{lemma}
+\begin{theorem}[Hierarchy]
+    If $f(n)\geq n$ is proper then $TIME(f(n)) \subsetneq TIME(f(2n+1)^3)$. The inclusion is trivial while we have proof that it is not equal because the halting language over $m = 2n+1$ is included on the right and not the left. 
+\end{theorem}
+Remember $P = \bigcup_{k\in \mathbb{N}}{TIME(n^k)}$ we define $ExP = \bigcup_{k\in \mathbb{N}}{TIME(2^{n^k})}$. As a corollary we have that \[ 
+    P \subsetneq ExP 
+\]
+\begin{proof}
+    $P\subseteq TIME(2^n) \overset{Hierarchy}{\subsetneq} TIME((2^{2n+1})^3) \subseteq TIME(2^{n^2}) \subseteq ExP$
+\end{proof}
+\begin{theorem}[Gap Theorem]
+    $\exists f$ recursive such that 
+    \[ 
+        TIME(f(n)) = TIME(2^{f(n)}) 
+    \]Observation: f is not proper. It proves that non proper function exists.\\
+    \begin{proof}
+        We consider an enumeration of the Turing machines $M_{0},M_{1}, \ldots,M_{n},\ldots$.\\
+        $P(i,k)$ iff $\forall M_h with h\leq i \forall x with \absolute{x}=i$, $M_h(x)$ terminates in at most k steps, or $M_h(x)$ terminates in more than $2^k$ steps, or $M_h(x) \uparrow$. $P(i,k)$ is decidable.\\
+        Consider (we want to define f(i)) the interval $k_1 = 2i, k_2 = 2^{k_1}, \ldots k_j = 2^{k_{j-1}}+1$
+        N(i) number of possible input s of length i for the machines $M_0, M_1, \ldots, M_i$ and it's $\Sigma_{h=0}^{i}{\absolute{\Sigma_h}^i}$\\
+        For a given input x of length i the machine $M_h$ either does not terminate or it terminates in $s_{xh}$ steps. If we consider N(i) +1 intervals there is at least one in which we do not have any of the number $s_{xh}$'s. We take that interval, suppose it starts at $k_l$ and we define $f(i)=k_l$ and f is computable. $P(i,f(i))= P(i,k_l)$ and f(i) has been defined so that $P(i,k_l)$ is true.\\
+        We then need to prove that $L \in TIME(2^{f(n)}) \Rightarrow L \in TIME(f(n))$.\\\\
+        Since $L\in TIME(2^{f(n)})$ it means that L is decidable and there is a machine $M_j$ that decides L in at most $2^{f(n)}$ steps. $\forall x with \absolute{x}= i \quad i\geq j$ our machine $M_j$ is among the first $M_i$: $M_0, M_1, \ldots, M_j, \ldots, M_i$. $M_j$ since is terminating in at most $2^{f(i)}$ it has to terminate in at most $f(i)$. We get that $M_j$ decides L in $TIME(f(n))$
+    \end{proof}
+\end{theorem}
