@@ -237,7 +237,7 @@ What if A is not square?
 \end{figure}
 Geometrically it is as before but without "matching" domain-codomain dimensions. 
 \begin{definition}[Spectral norm of a matrix]
-    For x in $Rn \setminus {0}$ the spectral norm of a matrix $A \in \mathbb{R}^{m\times n}$ is defined as 
+    For x in $\mathbb{R}^n \setminus {0}$ the spectral norm of a matrix $A \in \mathbb{R}^{m\times n}$ is defined as 
     \[ 
         \norm{A}_2 = \max_{x}{\frac{\norm{A}_2}{\norm{x}_2}} 
     \]
@@ -246,7 +246,7 @@ Geometrically it is as before but without "matching" domain-codomain dimensions.
     The spectral norm of A is its largest singular value $\sigma_i$
 \end{theorem}
 \begin{theorem}[Eckart-Young Theorem]
-    Consider a matrix $A \in \mathbb{R}mn$ of rank r and let $B \in \mathbb{R}^{m\times n}$ be a matrix of rank k. For any $k\leq r$ with $\hat{A}(k) = \sum_{i=1}^{k}{\sigma_iu_iv_i^T}$ it holds that
+    Consider a matrix $A \in \mathbb{R}^{m\times n}$ of rank r and let $B \in \mathbb{R}^{m\times n}$ be a matrix of rank k. For any $k\leq r$ with $\hat{A}(k) = \sum_{i=1}^{k}{\sigma_iu_iv_i^T}$ it holds that
     \begin{align*}
         \hat{A}(k) &= argmin_{rk(B)=k}{\norm{A-B}_2}\\
         \norm{A-\hat{A}(k)}_2 &= \sigma_{k+1}
