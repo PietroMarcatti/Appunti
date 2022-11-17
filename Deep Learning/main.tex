@@ -276,5 +276,40 @@ It can be useful to apply 1x1 convolutions on tensors that have many channels th
 \subsubsection*{Inception Neural Network}
 An idea that was proposed is to apply learning on filters of different sizes applied to tensors with many channels. The problem that resulted is that it was extremely computational costly. To solve this problem, before performing the 3x3 or 5x5 convolution they applied 1x1 convolutions to reduce the dimensionality. Operating like this relieved so much operational complexity. This set of convolutional passes are considered as a unit module and can be put together to form a chain of computation to increase the complexity of our model. It is also possible to introduce intermediate branches to calculate intermediate loss and 
 
+
+\section{Optimization}
+\subsection*{Batch-v.s.-Mini Batch Gradient Descent}
+When using standard gradient descent you will use the entire test set to compute the cost function and the derivatives. Of course this is cost-prohibitive when the set is not very small. With mini-batch gradient descent you divide the test set into smaller batches and perform cost calculation and derivatives for each. Only after having run with every mini-batch you'll complete 1 epoch.\\
+Stochastic gradient descent is a particular instance of batch gradient descent where batch size is 1. The speed of convergence for the three types can vary wildly and each comes with some tradeoff
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=10cm]{descent-comparison.png}
+\end{figure}
+Small train set size (about 2000 examples) is great for mini-batch. Batches are usually small powers of 2: 64, 128, 256, 512, 1024. Mini-batch size is also a learnable parameter and it's worth it to experiment with different values.
+
+\subsection{Optimization Algorithms}
+\subsubsection{Exponentially Weighted Average}
+If your data plot is very noisy we can introduce some historic data about the observed variable and modify the current value taking a major component from the actual value but inserting a parametric component to smooth the curve.
+\[ 
+    V_t = \beta V_t+(1-\beta)\theta_t 
+\]This way $V_t$ is the approximation of $\frac{1}{1-\beta}$ previous datapoint's value.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=10cm]{weighted_average.png}
+\end{figure}
+\subsubsection*{Bias Correction}
+By implementing the formula $V_t = \beta V_t+(1-\beta)\theta_t $ with starting value $V_0 = 0$ the first few values are not correctly represented. We can then introduce the revised formula
+\[ 
+    \bar{V_t} = \frac{V_t}{1-\beta^t} 
+\]By doing so, the added dividend will tend to 1, vanishing it's effect as $t \mapsto \infty$
+\subsubsection*{Gradient Descent with Momentum}
+In gradient descent with momentum we compute ad each iteration the derivatives $\frac{\partial L }{\partial w}, \frac{\partial L }{\partial b}$ and we compute:
+\begin{align*}
+    V_{dw}=\beta V_{dw}+(1-\beta)\frac{\partial L}{\partialw w'} \quad V_{db}=\beta V_{db}+(1-\beta)\frac{\partial L}{\partialw b'} \\
+    W:= W - \alpha V_{dw'}\quad b:= b-\alpha V_{db}
+\end{align*}
+Wehn considering Exponentially weighter averages in this case the average of b is more of less constant (vertical direction) while W goes towards the right. 
+Gradient descent with momentum almost always works empirically  faster than standard gradient descent algorithm. 
+
 \include{exercise-book.tex}
 \end{document}
