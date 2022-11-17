@@ -1,10 +1,10 @@
 \section{Learning}
-Preso dal libro:Chapter 2, Understanding Machine Learning, Shai Shalev?-Schwartz \\\\
-Many questions related to learning from a mathematical standpoint. \begin{itemize}
-    \item What if we do not have a direc (e.g. visual) way to find the features?
+Many questions related to learning from a mathematical standpoint:
+\begin{itemize}
+    \item What if we do not have a direct (e.g. visual) way to find the features?
     \item What if we want to know when to stop learning?
 \end{itemize}
-Using the papaya example we want to define learning. Learning means to produce a predictor/classifier/hypothesis that best approximates $f$
+Using the papaya example we want to define learning. Learning means to produce a predictor/classifier/hypothesis that best approximates $f$ which is the "correct" labeling function. 
 \[ 
     h: \mathcal{X} \longrightarrow \mathcal{Y}
 \]using an algorithm $A(S)$ called the learning algorithm.
@@ -16,73 +16,101 @@ We do not have access to the whole $\mathcal{X}$ so our data is given to us from
 \].
 On these grounds we can introduce a measure (of the error) to compare $h$ and $f$. How do we single out the measure? 
 \begin{enumerate}
-    \item get $A \subseteq \mathcal{X}$
-    \item determine how likely is to end up in A: $\mathcal{D}(A)$
-    \item In order to do step 2, use the characteristic function of A
+    \item Get $A \subseteq \mathcal{X}$
+    \item Determine how likely is to pick an x with distribution $\mathcal{D}$ and to fall in A: $\mathcal{D}(A)$
+    \item In order to do step 2, we use the characteristic function of A
     \[ 
         \pi_A : \mathcal{X} \longrightarrow \{0,1\}\quad A = {x\in \mathcal{X}\mid \pi_A(x)=1} 
     \]
 \end{enumerate}
-Putting together step 2 and 3:
+Putting together step 2 and 3 we can use the following notation to express $\mathcal{D}(A)$ :
 \[ 
     \mathbb{P}_{x\sim\mathcal{D}}[\pi(x)=1] = \mathcal{D(A)} 
 \]
-We define the error of a prediction rule as:
+We define the error of a prediction rule as $h: \mathcal{X}\longrightarrow \mathcal{Y}$:
 \[ 
     L_{\mathcal{D},f}(h)= \mathbb{P}_{x\sim D}[h(x)\neq f(x)]=\mathcal{D}(\left\{ x: h(x) \neq f(x) \right\}) 
-\]$\mathcal{D} $ and $f$ are our assumptions and together with the definition of loss we decided we have the true loss of the learner. In practice, though, we only have S and on its domain we consided h and 
+\]$\mathcal{D} $ and $f$ are our assumptions and together with the definition of loss we established we have a measure of the true loss of the learner. In practice, though, we only have S and on its domain we consided $h$ and 
 \[ 
     L_S(h) = \frac{\absolute{\left\{ i \in[m]: h(x_i) \neq y_i \right\}}}{m} 
 \]
-This is the empirical error and the practice of using it instead of the true error is called empirical risk minimization (ERM).\\
-We now have the tools to illustrate Overfitting very clearly:
+This is the empirical error and the practice of focusing and using it instead of the true error is called empirical risk minimization (ERM).
+\subsection{Overfitting}
+We now have the tools to illustrate overfitting very clearly:
 \[ 
     h_S(x) = \begin{cases}
-        y_i & if x_i = x\\
+        y_i & if\; \exists i \in [m]\; s.t. \; x_i = x\\
         0 & otherwise
     \end{cases} 
-\]It performs perfectly on S even if y is 50/50 on $\mathcal{X}$
+\]It performs perfectly on S but might have much bigger error on the whole $\mathcal{X}$
 \[ 
     \underset{estim. error}{L_S(h_S) = 0} \quad \underset{true error}{L_{\mathcal{D},f}(h_S)= \frac{1}{2}} 
 \]
-The cure for overfitting is to not only have one single h but a class $\mathcal{H}$
+The cure for overfitting is to choose in advance, before seeing the data, a set of predictors. This set is called a hypothesis class and it's denoted by $\mathcal{H}$. For a given class $\mathcal{H}$, and a training sample, S, the $ERM_\mathcal{H}$ learner uses the ERM rule to choose a predictor, $h \in \mathcal{H}$, with the lowest possible error over S
 \[ 
     ERM_\mathcal{H}(S) \in argmin_{h \in \mathcal{H}}{L_S(h)} 
-\]this is called inductive bias towards elements of the class.\\
-The fundamental question is over which hypothesis classes $ERM_\mathcal{H}$ we don't end up overfitting.\\\\
-Observation: the assumption that we work with h correct classifier is a simplifying assumption that we know the truth
-\begin{definition}[The realizabiliity assumption]
-    There exists $h^* \in \mathcal{H}$ such that $L_{\mathcal{D},f} (h^*) = 0$. Note that this assumption implies thtat with probability 1 over random samples, S, where the instances of S are sampled according to $\mathcal{D}$ and are labeled by f, we have $L_S(h^*) = 0$.
-\end{definition}
-It is reasonable:
-\begin{enumerate}
-    \item determine $h_S$ with a certain probability
-    \item approximately compute $L_{\mathcal{D},f}(h_S)$
-\end{enumerate}
-We are making another important assumption: that all the examples in the trainin set are independently and identically distributed (i.i.d.) according to the distribution $\mathcal{D}$. We deonte this assumption by $S \sim \mathcal{D}^m$. We can see the training set S as a window over the distribution $\mathcal{D}$ and the function f, the larger the window, the better.\\
-If S is chosen randomly we can see that a "wrong" choice leads to a "wrong" result, for this reason we need an estiamte of the probability of picking the "wrong" S. The probability of picking a non-representative S is $\delta$
-\[ 
-    confidence(parameter) = 1-\delta
-\]We cannot guarantee a perfect label prediction, so we introduce an accuracy parameter and we interpret an accuracy parameter bigger than our treshold as a failure by the learner.
-\[ 
-    \mathcal{D}^m\left( \left\{ S\mid_x : L_{\mathcal{D},f}(h_S)>\epsilon \right\} \right) 
 \]
-This is the probability of picking a bad $S\mid_x$ for the ERM $h_S$. We want to bound this value
+By restricting the learner to choosing a predictor from $\mathcal{H}$, we bias it toward a particular set of predictors. Such restrictions are referred to as inductive bias. 
+The fundamental question is over which hypothesis classes $ERM_\mathcal{H}$ we don't end up overfitting. Intuitively, choosing a more restricted hypothesis class better protects us against overfitting but at the same time might cause us a stronger inductive bias. 
+\subsubsection{Finite Hypothesis Classes}
+The simplest type of restriction on a class is imposing an upper bound on its size. Here we show that if $\mathcal{H}$ is a finite class then $ERM_\mathcal{H}$ will not overfit, provided it is based on a sufficiently large training sample. 
+\begin{definition}[The realizabiliity assumption]
+    There exists $h^* \in \mathcal{H}$ such that $L_{\mathcal{D},f} (h^*) = 0$. Note that this assumption implies that with probability 1 over random samples, S, where the instances of S are sampled according to $\mathcal{D}$ and are labeled by f, we have $L_S(h^*) = 0$.
+\end{definition}
+We are making another important assumption: that all the examples in the trainin set S are independently and identically distributed (i.i.d.) according to the distribution $\mathcal{D}$ and labeled according to $f$. We denote this assumption by $S \sim \mathcal{D}^m$ where m is the size of S. We can see the training set S as a window over the distribution $\mathcal{D}$ and the function $f$, the larger the window the more likely it is to reflect more accurately the distribution and labeling used to generate it.\\
+If S is chosen randomly we can see that a "wrong" choice leads to a "wrong" result, for this reason we need an estimate of the probability of picking the "wrong" S. The probability of picking a non-representative S is $\delta$, while we refer to $(1-\delta)$ as the confidence parameter of our prediction. \\We cannot guarantee a perfect label prediction, so we introduce an accuracy parameter and we interpret a measure of our accuracy parameter larger than some treshold $\epsilon$ as a failure by the learner.
+Therefore we are interesting in upper bounding the probability to sample m-tuple of instances that will lead to failure of the learner. Formally, let $S\mid_x = (x_{1}, \ldots,x_{m})$ be the instances of the training set. We want to upper bound the probability of picking a bad $S\rvert_x$ for the ERM $h_S$.
+\[ 
+    \mathcal{D}^m\left( \left\{ S\rvert_x : L_{\mathcal{D},f}(h_S)>\epsilon \right\} \right) 
+\]
+Let $\mathcal{H}_B$ be the set of "bad" hypotheses, that is,
 \[ 
     \mathcal{H}_B = \left\{ h \in \mathcal{H}: L_{\mathcal{D},f}(h)>\epsilon \wedge L_S(h)=0 \right\} 
-\]This is the set of bad hypothesis.
+\]In addition let
 \[ 
-    M = \left\{ S\mid_x : \exists h \in \mathcal{H}_B, L_S(h)= 0 \right\}
-\]This is the misleading S and it't what we want to bound. 
-Follow computations all the way to corollary 2.3
+    M = \left\{ S\rvert_x : \exists h \in \mathcal{H}_B, L_S(h)= 0 \right\}
+\]be the set of misleading samples and it't what we want to bound. Since the realizabiliity assumption implies that $L_S(h_S)=0$, it follows that the event $L_{\mathcal{D},S}(h_S)>\epsilon$ can only happen if for some $h\in \mathcal{H}_B$ we have that $L_S(h) =0$. In other words, this event will only happen if our sample is in the set of misleading samples M. We can rewrite M as
+\[ 
+    M = \bigcup_{h\in\mathcal{H}_B}\left\{ S\rvert_x : L_S(h) = 0 \right\} 
+\]
+Hence,
+\[ 
+    D^m(\left\{ S\rvert_x:L_{\mathcal{D},f}(h_S) > \epsilon \right\})\leq D^m(M) = D^m(\cup_{h\in\mathcal{H}_B}\left\{ S\rvert_x : L_S(h) =0 \right\}) 
+\]
+We upper bound the right-hand of the preceding equation using the union bound, a basic property of probabilities.
+\[ 
+    \mathcal{D}(A \cup B ) \leq \mathcal{D}(A)+\mathcal{D}(B) 
+\]Applying the union bound to the right-hand side of the equation yields:
+\begin{equation}
+    \mathcal{D}^m(\left\{ S\rvert_x: L_{\mathcal{D},f}(h_s)>\epsilon \right\})\leq \sum_{h\in\mathcal{H}_B}{\mathcal{D}^m(\left\{ S\rvert_x : L_S(h) = 0 \right\})}
+\end{equation}
+Next, let us bound each summand of the right-hand side of the preceding inequality. Fix some "bad" hypothesis $h \in \mathcal{H}_B$. The event $L_S(h) = 0$ is equivalent to the event $\forall i, h(x_i) = f(x_i)$. Since the examples in the trainin set are sampled i.i.d. we get that
+\begin{align*}
+    \mathcal{D}^m(\left\{ S\rvert_x : L_S(h) = 0 \right\}) &= \mathcal{D}^m(\left\{ S\rvert_x : \forall i,h(x_i) = f(x_i) \right\})\\
+    & = \Pi_{i=1}^{m}{\mathcal{D}(\left\{ x_i: h(x_i) = f(x_i) \right\})}
+\end{align*}
+For each individual sampling of an element of the training set we have
+\[ 
+    \mathcal{D}({x_i:h(x_i) = y_i}) =1 - L_{\mathcal{D},f}(h) \leq 1-\epsilon
+\]
+where the last inequality follows from the fact that $h\in \mathcal{H}_B$. Combining the two previous equation and the inequality $1-\epsilon \leq e^{-\epsilon}$ we obtain that for every $h\in\mathcal{H}_B$
+\[ 
+    \mathcal{D}^m(\left\{ S\rvert_x : L_S(h) = 0 \right\}) \leq (1-\epsilon)^m \leq e^{-\epsilon m}
+\]Combining this equation with ... we conclude that
+\[ 
+    \mathcal{D}^m(\left\{ S\rvert_x : L_{\mathcal{D},f}(h_S) > \epsilon \right\}) \leq \absolute{\mathcal{H}_B}e^{-\epsilon m}\leq \absolute{\mathcal{H}}e^{-\epsilon m}
+\]
 \begin{corollary}
     Let $\mathcal{H}$ be a finite hypothesis class. Let $\delta \in (0,1), \epsilon >0$ and let m be an integer that satisfies
     \[ 
         m\geq \frac{\log(\absolute{\mathcal{H}}/\delta)}{\epsilon} 
     \]
-    Then fory labellingfunction f and for any distribution $\mathcal{D}$ for which the realizabiliity assumption holds, with probability of at least $1-\delta$ over the choice of an i.i.d.  sample S of size m, we have that 
+    Then fory labeling function f and for any distribution $\mathcal{D}$, for which the realizabiliity assumption holds, with probability of at least $1-\delta$ over the choice of an i.i.d. sample S of size m, we have that for every ERM hypothesis $h_S$ it holds that
+    \[ 
+        L_{\mathcal{D},f}(h_S) \leq \epsilon 
+    \]
 \end{corollary}
-This is called Probabily Accurate Correct learning (P.A.C.).
+The preceding corollary tells us that for a sufficiently large m, the $ERM_{\mathcal{H}}$ rule over a finite hypothesis class will be \textbf{probably} (with confidence $1-\delta$) \textbf{approximately} (up to an error of $\epsilon$) \textbf{correct}. This model is called PAC learning. 
 \begin{definition}(PAC learnability)
-    Insert definition
+    A hypothesis class $\mathcal{H}$ is PAC learnable if there exists a function $m_{\mathcal{H}}:(0,1)^2 \longrightarrow \mathbb{N}$ and a learning algorithm with the following property: For every $\epsilon, \delta \in (0,1)$, for every distribution $\mathcal{D}$ over $\mathcal{X}$, and for every labeling function $f: \mathcal{X}\longrightarrow\left\{ 0,1 \right\}$, if the realizable assumptino holds with respect to $\mathcal{H}, \mathcal{D}, f$, then when running the learning algorithm on $m \geq m_{\mathcal{H}}(\epsilon, \delta)$ i.i.d. examples generated by $\mathcal{D}$ and labeled by $f$, the algorithm returns a hypothesis $h$ such that, with probability of at least $1-\delta$ (over the choice of the examples), $L_{\mathcal{D},f}(h)\leq \epsilon$
 \end{definition}
