@@ -444,3 +444,62 @@ Remember $P = \bigcup_{k\in \mathbb{N}}{TIME(n^k)}$ we define $ExP = \bigcup_{k\
         Since $L\in TIME(2^{f(n)})$ it means that L is decidable and there is a machine $M_j$ that decides L in at most $2^{f(n)}$ steps. $\forall x with \absolute{x}= i \quad i\geq j$ our machine $M_j$ is among the first $M_i$: $M_0, M_1, \ldots, M_j, \ldots, M_i$. $M_j$ since is terminating in at most $2^{f(i)}$ it has to terminate in at most $f(i)$. We get that $M_j$ decides L in $TIME(f(n))$
     \end{proof}
 \end{theorem}
+
+Another corollary to Savitch theorem
+\begin{corollary}
+    \[ 
+        NSPACE = PSPACE 
+    \]
+    The classes are close enough that the speed up theorem allows us that they are the same
+\end{corollary}
+
+\subsubsection*{Relation between complement classes}
+We want to explore the question:
+\[ 
+    CO-NSPACE(f(n)) ? NSPACE(f(n)) 
+\]
+To answer this we will use another result.\\
+Problem:\\
+Given $ G=(V,E) $ and $u \in V$ we want to compute the number of nodes reachable from u
+\[ 
+    \absolute{Reach_G(u)} 
+\]
+Recall the meaning of complement: $\bar{L} \in co-l, x \in \bar{L} iff x\notin L iff N(x)$ always terminates with no ( N non-det for L)
+\begin{theorem}[Immerman - Szelepscényi]
+    The problem of computing the number of nodes reachable from x in G can be solves in non-deterministic space $O(\log{n})$. ( We don't say this is in NL because this is not a decision problem, but a functional one). In the computational graph all the nodes terminating the computation correctly will output a number and that is the same and also the correct one. All other computation branches will terminate with "no" ( just a convention, we don't want a number)
+    \begin{proof}
+        S(i) is the set of nodes reachable from x in at most i steps.\\
+       $ S(0) = \{x\}, \quad \absolute{S(0)}=1$. At each step we store $\absolute{S(k-1)}$ and use it to compute $\absolute{S(k)}$ for $k = 1,2,\ldots, \absolute{V}-1$\\
+       Inside the loop for k we have another loop always startin with $l:=0$ for $u = 1,2, \ldots, \absolute{V}$:
+       \begin{itemize}
+        \item if $\underset{how?}{u \in S(k)} l=l+1$
+        \item m:=0, reply:= false (if u in S(k) becomes true)
+        \item for (v = 1,2,..., |V|) \begin{itemize}
+            \item if(v in S(k-1))
+            \item   m= m+1
+            \item   if((v,u) in E)
+            \item       reply:= true
+        \end{itemize}
+       \end{itemize}
+       at the end if m < |S(k-1)| return "no", else return reply. During the computation we only store k, l, u, m, v, reply, |S(k-1)|, p and $w_p$. They all range between 1 and |V| so they all require logarithmic space so the whole problem is O(log\{n\})
+    \end{proof}
+\end{theorem}
+\begin{corollary}
+    If f is proper $f(n) \geq \log{n}$ 
+    \[ 
+        Co-NSPACE(f(n)) = NSPACE(f(n)) 
+    \]
+    \begin{proof}
+        $\bar{L} \in Co-NSPACE(f(n))$ we want to prove $\bar{L} \in NSPACE(f(n))$
+        If $L \in NSPACE(f(n))$ it means that there is N that decides L. $x \in \bar{L}$, i generate the graph $G_N(x)$ and check that "yes" is not reachable, count all the reachable nodes with Immerman-Szelepscényi. Terminate with "yes" iff during IS the node (yes) of the graph $G_N(x)$ is never reached and IS has terminated with a number
+    \end{proof}
+\end{corollary}
+Exercises
+7.4.5 NP closed under $\cup$ and intersection\\
+7.4.6 $L^* = \left\{ w_{1}, \ldots,w_{n} | k\geq 0 , w_i \in L \right\}$. Prove that both P and NP are closed for the operator kleenstar:
+\[ 
+    L \in P \Rightarrow L^* \in P 
+\]
+7.4.7 $NP \neq SPACE(n)$ (use some closure under some operations to prove)\\
+
+
