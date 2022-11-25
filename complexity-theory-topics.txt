@@ -1,0 +1,49 @@
+Information Theory
+ Relation between probability and Information
+ Definition of Entropy and its properties
+ Basis of data compression
+ Kraft-McMillen Inverse Theorem and proof(s)
+ Kraft-McMillen Direct Theorem and proof
+ 1st Shannon Theorem and proof
+ Definition of Shannon Code
+ Sub-optimality of Shannon Codes
+ Shannon-Fano Code
+ Shannon codes on strings of lenght n
+ Huffman code basic functioning
+ LZ-77 data compression algorithm
+
+Kolmogorov Complexity
+ Definition and idea of Kolmogorov Complexity
+ Church-Turing Thesis
+ Universal Machine Theorem
+ Conditional Kolmogorov Complexity
+ Universality of Kolmogorov Complexity Theorem and proof
+ Upper bound for Conditional Kolmogorov Complexity Theorem and proof
+ Upper bounds (Li-Vitanyi v.s. Cover) for Kolmogorov Complexity
+ Kolmogorov Encoding
+
+Computational Complexity
+ Quick review of Turing Machines as our computational model of choice
+ Definition of Time Complexity
+ Definition of the URM computation model
+ Definition of Uniform and Logarithmic complexity cost
+ Computational Church-Turing Thesis
+ Definition of Time complexity and time complexity classes
+ Polynomial relatioship between models of computation by watching at the decision of the palyndrome language with 1-tape TM and k-tape TM
+ Theorem 2.1 from the book and proof
+ Speed-up Theorem and proof
+ Definition of Space complexity
+ Definition of the RAM computational model
+ Definition of the function computed by a RAM
+ Simulation of a TM with RAM and viceversa
+ Definition of Non-deterministic Turing Machine
+ Time complexity for a Non-deterministic (N.D.) TM
+ Definition of non-deterministic complexity classes
+ Undecidability of the Halting Problem (chapter 3 of the book, read individually, not seen in class)
+ Relationship between complexity classes
+ Definition of Proper complexity function
+ Definition of precise TM Machine
+ Complement of non deterministic classes
+ Hierarchy Theorem and proof
+ Gap Theorem and proof
+ Savitch Theorem, proofs and corollaries

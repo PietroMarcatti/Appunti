@@ -1,0 +1,59 @@
+\section{Word Embeddings}
+ When introducing the concept of word embeddings we can say that our aim is to build a language model in terms of a probability distribution over strings (first words and then sentences). These elements will constitute the features of our model. The characterization through the use of a probability distribution is a key aspect.\\
+ A sentence is a sequence of words and for example we want to calculate the probability of the sentence
+ \[ 
+    \text{We live in a small world} 
+ \]
+ we are interested in
+ \[ 
+    P(We, live, in, a, small, world) = P(world \mid we, live, in , a, small) P(we, live, in , a ,small) 
+ \]This is theoretically correct but the probabilities get so small that it is not reasonable to use them.\\
+ One question we can ask ourselves how do we recognize the words from eachother? The answer is tokenization, we define a corpus and cap the vocabulary (example 10000 words) and its size is going to be one of our parameters. Having a fixed vocabulary means that we must account for words that are not in our vocabulary, for them we must include a unknown token.\\The important issue, already mentioned, is that the longer the prefix sentence gets, the more miningless the probabilities get. For this matter we reduce the span of the probability computation. We start by considering the smallest window possible: 2
+ \subsection{Bigram Model}
+ The simple idea is: given a word we want to give the most probable next word. Three possible approaches
+ \begin{description}
+    \item[Super-trivial]: every word is equally probable
+    \item[Trivial]: count the occurences
+    \item[Bigram]: estimate "two words" reliably and in a generalizable way   
+ \end{description}
+ To calculate this estimate we use deep learning. We want to give the deep network a word and expect as output a reasonable probability distribution over possible next words. It is obvious that we need, somehow, to turn words into floating point numbers that deep learning can manipulate. The vectors representing the words in floating point are called word embeddings.\\
+ The number of features associated with each embedding is an hyperparameter of the network.\\
+ Insert description of the network\\
+ Notice the difference between this and a classifier, the output modifies the encoding. A critical point is that E, the embedding, is a parameter of the model and they are initialized randomly and learned using a stochastic gradient descent optimization. This process does actually converge to a solution and this solution has the property to map words that have similar meanings to similar embedding vectors. A question then emerges: how do we measure closeness? We use scalar prouct and in particular cosine similarity 
+ \[ 
+    cos(x,y) = \frac{x\cdot y}{(\sqrt{(\sum_{i=1}^{n}{x_i^2})})(\sqrt{(\sum_{i=1}^{n}{y_i^2})})} 
+ \]
+ Given a word, then most probable next on is going to have the largest cosine similarity. The evaluation of the network is done on an average-per-word loss and not on the single word. In any case we want to minimize the loss, we call perplexity the error of the total loss relativized to the entire corpus
+ \[ 
+   perplexity = e^{\frac{x_d}{\absolute{d}}} 
+ \]
+ Notice that when $P_{x_i} = \frac{1}{\absolute{d}}$ any word has the same probability of being the next, in that case
+ \[ 
+   \sum_{i=1}^{\absolute{d}}{-log(P_{x_i})} = \sum_{i=1}^{\absolute{d}}{-log{\frac{1}{\absolute{d}}}} = \absolute{d} \cdot \log{\absolute{d}}
+ \]
+ and the perplexity is $\absolute{d}$.
+Further improvements on the model can be done by simply expanding the history of words at which we look to take our guess, the trigram model uses the previous two words to predict the third. First layer is the encoding of two words, then they are multiplied with their logits and then we get a softmax matrix of probabilities.
+\subsubsection*{Overfitting}
+If we find ourselves using the same data for more than one epoch we are seriously running the risk of overfitting. The reason why language models are often overfitting is that they are usually too small (few examples) and they are not well distributed.\\
+Countermeasures for overfitting:
+\begin{itemize}
+   \item (Very simple minded) stop early
+   \item Dropout: leave some parts of the computation (nodes)
+   \item L2 Regularization: keep the absolute value of parameter small
+\end{itemize}
+How to implement L2 Regularization: add a regularization parameter to your loss 
+\[ 
+   \mathcal{L}(\Phi) = -log(Pr(c)) + \alpha \frac{1}{2}\sum_{\phi in \Phi}{\phi^2} 
+\]
+\subsection{Recurrent Networks}
+Recurrent networks include cycles in the graph, the output contributes to its own input. We need to add a new ingredient, the notion of state that is going to act like memory. Weights and biases are grouped into two: those used for the recursion and those used to produce the output.\\
+States are recursively defined and the dimension of a state is a hyperparameter, new states are obtained by concatenation.\\\\
+Insert model topology\\\\
+Recurrent networks are appropriate when we want previous inputs to the network to have an influence arbitrarily far into the future.\\ The forward pass is easy but the key point is that when we do the backwards pass we should look back. How do we do it? Simple minded idea: unfold the network but we don't know how to stop. A simple idea is to stop after a window size of N steps. Notice: in the non-cyclic case the full data is processedin parallel, in the cyclic case parallelism is lost but pieces of data have long range interactions\\ The i-th computing unit receives the output of i-1 unit and the i-th word. Once we define our loss we are done\\
+Let us lift up our view: RNN in general, one channel passes the information to subsequent units.
+\subsection*{Long Short-Term Memory}
+A long short-termo memoery nn is a particular kind of Rnn that almost always outperforms the simple RNN. In the architecture, the tanh function deletes values, the sigmoid reduces them, this way i get two different types of non-linearity. The sigmoid has a smoothing effect, the hyperbolic tangent has a much stronger forgetting effect.
+
+
+Approfondimento: paper per algoritmica legata all'identificazione del predecessore e successore in liste con soluzioni classiche come interpolazione con linee spezzate vs reti neurali per l'approssimazione della funzione. 
+

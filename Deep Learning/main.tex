@@ -305,11 +305,41 @@ By implementing the formula $V_t = \beta V_t+(1-\beta)\theta_t $ with starting v
 \subsubsection*{Gradient Descent with Momentum}
 In gradient descent with momentum we compute ad each iteration the derivatives $\frac{\partial L }{\partial w}, \frac{\partial L }{\partial b}$ and we compute:
 \begin{align*}
-    V_{dw}=\beta V_{dw}+(1-\beta)\frac{\partial L}{\partialw w'} \quad V_{db}=\beta V_{db}+(1-\beta)\frac{\partial L}{\partialw b'} \\
+    V_{dw}=\beta V_{dw}+(1-\beta)\frac{\partial L}{\partial w'} \quad V_{db}=\beta V_{db}+(1-\beta)\frac{\partial L}{\partial b'} \\
     W:= W - \alpha V_{dw'}\quad b:= b-\alpha V_{db}
 \end{align*}
-Wehn considering Exponentially weighter averages in this case the average of b is more of less constant (vertical direction) while W goes towards the right. 
+When considering Exponentially weighted averages in this case the average of b is more of less constant (vertical direction) while W goes towards the right. 
 Gradient descent with momentum almost always works empirically  faster than standard gradient descent algorithm. 
+\subsubsection*{RMSprop}
+RMSprop is another improvement on gradient descent that relies on the idea of Exponentially weighted averages introducing a non-linearity by squaring the derivative value
+\subsubsection*{ADAM}
+ADAM or Adaptive Moment Estimation Optimizer is a optimization technique that puts together Grdient Descent with Momentum and RMSprop 
+
+\subsubsection*{Learning Rate Decay}
+Poorly choosing the value for your learning rate could prevent you from finding the minimum. A value too small could not converge or take too much time to do so. A value too large could end up jumping over your minimum and keep going back and forth. For this reason we implement learning rate decay and start with a larger value for the learning rate and gradually make it smaller to achieve better results.
+\subsection*{Local Optimum in Neural Networks}
+When observing the cost function it is very likely that it has saddle points and plateaus. Especially this last case is better handled by ADAM, RMSprop or Gradiant descent with momentum rather than the basic version.
+\section{Loss Functions}
+For binary classification we often use the binary cross-entropy loss where m is the number of examples in the mini-batch\\
+For regression we often use the Mean Square error loss, again m is the number of examples in the mini-batch\\
+For multiclass classification we usually insert a softmax activation function on the last layer of the network that will output a probability distribution over the classes. While the loss function used for multiclass classification is the Cross-Entropy loss. This function is used to evaluate the difference in two probability distribution (the one of the ground truth is given as a one-hot vector)
+\section{Convolutional Neural Networks - Object Detection}
+Image Classification can then be further categorized in the case that we want to localize the object placing it within its bounding box. When we are talking about multiple object localization we are talking about object detection. Our image classification network is modified as follows, adding a regression module/task for deciding the bounding box
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width = 10cm]{object-localization-network.png}
+\end{figure}
+The output of the network will be a vector that has one binary digit to express whether the network thinks there is an object or not, followed by the four coordinates of the bounding box and then a one-hot subvector for the classification.
+\subsection*{Landmark Detection}
+Landmark detection is an application of object detection used to identify a fixed number of landmarks on an object to capture its detailed characterstics. It is often used on faces to capture emotions, pose estimation for animation etc. The ground truth for these landmark detection task is a vector with a binary for face or no face, for example, and then 64 coordinates (x,y) for each of the landmarks to be estimated.
+\subsection*{Sliding Window detection}
+A popular practice to perform object detection is to use a sliding window that moves through the image and each image patch is used as input for our trained Convolution NN. In order to handle different scales we can also change the size of the window.
+\subsection*{Convolution implementation of sliding windows}
+By removing the fully connected layers at the end of a CNN and replacing them with a series of 1x1 convolutions we have that the final value of a certain pixel in the last convolution result is only dependant on a specific window of pixel in the original image, hence obtaining a sliding window apprach withouth any other computation. 
+\subsection*{Yolo Algorithm}
+Yolo algorithm is a particular implementation of windowed object detection which uses a grid of $ n\times n $ squares, for example n=3. Then for every square it outputs a vector (of size let's say m) in the same form as a standard object detection (0/1 object or not, bounding box coordinates and one-hot subvector for class identified). The output is then going to be $n\times n\times m$. Using a convolutional implementation of sliding window the result tensor of the network is going to be based exclusively on the corresponding square in the grid.
+\subsection*{Evaluating Object localization}
+To evaluate the goodness of an object localization algorithm we can use a simple calculation of Intersection over Union that gives us a percentage of overlap. Then we apply a non-max suppression algorithm that works by removing all object detection that are scoring too poorly and then focusing on the best match. 
 
 \include{exercise-book.tex}
 \end{document}
