@@ -395,6 +395,7 @@ $P = U_{k\in\mathbb{N}}TIME(n^k)$, and we have a language $L \in P$ it means tha
     \item TIME(f(n)) = co-TIME(f(n))
     \item SPACE(f(n)) = co-SPACE(f(n))
 \end{itemize}
+\subsection{Hierarchy between complexity classes}
 Taking $L \in NP$ and $x \in L$, it means that in its computation tree over x there exists a leave terminating with yes. It necessarily means that $x\notin \bar{L}$. We cannot simply invert the final states to get a nondet. TM that decides $\bar{L}$, we get a TM, it works in f(n) but it doesn't decide the complement. For this reason we cannot classify the relationship between NP and co-NP.
 \begin{theorem}[Hierarchy Theorem]
     Halting problem: $H = \left\{ M;x \mid M(x) \downarrow \right\}$.\\ Two main results: the halting problem is recursively enumerable, H is not recursive (theorems from chapter 3). \\
@@ -444,3 +445,76 @@ Remember $P = \bigcup_{k\in \mathbb{N}}{TIME(n^k)}$ we define $ExP = \bigcup_{k\
         Since $L\in TIME(2^{f(n)})$ it means that L is decidable and there is a machine $M_j$ that decides L in at most $2^{f(n)}$ steps. $\forall x with \absolute{x}= i \quad i\geq j$ our machine $M_j$ is among the first $M_i$: $M_0, M_1, \ldots, M_j, \ldots, M_i$. $M_j$ since is terminating in at most $2^{f(i)}$ it has to terminate in at most $f(i)$. We get that $M_j$ decides L in $TIME(f(n))$
     \end{proof}
 \end{theorem}
+\begin{theorem}
+    If $f$ is proper then:
+    \begin{align*}
+        PSPACE(f(n)) &\subseteq NSPACE(f(n)) \\
+        TIME(f(n)) &\subseteq NTIME(f(n)) \\
+        TIME(f(n)) & \subseteq PSPACE(f(n)) \\
+        PSPACE(f(n)) &\subseteq TIME(c^{f(n)+\log{n}})\\
+        NTIME(f(n)) & \subseteq PSPACE(f(n)) \\
+        NSPACE(f(n)) &\subseteq TIME(c^{f(n)+\log{n}})
+    \end{align*}
+    \begin{proof}
+        \[ 
+             L \in NTIME(f(n)) \Longrightarrow L\in PSPACE(f(n))
+        \]
+        If $L \in NTIME(f(n)), \exists N$ non-deterministic TM that decides L in time $f(n)$. This means that there exists M deterministic TM that decides $L$ in time $O(c^{f(n)})$. Let's recall that N uses at most $f(n)$ space because it's working in $f(n)$ space. The tape used by M to store the nondeterministic choices to simulate N requires at most $f(n)$ characters, each $1 \leq c_i \leq d$ and requiring $\log{d}$ (constant) space. So M is working in space $O(f(n))$ because with respect to N it is only adding $\log{d}\cdot f(n)$ space.
+    \end{proof}
+    \begin{proof}
+        \[ 
+            L \in NSPACE(f(n)) \Longrightarrow L \in TIME(c^{f(n)+\log{n}})
+        \]
+        Since $ L \in NSPACE(f(n)), \exists N$ nondeterministic I/O TM that decied L in space $f(n)$. We have to look at the work performed by N as a set of configurations:
+        \begin{align*}
+            &\qquad\tikznode{1}{$(q_1, w_{1}^1,u_{1}^1, \ldots,u_{k}^1,w_{k}^1)$}\\
+            &\qquad\tikznode{2}{$(q_2, w_{1}^2,u_{1}^2, \ldots,u_{k}^2,w_{k}^2)$}\\
+            \tikznode{0}{$(q,w_1,u_1,\ldots,w_k, u_k)$}&\qquad \vdots \; d\\
+            &\qquad\tikznode{d}{$(q_n, w_{1}^d,u_{1}^d, \ldots,u_{k}^d,w_{k}^d)$}\\
+        \end{align*}
+        \begin{tikzpicture}[remember picture,overlay,rounded corners,>=stealth,shorten > =1pt,shorten <=1pt,thick]
+            \draw[->] (0.east) |- (1.west);
+            \draw[->] (0.east) |- (2.west);
+            \draw[->] (0.east) |- (d.west);
+        \end{tikzpicture}We can fix input the input x and $\absolute{x} = n$. We can modify how we write the configurations and we can substitute $w_1^i, u_1^i$ since the input tape is fixed and we only need the integer $j$ of the position of the cursor on the input tape. We further modify the configuration removing $w_k^i,u_k^i$ because given that the machine is I/O we cannot go back and read/modify the content. Now we calculate how many possible configurations of the form $(q,j,w_2^i,u_2^i,\ldots,w_{k-1}^i,u_{k-1}^i)$ of N on input x are possible:
+        \begin{align*}
+            &\underset{states}{(\absolute{K}+2)} * \underset{\text{cursor positions}}{n+2} * \prod_{i=2}^{k-1}{\underset{\text{contents of tape } i}{\left( \absolute{\Sigma}^{f(n)} \times \absolute{\Sigma}^{f(n)} \right)}}=\\
+            &=(\absolute{K}+2) * {n+2} * \absolute{\Sigma}^{2f(n)\cdot(k-2)}
+        \end{align*}
+        I now construct a deterministic machine M that will create the computation graph of N and then M has to decide whether the starting configuration is able to reach a node whose state is "yes".\\
+        M produces the graph $G_N(x)$ in linear time with respect to $\absolute{G_N(x)}$. M solves a reachability problem over $G_N(x)$ in polynomial time w.r.t. $\absolute{G_N(x)}$, being generous let's say $\absolute{G_N(x)}^{10}$. We know that from our previous computation that $\absolute{G_N(x)} = (\absolute{K}+2) * {n+2} * \absolute{\Sigma}^{2f(n)\cdot(k-2)} = (\absolute{K}+2) * O(b^{f(n)+\log{n}})$. Then the reachability problem becomes $O(c^{f(n)+\log{n}})$ and c depends on N.
+    \end{proof}
+\end{theorem}
+The problem with the last proof is that c depends on N so it changes depending on the language and of course the machine. For this reason the complexity relation is only partially correct because it isn't the same c for every language.
+\begin{corollary}
+    \[ 
+        \tikznode{L}{L} \subseteq NL \subseteq \tikznode{P}{P} \subseteq  NP \subseteq \tikznode{PSPACE}{PSPACE} \subseteq \tikznode{NSPACE}{NSPACE} \subseteq ExP \subseteq NExP \subseteq \ldots
+    \]
+\end{corollary}
+\begin{corollary}
+    \[ 
+        NSPACE(f(n)) \subseteq SPACE(c^{f(n) +\log{n}})
+    \]
+\end{corollary}
+\begin{theorem}[Savitch Theorem]
+    The problem \textsc{Reachability}$\in SPACE((\log{n})^2)$.
+    \begin{proof}
+        We define a predicate $Path(x,y,i)$ true when x reaches y in at most $2^i$ steps. For this we define a base case $Path(x,y,1)\; iff \; x =y \vee x \rightarrow y$
+        \[ 
+            Path(x,y,i+1) \Longleftrightarrow \exists z: Path(x,z,i) \wedge Path(z,y,i) 
+        \]
+        The machine receives in input the encoding of the graph, x and y. x reaches y if and only if $Path(x,y, \absolute{V})$. On the working tape we write down recursive calls and they accumulate like the stack of a recursive program. At most $\log{\absolute{V}}$ calls will accumulate and each of them is long at most $\log{\absolute{V}}$. This means that we can solve \textsc{Reachability} in $PSPACE((\log{n})^2)$
+    \end{proof}
+\end{theorem}
+\begin{corollary}[Savitch Corollary]
+    \[ 
+        NSPACE(f(n)) \subseteq SPACE(f(n)^2),\quad f(n) \geq n
+    \]
+    \begin{proof}
+        We have a computational graph $G_N(x)$ of size $b^{f(n)+\log{n}}$, using Savitch theorem we get
+        \[ 
+            SPACE((\log{b^{f(n)+\log{n}}})^2) = SPACE((f(n)+\log{n})^2)
+        \]
+    \end{proof}
+    This proof is cheating a little because it doesn't account for the space required to create and compute the graph.
+\end{corollary}

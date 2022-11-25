@@ -6,6 +6,7 @@
 \usepackage{witharrows}
 \usepackage{cancel}
 \usepackage{accents}
+\usepackage{tikz}
 \newtheorem{definition}{Definition}
 \newtheorem{remark}{Remark}
 \newtheorem{theorem}{Theorem}
@@ -13,12 +14,18 @@
 \newtheorem{lemma}{Lemma}
 \newtheorem{thesis}{Thesis}
 \newtheorem{property}{Property}
+\newtheorem{corollary}{Corollary}
 \newcommand\munderbar[1]{%
 \underaccent{\bar}{#1}}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\eunorm}[1]{\left\lVert#1\right\rVert_{2}}
 \newcommand{\anglepar}[1]{\left\langle#1\right\rangle}
 \newcommand{\absolute}[1]{\left\lvert#1\right\rvert}
+\newcommand\tikznode[3][]
+{\tikz[remember picture,baseline=(#2.base)]
+    \node[minimum size=0pt,inner sep=0pt,#1](#2){#3};
+}
+\usetikzlibrary{positioning,shapes,arrows}
 
 \title{Complexity and Information Theory}
 \author{Pietro Marcatti}
