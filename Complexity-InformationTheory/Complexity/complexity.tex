@@ -638,5 +638,38 @@ G is 3-col if and only if R(G) is SAT, and this is computable in
         \]$x \in \bar{L'}$ if and only if $R(x) \in L$, this means that $x \in L'$ if and only if $R(x) \in \bar{L}$ which brings us to the final conclusion $L' \preceq \bar{L}$
     \end{proof}
 \end{lemma}
+\subsection*{Complete problems}
+Recall that a P-complete language means that $L \in P$ and $\forall L' \in P \quad L' \preceq L$. Boolean circuits: a DAG 
+\begin{itemize}
+    \item each node is either 0, 1, a variable, not, or, and
+    \item Nodes of the type 0,1,variable do not have incoming edges
+    \item Nodes of type not have only 1 incoming edge
+    \item Nodes of type or, and have 2 incoming edges
+    \item There is 1 node without outgoing edges
+\end{itemize}
+Circuit value:\\
+Given a circuit without variable nodes the problem is to decide whether the circuit has value 1\\
+Circuit SAT: \\
+Given a circuit decide whether there exists an assignement for the variables such that the circuit has value 1\\
+We'll now see that the first one will be a P-complete problem and the second one a NP-complete problem. The result we will study is the Levi-Cook theorem.
+\begin{theorem}[Circuit Value P-completeness]
+    Circuit Value is P-complete
+    \begin{proof}
+        First step I need to prove that Circuit is in P.  We need to visit the DAG using topological sorting and this can be done in polynomial time.\\
+        Secon step I need to know that given $L\in P$ it has to be possible to $L \preceq CircuitValue$. If $L \in P$ it has to be true that $\exists M$ that decides L in time at most $n^k-2$\\ I can define a table $T_M(x)[i,j] \in \Sigma \cup (\Sigma \times K)$. $T_M(x)[i,j]$ only depends on
+        \begin{itemize}
+            \item $T_M(x)[i-1,j-1]$ 
+            \item $T_M(x)[i-11,j]$
+            \item $T_M(x)[i-1,j+1]$
+        \end{itemize}This dependance is on the value of the cells, not the position i,j, this means that the same three values somewhere else on the table produce the same cell result. This dependance can also be seen as a boolean function $F_M:\left( \left\{ 0,1 \right\}^l \right)^3 \longrightarrow \left\{ 0,1 \right\}^l$. I can then split this function in l parts, each computing the h-th bit of the output. All of these partial functions can be seen as boolean circuits, each producing one bit of the binary encoding of the output.
+        $T_M(x)$ can be built using $O(n^k \times n^k)$ copies of $C_M$. $C_M(x) = 1 iff x\in L$. $C_M$ is computable in logarithmic space on a different I/O machine, at every moment the machine only needs to remember i and j to know which copy of $C_M$ i am producing in output. Each of the indexes i and j only require logarithmic space.
+    \end{proof}
+\end{theorem}
 
+\begin{theorem}[Circuit SAT NP-completeness]
+    Circuit SAT is NP-complete
+    \begin{proof}
+        Circuit SAT $\in$ NP. If $L \in NP$ there exists a non deterministic machine N. I use the same idea as the previous theorem but we need to define the table for the non-deterministic machine N. We need to add a number of boolean variable to each row for every non-deterministic choice that i can make for every row.
+    \end{proof}
+\end{theorem}
 

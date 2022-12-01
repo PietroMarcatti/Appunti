@@ -341,5 +341,14 @@ Yolo algorithm is a particular implementation of windowed object detection which
 \subsection*{Evaluating Object localization}
 To evaluate the goodness of an object localization algorithm we can use a simple calculation of Intersection over Union that gives us a percentage of overlap. Then we apply a non-max suppression algorithm that works by removing all object detection that are scoring too poorly and then focusing on the best match. 
 
+\subsection*{Image Segmentation}
+Image segmentation envolves from object detection by focusing on a object classification at the pixel level. After the feature extraction part of the network we then have to upscale the image somehow to bring it back to its original size. Some techniques for image upscaling is doind 2D upsampling, two ways to do it are:
+\begin{itemize}
+    \item Nearest: copy the value of the pixel on the left/right/up/down
+    \item Bilinear: the value of the pixel is going to be the result of some interpolation function for every group of four pixels
+\end{itemize}
+
+\section*{Recurrent Neural Networks}
+Recurrent neural networks are vastly used in context where we need to handle or generate sequences of data, examples are character prediction, chatbots, image captioning, speech recognition etc. 
 \include{exercise-book.tex}
 \end{document}
