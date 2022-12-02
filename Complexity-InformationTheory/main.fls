@@ -555,18 +555,6 @@ INPUT c:/texlive/2022/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.code
 INPUT ./main.aux
 INPUT main.aux
 INPUT main.aux
-INPUT ./Information Theory/Introduction.aux
-INPUT Information Theory/Introduction.aux
-INPUT Information Theory/Introduction.aux
-INPUT ./Information Theory/Data Compression/data_compression.aux
-INPUT Information Theory/Data Compression/data_compression.aux
-INPUT Information Theory/Data Compression/data_compression.aux
-INPUT ./Complexity/kolmogorovComplexity.aux
-INPUT Complexity/kolmogorovComplexity.aux
-INPUT Complexity/kolmogorovComplexity.aux
-INPUT ./Complexity/complexity.aux
-INPUT Complexity/complexity.aux
-INPUT Complexity/complexity.aux
 OUTPUT main.aux
 INPUT c:/texlive/2022/texmf-dist/tex/latex/graphics/graphicx.sty
 INPUT c:/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii

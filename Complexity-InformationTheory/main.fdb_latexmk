@@ -1,11 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1669719832 "c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex" "main.pdf" "main" 1669719832
-  "Complexity/complexity.aux" 1669719832 2752 6fc6d0f5edc9fb3c18a4b88ad9314c50 ""
-  "Complexity/kolmogorovComplexity.aux" 1669719831 1685 e5a03af9aedbfbb97ae2dd7cec70187d ""
-  "Information Theory/Data Compression/data_compression.aux" 1669719831 2629 46ea2554fb9b02daecdd9e2e9225301d ""
-  "Information Theory/Introduction.aux" 1669719831 993 59eae44d964123665cb648638fdab795 ""
+["pdflatex"] 1669980477 "c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex" "main.pdf" "main" 1669980477
   "Information Theory/Introduction.tex" 1666687177 2469 0770aeacd1788856792c5cd72edbf6c1 ""
-  "c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex" 1669459042 1253 2702ddf33468b58bc421bf21b13fa51a ""
+  "c:/Users/pietr/Desktop/Appunti/Complexity-InformationTheory/main.tex" 1669976135 1292 df7f86d6718e18e3f166dbba7dcfb7e4 ""
   "c:/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1665075964 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1665073512 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1665073512 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -147,8 +143,8 @@
   "c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1665081101 4635757 fee44e15b3aae95ce4ca399b9df8f1bd ""
   "c:/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1665081240 3058773 fc25debb91eaf826a1233bf5b33c6a9a ""
   "c:/texlive/2022/texmf.cnf" 1665081068 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1669719832 2689 2e69374570fcd41ede9bcb2dcfc15603 "pdflatex"
-  "main.tex" 1669459042 1253 2702ddf33468b58bc421bf21b13fa51a ""
+  "main.aux" 1669980477 34 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "main.tex" 1669976135 1292 df7f86d6718e18e3f166dbba7dcfb7e4 ""
   (generated)
   "main.aux"
   "main.log"

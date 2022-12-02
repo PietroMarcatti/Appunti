@@ -673,3 +673,79 @@ We'll now see that the first one will be a P-complete problem and the second one
     \end{proof}
 \end{theorem}
 
+Alternative definition of NP: A relation $ R \subseteq \Sigma^* \times \Sigma^*$ that is polynomially decidable. We say that R is polynomially balanced if $\exists k \; \forall (x,y) \in R \quad \absolute{y} \leq \absolute{x}^k$
+
+\begin{theorem}
+    $L \subseteq \Sigma^* \quad L \in NP$ if and only if $\exists R$ polynomially decidable and polynomially balances such that
+    \[ 
+        L = \left\{ x \mid \exists y (x,y) \in R \right\} 
+    \]
+    The string y is called the certificate, it is one of the possible evaluation that makes the formula true.
+    \begin{proof}[$\Rightarrow$]
+        $ L \in NP \Rightarrow \exists N$ that decides L in polynomial time and N is non-deterministic. I consider the sequence R
+        \[ 
+            R = \left\{ (x,c_1, \ldots, c_m) \mid x \in L \quad N(x; c_1, \ldots, c_m) = yes \right\} 
+        \]
+        We can deterministically, in polynomial time, decide R by modifying N to take in input also the choices and N works by choosing every time the correct choices ($c_1, \ldots, c_m$)
+    \end{proof}
+    \begin{proof}[$\Leftarrow$]
+        R is polynomially decidable and polynomially balanced, moreover $L = \left\{ x \mid \exists y (x,y) \in R \right\} $
+        I need to construct a N non-det machine that decides L. On the first tape I non-deterministically generate the bits of the certificate y and then I behave like M checking if the pair x,y is in R
+    \end{proof}
+\end{theorem}
+
+\begin{proposition}[3-SAT is NP-complete]
+    3-SAT is the language of formulas with clauses involving at most 3 literals. A clause is a disgiunction of literals. A literal is either a boolean variable or its negation.\\\\
+    Conjunctive Normal Form is a form for formulas that are as follows:
+    \[ 
+        C_1 \wedge C_2 \wedge \ldots \wedge C_k, \quad C_h \; clause 
+    \]\\
+    Disjunctive Normal Form:
+    \[ 
+        (C_1 \wedge \ldots \wedge C_m) \vee (\ldots \wedge \ldots) 
+    \]
+    It is easy (polynomial) to bring a formula to CNF but it's hard to decide its satifiability
+
+    \begin{proof}
+        $3-SAT \in NP$, this can be proven with certificate, I can present a formula Y that is in CNF and its evaluation $v:{p_{1}, \ldots,p_{m}} \longrightarrow{0,1}$\\
+        $Circuit-SAT \preceq 3-SAT$
+        \[ 
+            C-circuit \mapsto Y_C \mapsto \bar{Y_C} \; \text{conjunction of clauses}
+        \]
+        $\bar{Y_C} = C_1 \wedge C_2 \wedge \ldots C_m$, each clause might have more than three literals. So if $C = (l_1 \vee l_2 \vee l_3 \vee l_4)$ I create a new variable $z = l_3 \vee l_4$ so C changes and now is $C = (l_1 \vee l_2 \vee z) \wedge ( \neg z \vee l_3 \vee l_4)$
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}[Independent Set is NP-complete]
+    Given a graph G = (V,E), a set I of verteces is Independent if 
+    $\forall u,v \in I \quad {u,v} \notin E$. Given a graph G, and $k \in \mathbb{N}$ decide if G has an Independent set such that $\absolute{I} = k$
+    \begin{proof}
+        Ind. Set $\in$ NP can be proven with a certificate (G,k; I). It can be checked, in polynomial time, that the certificate expressed as a possible set of nodes is indeed Independent and of size k. I now need to prove $3-SAT \preceq Ind.Set$. Given the 3-SAT formula $Y  = (C_1 \wedge \ldots \wedge C_h)$ and for example $C_j = (l_{1j} \vee l_{2j} \vee l_{3j})$\\
+        Non ho capito una sega
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}[Clique is NP-complete]
+    Given a graph G=(V,E), $C \subseteq V$ is a clique iff $\forall u,v \in V \quad \left\{ u,v \right\} \in E$. So given a graph G and integer k, the problem is to decide if there is a clique of size k
+    \begin{proof}
+        Clique is in NP and it can be proven with a certificate in the form of a set of nodes. We can prove, in polynomial time. The reduction comes immediately by taking the complement of E. The problem could now be seen as the one of finding a Independent set of size k. 
+    \end{proof} 
+\end{proposition}
+
+\begin{proposition}[Sub-graph Isomorphism is NP-complete]
+    Given two graphs $G_1, G_2$ check if there exists a subgraph of $G_2$ that is isomorphic to $G_1$.
+    \begin{proof}
+        We'll reduce to Clique 
+    \end{proof}
+
+\end{proposition}
+
+\begin{proposition}[Integer Programming is NP-complete]
+    Using 3-SAT
+\end{proposition}
+
+The non linear disequalities if with integer solutions is called the diophantine equations or 10th Hilbert problem is undecidable. While over the reals is decidable.
+
+
+
+
