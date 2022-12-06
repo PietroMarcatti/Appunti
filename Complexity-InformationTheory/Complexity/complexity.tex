@@ -743,8 +743,39 @@ Alternative definition of NP: A relation $ R \subseteq \Sigma^* \times \Sigma^*$
 \begin{proposition}[Integer Programming is NP-complete]
     Using 3-SAT
 \end{proposition}
+The non linear disequalities if with integer solutions are called the diophantine equations or 10th Hilbert problem and they are undecidable. While over the reals they are decidable.
 
-The non linear disequalities if with integer solutions is called the diophantine equations or 10th Hilbert problem is undecidable. While over the reals is decidable.
+\begin{proposition}[Knapsack is NP-complete 9.10]
+    We are going to consider the decision version of this problem.
+\end{proposition}
+\begin{theorem}[9.4]
+    Any instance of Knapsack can be solved in $O(n\cdot W)$. (the idea is that given an instance the amount of space required to express the instance is logarithmic with respect to the size of the instance). we can say that this problem is only polynomial with respect to a bound on the input. They are called pseudo-polynomial algorithms
+\end{theorem}
+Another category of problem is that of strongly NP-complete ones, they are NP-complete even with bounds on the involved integers
+
+\subsection{L-complete problems - Chpt. 16}
+Given two languages in $\mathbb{L}$, $L_1, L_2$ we can draw a reduction $L_1 \preceq L_2$.\
+I take two strings, both within the alphabet $\Sigma_2^*$, one inside the language and one outside. The string $\alpha$ in $\Sigma_1^*$ is transformed as x (the string in L2) if $\alpha \in L_1$ otherwise as y if $\alpha \in L_2$
+\begin{theorem}
+    If $L \in \mathbb{L}$ with $L\neq \emptyset, L \neq \Sigma^*$ then L is $\mathbb{L}$-complete
+\end{theorem}
+\subsection{NL-complete problems - Chpt. 16}
+We've seen that Reachability is in NL. We've also seen that co-NL = NL so Unreachability is in co-NL.
+\begin{theorem}[Reachability is NL-complete]
+    Reachability is NL-Complete
+    \begin{proof}
+        $L \in NL$ means that there is a machine N 
+    \end{proof}
+\end{theorem}
+Corollary: if Reachability is in L, then L = NL
+
+\begin{theorem}
+    2-SAT is NL-complete
+    \begin{proof}
+        2-SAT in NL we demonstrate by adding a node for every literal in the clauses and its negation. I then create edges from the negation of one to the second one: if the clause is $p \vee q$ it can be seen as $\not p \rightarrow q$ identifying an edge on the graph. This creates a path of truth. If we have both a path from p to $\not p$ and one from $\not p$ to p, then the formula is not satisfiable. We get that 2-UnSAT is in NL which means that 2-SAT is NL.\\\\
+        I then have to prove that 2-SAT is NL-complete
+    \end{proof}
+\end{theorem}
 
 
 
