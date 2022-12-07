@@ -349,6 +349,66 @@ Image segmentation envolves from object detection by focusing on a object classi
 \end{itemize}
 
 \section*{Recurrent Neural Networks}
-Recurrent neural networks are vastly used in context where we need to handle or generate sequences of data, examples are character prediction, chatbots, image captioning, speech recognition etc. 
+Recurrent neural networks are vastly used in context where we need to handle or generate sequences of data, examples are character prediction, chatbots, image captioning, speech recognition etc.
+\subsection*{Vanishing Gradient in RNN}
+After having encoded a long (although fixed) series of words the vanishing gradient phenomenon can manifest itself in the way that the network "forgets" what was encoded many words before.
+\subsection*{Equation of a RNN}
+\begin{align*}
+    a^{t} &= g_t(W_{aa}a^{t-1}+W_{ax}x^{t}+b_a)\\
+    \hat{y}^t &= g_t'=(W_{ya}a^t+b_y)
+\end{align*}
+In this case $g_t$ is usually a ReLU/Tanh function and $g_t'$ is usually a sigmoid function. This notation can be simplified to give us:
+\begin{align*}
+    a^{t} &= g_t(W_{a}[a^{t-1},x^{t}]+b_a)\\
+    \hat{y}^t &= g_t'=(W_{ya}a^t+b_y)
+\end{align*}
+where $W_a = [W_{aa}, W_{ax}]$ and $[a^{t-1},x^{t}] = \begin{bmatrix}
+    a^{t-1} \\
+    x^{t}
+\end{bmatrix}$
+\subsection*{Gated Recurrent Unit}
+The main idea is to add a new variable C as a memory cell. We then refer to $c^t$ as the memory cell at the time t. In this unit $c^t = a^t$ we use different notation to simplify the introduction of LSTM.\\
+We define a candidate for c:
+\[ 
+    \tilde{c}^t = \tanh{W_c[c^{t-1, x^t}, x^t]+b_c}
+\]
+We also define a gate u:
+\[ 
+    \Gamma_u = \sigma(W_u[c^{t-1}, x^t]+b_u)
+\]Note that $\Gamma \in [0,1]$ and the pedix u refers to update. Now c is updated as follows:
+\[ 
+    c^t = \Gamma_u * \tilde{c}^t + (1-\Gamma_u)* c^{t-1} 
+\]This means that the gate $\Gamma$ will decide if we are mostly using the candidate or the last value for c. In real application the memory cell c is a vector and so is its candidate and gate
+\subsubsection*{Full GRU}
+We add another gate $\Gamma_r$ where r stands for relevance. The reason why adding this other gate is useful is still under research but results show that it improves the robustness of the model.
+\subsection*{LSTM}
+LSTM introduces a couple more elements to the GRU model. It uses the same c memory cells but the value is determined using two gates (update and forget):
+\[ 
+    c^t =\Gamma_u * \tilde{c}^t + \Gamma_f * c^{t-1}
+\]
+We add a new type of memory cell: c is designed for long memory while memory of type a is for short term:
+\[ 
+    a^t = \Gamma_o * c^t 
+\]Here we are adding another gate which is the output gate.\\ The c state changes slowly through time which better helps with remembering information for longer.
+
+\section{Transformer Model}
+The Transformer model was first introduced by Google with their famous paper "Attention is all you need". The main goal of the transformer was to solve the translation problem. The architecture of the Transformer is composed of two main parts: the Encoder and the Decoder. The output from the Encoder is then fed into the Decoder.
+\subsection*{BERT}
+The evolution proposed by Google in the following years is based on focusing on only the Encoder part of the transformer. This model has proven state-of-the-art performance on a variety of NLP tasks. The input of this model is a sequence of tokens which are first embedded into vectors and then processed in the neural network. The output is a sequence of vectors of size H, inwhich each vector corresponds to an input token with the same index. 
+\subsubsection*{Information Flow}
+The data flows through the architecture as follows:
+\begin{itemize}
+    \item THe model represents each token as a vector of emb dim size. We have a matrix of dimensions input length x emd dim for a specific input sequence.
+    \item It then adds positional information (positional encoding).
+    \item The data goes through N encoder blocks. After this, we obtain the same matrix dimensions. 
+\end{itemize}
+\subsubsection*{Input preprocessing}
+A number of steps including Tokenization, Numericalization and word embedding are needed before feeding the input into BERT.
+\begin{itemize}
+    \item Tokenization and Numericalization do not differ in the way they are performed in RNN
+\end{itemize}
+\subsubsection*{Positional Encoding}
+In BERT the authors used learned positional embedding. At the beginning they added some random numbers. 
+
 \include{exercise-book.tex}
 \end{document}
