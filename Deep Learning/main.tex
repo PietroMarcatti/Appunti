@@ -394,11 +394,11 @@ We add a new type of memory cell: c is designed for long memory while memory of 
 \section{Transformer Model}
 The Transformer model was first introduced by Google with their famous paper "Attention is all you need". The main goal of the transformer was to solve the translation problem. The architecture of the Transformer is composed of two main parts: the Encoder and the Decoder. The output from the Encoder is then fed into the Decoder.
 \subsection*{BERT}
-The evolution proposed by Google in the following years is based on focusing on only the Encoder part of the transformer. This model has proven state-of-the-art performance on a variety of NLP tasks. The input of this model is a sequence of tokens which are first embedded into vectors and then processed in the neural network. The output is a sequence of vectors of size H, inwhich each vector corresponds to an input token with the same index. 
+The evolution proposed by Google in the following years is based on focusing on only the Encoder part of the transformer. This model has proven state-of-the-art performance on a variety of NLP tasks. The input of this model is a sequence of tokens which are first embedded into vectors and then processed in the neural network. The output is a sequence of vectors of size H, in which each vector corresponds to an input token with the same index. 
 \subsubsection*{Information Flow}
 The data flows through the architecture as follows:
 \begin{itemize}
-    \item THe model represents each token as a vector of emb dim size. We have a matrix of dimensions input length x emd dim for a specific input sequence.
+    \item The model represents each token as a vector of emb dim size. We have a matrix of dimensions input length x emb dim for a specific input sequence. To make sure that input length is always the same use padding (either at the beginning or at the end of the sentence)
     \item It then adds positional information (positional encoding).
     \item The data goes through N encoder blocks. After this, we obtain the same matrix dimensions. 
 \end{itemize}
@@ -408,7 +408,25 @@ A number of steps including Tokenization, Numericalization and word embedding ar
     \item Tokenization and Numericalization do not differ in the way they are performed in RNN
 \end{itemize}
 \subsubsection*{Positional Encoding}
-In BERT the authors used learned positional embedding. At the beginning they added some random numbers. 
+In BERT the authors tried using learned positional but then it was removed.
+\subsubsection*{Encoder Block}
+All that we just described constitutes an encoder block, these blocks are then stacked one after the other. A specific block is in charge of finding relationships between the input representations and the ??. The transformer uses multi-head attention, which means it computes attention h different times with different weight matrices and the concatenates the results together. The result of each of those parallel computations of attention is called a head.
+\subsubsection*{BERT Training}
+When training a model there is the challenge of defining a prediction goal. In the case of the transformer we mask a word of the input sentence replacing it with a fixed "mask" encoding and then we ask to predict the word that best fits the masked position. 
+
+\subsection*{GPT-3}
+GPT-3 is a transformer model that differs from BERT in the sense that it is based on a sequence of decoder blocks instead of encoders.
+
+\subsection*{Text Classification}
+Text classification model constist of adding a classifier on top of an already trained transformer model (BERT, GPT or others) and just tuning the parameters for the classification task.
+\subsection*{Question Answering}
+Instead of a classifier, like in the text classification task, question answering uses a regression layer.
+
+\section{Generative Adversarial Networks}
+Generative Adversarial networks, as it says in the name, they are generative models.
+\subsection*{GAN Structure}
+The main components of a GAN structure are the generator, that takes random number and is capable of generating a face. Putting real faces and generated faces through a discriminator should classify if the given image is fake or not. 
+
 
 \include{exercise-book.tex}
 \end{document}
