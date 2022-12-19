@@ -805,6 +805,39 @@ If $L \in PH-complete$ then $\exists j \; L \in \Sigma_j$ this would mean that $
 We will prove that $PH \subseteq PSPACE$ we'll rely on the fact that QSAT is in PSPACE-complete\\
 $Q_iSAT$ in ???-complete, so we can "reduce" $Q_iSat \preceq QSAT$, $\forall i \; \Sigma_i \subseteq PSPACE$ which leads to $PH \subseteq PSPACE$\\
 Trace equivalence: given two NFA $A_1, A_2$ we want to decide $L(A_1) = L(A_2)$
+\subsection*{EXP and NEXP}
+Recall thath $EXP = \bigcup_{k \in \mathbb{N}}{TIME(2^{n^k})}$
+\begin{theorem}
+    If P = NP then EXP = NEXP
+    \begin{proof}
+        Thesis is to prove that $\forall L \in NExp, L \in EXP$. If $L \in NEXP$ then $\exists N$ non-det that decides L in time $O(2^{n^k})$. The langaguge L' is constructed takin the string of L and doing so:
+        \[ 
+            L' = \left\{ x \underset{2^{\absolute{x}^k}-\absolute{x}}{\sqcap \ldots \sqcap} \mid x \in L \right\}
+        \]
+        The machine N' for L':
+        \begin{itemize}
+            \item Uses N for deciding $x\in L$
+            \item Counts $\sqcap \ldots \sqcap$
+        \end{itemize} N' works in time $O(2^{\absolute{x}^k})$, this means that N' prime decides L' time in polynomial time (non det.) which would mean that $L' \in NP$. If this is true then $\exists M $ det. that decides L' in time $O(n^h)$ for some h (since by hypothesis P = NP). We modify M to "avoid" the check of $\sqcap \ldots \sqcap$. We get the machine M' that decides L in time $O((2^{\absolute{x}^k})^h)$. This proves that $L \in EXP$
+    \end{proof}
+\end{theorem}
+
+\begin{theorem}[Succint Circuit-Value is Exp-complete]
+    \begin{proof}
+        Dc is a boolean funciton that takes in input two indices (i,k) and it gives in output a pair (s,j), for exaple:
+        \[ 
+            Dc(100, 001) = (001: 010) 
+        \]From Dc we can recontruct C. 
+    \end{proof}
+\end{theorem}
+
+\begin{theorem}[Succing Circuit-SAT is NExp-complete]
+    \begin{proof}
+        Succint Circuit-SAT problem is that given Dc decide whether C is satifiable.
+    \end{proof}
+\end{theorem}
+
+
 
 
 
