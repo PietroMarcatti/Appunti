@@ -777,6 +777,34 @@ Corollary: if Reachability is in L, then L = NL
     \end{proof}
 \end{theorem}
 
+\begin{theorem}[Validity is co-NP-complete]
+    If proving satifiability is NP-complete, then validity, being the complement of satifiability, it's easy to see that it's co-NP-complete
+\end{theorem}
+
+\begin{theorem}
+    If $L \in co-NP-complete$ and $L \in NP$ then NP = co-NP
+\end{theorem}
+
+\begin{theorem}
+    If P $\neq$ NP then there exists a language L $\in P$ and $L \notin NP-complete$
+\end{theorem}
+
+\subsection{Polynomial Hierarchy}
+\begin{definition}[Turing Machine with Oracle]
+    Page 339. A machine $M^?$ is a machine with oracle, can be deterministic or nondeterministic. It's a I/O machine and all of its tapes function normally. It then has a special tape, called the query tape. This oracle will tell us in one step whether the content of the query tape is in the language of the query oracle.\\
+    $M^L$ when is in the query state will tell us in one state whether the content of the query tape is in the language L. It is still an open problem to decide whether it is more powerful than just checking a polynomial number of instances of some language.\\
+    $P^P=P, \quad NP^P = NP \quad P^NP ?? NP$\\
+    The class $PH = \bigcup_{i\in N}\Sigma_i$
+\end{definition}
+Recall the definition of NP with certificate. We define co-NP with certificate as follows: L in co-NP if and only if there exists a relation R polynomially balanced and polynomially decidable such that 
+\[ 
+    L = \{x \mid \forall y (x,y) \in R\} 
+\]
+a bunch of stuff \\\\
+If $L \in PH-complete$ then $\exists j \; L \in \Sigma_j$ this would mean that $PH=\Sigma_j$
+We will prove that $PH \subseteq PSPACE$ we'll rely on the fact that QSAT is in PSPACE-complete\\
+$Q_iSAT$ in ???-complete, so we can "reduce" $Q_iSat \preceq QSAT$, $\forall i \; \Sigma_i \subseteq PSPACE$ which leads to $PH \subseteq PSPACE$\\
+Trace equivalence: given two NFA $A_1, A_2$ we want to decide $L(A_1) = L(A_2)$
 
 
 

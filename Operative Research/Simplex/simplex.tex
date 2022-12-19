@@ -54,7 +54,7 @@ The cost of the feasible basic set $ \mathcal{B} $ is then \[
     \sum_{i=1}^{k}{c_{j_i}x_i} 
 \]
 The simplex algorithm works with bases rather than baisc sets. If there is no degeneracy it's the same, but in presence of degernarcy a basi set can be extende dto a basis in many ways, and therefore to a verx of P there can correspond more than one basis.\\
-Given a basis B, let N =[d] -B. Let A_B  be the m\times m submatrix of A consisteing of the comulns in B, and A_n the m\times n submatrix of the columns inN. We partition x as x ?(x_B, x_N) where x_B are the basic variables and X_N are the non-basic variables. Similòarly, we partiion c as c=(x_B,C_N)
-Let \bar{A} = A^-1_B and \bar b = A^-1_b
-\bar{A}_N are the coefficients of the non-basic variables, and \bar b is the rhs, when the system Ax = b is put in echelon form wrt the basic variables
-A_Bx_B + A_Nx_N = b becomes Ix_B+\barA_Nx_N = \bar b
+Given a basis B, let $N=[d] -B$. Let $A_B$  be the $m\times m$ submatrix of A consisteing of the comulns in B, and $A_n$ the $m\times n$ submatrix of the columns inN. We partition x as x ?$(x_B, x_N)$ where $x_B$ are the basic variables and $X_N$ are the non-basic variables. Similòarly, we partiion c as $c=(x_B,C_N)$
+Let $\bar{A} = A^-1_B and \bar b = A^-1_b$
+$\bar{A}_N$ are the coefficients of the non-basic variables, and $\bar{b}$ is the rhs, when the system Ax = b is put in echelon form wrt the basic variables
+$A_Bx_B + A_Nx_N = b$ becomes $Ix_B+\bar{A_N}x_N = \bar{b}$

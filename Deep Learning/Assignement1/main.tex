@@ -1,0 +1,53 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{svg}
+
+\title{Deep Learning - Assignement 1}
+\author{Pietro Marcatti - 164717}
+\date{December 14 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Abstract}
+The task of multiple object localization and classification immediately posed some questions and challenges. The main obstacle to overcome was designing a model that could handle samples with a variable number of ground-truth objects to detect. To achieve this, my approach is to define a relatively high number of anchor boxes (with respect to the average amount of objects per sample) within the sample image. An anchor box is a basic guessing area for both the localization and classification task corresponding to one of $9$ grid cells created in a simple $3 \times 3$ pattern over the image. I chose the number of anchor boxes to be 9 by briefly analyzing the average size of the ground truth boxes. I will explain more clearly why the size of the ground truth object is relevant in section 3.1.  Since not all the anchor boxes would contain an object, or just part of it, I also introduced one more class associated with the concept of “background”, or absence of objects, so that I could still evaluate the goodness of the prediction for all anchor boxes.
+
+\section{Model Architecture}
+
+The architecture proposed is entirely composed of a series of 2D convolutions. The input size of the network, to which resize the images, has been derived moving backwards from the output layer. The output dimension had to be a $3 \times 3 \times h$.
+\begin{description}
+    \item[$3 \times 3$]: As explained in the introductory section, I wanted a $3 \times 3$ grid of guessing boxes over the image so my network is outputs a tensor with such shape in the first two dimensions.
+    \item[$h$]: The third dimensional component of size $h = 4 + 14 +1$ where the first $4$ values are used in the box localization task and the remaining $14 + 1$ are going to be the logits of my classification task: one value for each class plus the additional background class.
+\end{description}
+\begin{figure}
+    \includesvg{assignment-architecture.svg}
+    \caption{Convolutional Neural Network of the model}
+\end{figure}
+
+
+
+\section{Training}
+
+The training of the model consists of two main sections, which are the interpretation of the model output, from which to formalize the model guess, and the loss calculation. 
+    \subsection{Model Output Interpretation}
+    As it is shown in picture 2.1 the output of the model on a single image sample is a tensor of shape 3x3x(4+15). This result, though, needs to be interpreted to then formulate the guess of the model. In particular,  the first 4 elements of the 3rd dimension are to be seen as shift
+
+    \subsection{Loss Calculation}
+
+        \subsubsection{Bounding Box Loss}
+
+        \subsubsection{Classification Loss}
+
+\section{Results}
+
+Sadly the results of the model are lackluster to say the least. To put it simply, it seems the model is not able to learn and for this reason it is not able to produce good guesses on the test set, especially on the classification task. If I were to be critical of the model and its operation I would say the culprit is the incredibly disproportionate amount of anchor boxes that are required, according to my architecture, to guess the “background” class. This nullifies whatever improvement results from the backpropagation on the anchor boxes that should predict “real” classes.
+
+    \subsection{Expansion Points}
+
+\section{Submitted Material}
+
+\end{document}
